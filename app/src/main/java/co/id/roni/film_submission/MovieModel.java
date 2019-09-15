@@ -25,7 +25,7 @@ public class MovieModel implements Parcelable {
 
             this.id = id;
             this.title = title;
-            this.poster_path = ("https://image.tmdb.org/t/p/w185" + jsonObject.getString("poster_path"));
+            this.poster_path = ("https://image.tmdb.org/t/p/w185" + poster_path);
             this.overview = overview;
             this.release_date = release_date;
             this.vote_average = vote_average;

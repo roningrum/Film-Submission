@@ -10,14 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private ArrayList<MovieModel> movieData = new ArrayList<>();
+    private MovieAdapter.OnItemClickCallback onItemClickCallback;
 
     public void setMovieData(ArrayList<MovieModel> movies) {
         movieData.clear();
@@ -54,11 +52,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             tvMovieRate = itemView.findViewById(R.id.tv_rate_average);
             imgMoviePoster = itemView.findViewById(R.id.img_poster_item);
         }
-        void bind(MovieModel movies){
+        void bind(final MovieModel movies){
             tvMovieTitle.setText(movies.getTitle());
             tvOverview.setText(movies.getOverview());
             tvMovieRate.setText(String.valueOf(movies.getVote_average()));
             Glide.with(itemView.getContext()).load(movies.getPoster_path()).into(imgMoviePoster);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickCallback.onItemClicked(movieData.get(getAdapterPosition()));
+                }
+            });
         }
+    }
+
+    public interface OnItemClickCallback {
+        void onItemClicked(MovieModel movieData);
     }
 }
