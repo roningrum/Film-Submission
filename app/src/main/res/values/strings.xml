@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Film-Submission</string>
+    <string name="cd_poster_image">For Poster Image</string>
+    <string name="sample_overview">lorem ipsum</string>
+</resources>
