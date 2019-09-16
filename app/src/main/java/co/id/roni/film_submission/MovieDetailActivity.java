@@ -19,7 +19,11 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MovieDetailActivity extends AppCompatActivity {
     private ImageView imgDetailBackDropMovie;
@@ -92,6 +96,17 @@ public class MovieDetailActivity extends AppCompatActivity {
             layoutManager.setAlignItems(AlignItems.BASELINE);
             rvGenreList.setLayoutManager(layoutManager);
             rvGenreList.setAdapter(genreAdapter);
+
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            String date = movieDetailModel.getRelease_date();
+            try {
+                Date newDate = dateFormat.parse(date);
+                dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+                tvDetailReleaseDateMovie.setText(dateFormat.format(newDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
 
         }

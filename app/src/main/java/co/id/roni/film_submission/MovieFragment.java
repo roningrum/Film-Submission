@@ -1,12 +1,17 @@
 package co.id.roni.film_submission;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,7 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class MovieFragment extends Fragment {
+
     private MovieAdapter movieAdapter;
     private ProgressBar progressBar;
     private MovieViewModel movieViewModel;
@@ -30,26 +40,37 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public MovieFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_movie, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
         movieViewModel.getListMovies().observe(this, getMovies);
 
         movieAdapter = new MovieAdapter();
         movieAdapter.notifyDataSetChanged();
-        progressBar = findViewById(R.id.pb_loading);
+        progressBar = view.findViewById(R.id.pb_loading);
 
-        RecyclerView rvMovies = findViewById(R.id.rv_movies);
-        rvMovies.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView rvMovies = view.findViewById(R.id.rv_movies);
+        rvMovies.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMovies.setAdapter(movieAdapter);
 
         movieAdapter.setOnItemClickCallback(new MovieAdapter.OnItemClickCallback() {
             @Override
             public void onItemClicked(MovieModel movieData) {
-                Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+                Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
                 intent.putExtra("EXTRA_MOVIES", movieData);
                 intent.putExtra("id", movieData.getId());
                 Log.d("Check Intent Id", "Movie Id" + movieData.getId());
@@ -59,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         movieViewModel.setListMovies(1, "en-US");
         showLoading(true);
-
-
-
     }
 
     private void showLoading(Boolean state) {
@@ -71,4 +89,5 @@ public class MainActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
     }
+
 }
