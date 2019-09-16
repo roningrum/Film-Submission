@@ -3,14 +3,23 @@ package co.id.roni.film_submission;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
+
+import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity {
     private ImageView imgDetailBackDropMovie;
@@ -19,13 +28,17 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView tvDetailTitleMovie;
     private TextView tvDetailOverviewMovie;
     private TextView tvDetailReleaseDateMovie;
+    private RecyclerView rvGenreList;
 
+    private ProgressBar progressBar;
     private int id;
+
     private Observer<MovieDetailModel> getMovieDetail = new Observer<MovieDetailModel>() {
         @Override
         public void onChanged(MovieDetailModel movieDetailModel) {
             if (movieDetailModel != null) {
                 showDetailMovie(movieDetailModel);
+                showLoading(false);
             }
         }
     };
@@ -40,12 +53,16 @@ public class MovieDetailActivity extends AppCompatActivity {
         tvDetailRunTimeMovie = findViewById(R.id.tv_duration_movie_item);
         tvDetailOverviewMovie = findViewById(R.id.tv_sinopsis_detail);
         tvDetailReleaseDateMovie = findViewById(R.id.tv_release_time_detail);
+        rvGenreList = findViewById(R.id.rv_genre_movie_detail);
+        progressBar = findViewById(R.id.pb_loading);
+
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
 
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
         movieDetailViewModel.setDetailMovies(id, "en-US");
+        showLoading(true);
 
     }
 
@@ -65,6 +82,26 @@ public class MovieDetailActivity extends AppCompatActivity {
             tvDetailReleaseDateMovie.setText(movieDetailModel.getRelease_date());
             Glide.with(getApplicationContext()).load(movieDetailModel.getPoster_path()).into(imgDetailPosterMovie);
 
+            List<Genre> genres = movieDetailModel.getGenres();
+            GenreAdapter genreAdapter = new GenreAdapter();
+            genreAdapter.setGenreList(genres);
+
+            FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
+            layoutManager.setFlexDirection(FlexDirection.ROW);
+            layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+            layoutManager.setAlignItems(AlignItems.BASELINE);
+            rvGenreList.setLayoutManager(layoutManager);
+            rvGenreList.setAdapter(genreAdapter);
+
+
+        }
+    }
+
+    private void showLoading(Boolean state) {
+        if (state) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
         }
     }
 }
