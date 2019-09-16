@@ -3,39 +3,12 @@ package co.id.roni.film_submission;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class MovieModel implements Parcelable {
     private int id;
     private String title;
     private String poster_path;
     private String overview;
-    private String release_date;
     private double vote_average;
-
-    MovieModel(JSONObject jsonObject) {
-        try {
-            int id = jsonObject.getInt("id");
-            String title = jsonObject.getString("title");
-            String poster_path = jsonObject.getString("poster_path");
-            String overview = jsonObject.getString("overview");
-            String release_date = jsonObject.getString("release_date");
-            double vote_average = jsonObject.getDouble("vote_average");
-
-            this.id = id;
-            this.title = title;
-            this.poster_path = ("https://image.tmdb.org/t/p/w185" + poster_path);
-            this.overview = overview;
-            this.release_date = release_date;
-            this.vote_average = vote_average;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
     public int getId() {
         return id;
@@ -53,8 +26,7 @@ public class MovieModel implements Parcelable {
         this.title = title;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public MovieModel() {
     }
 
     public void setPoster_path(String poster_path) {
@@ -69,14 +41,6 @@ public class MovieModel implements Parcelable {
         this.overview = overview;
     }
 
-    public String getRelease_date() {
-        return release_date;
-    }
-
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
-    }
-
     public double getVote_average() {
         return vote_average;
     }
@@ -84,7 +48,6 @@ public class MovieModel implements Parcelable {
     public void setVote_average(double vote_average) {
         this.vote_average = vote_average;
     }
-
 
     @Override
     public int describeContents() {
@@ -97,8 +60,11 @@ public class MovieModel implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.poster_path);
         dest.writeString(this.overview);
-        dest.writeString(this.release_date);
         dest.writeDouble(this.vote_average);
+    }
+
+    public String getPoster_path() {
+        return "" + poster_path;
     }
 
     protected MovieModel(Parcel in) {
@@ -106,7 +72,6 @@ public class MovieModel implements Parcelable {
         this.title = in.readString();
         this.poster_path = in.readString();
         this.overview = in.readString();
-        this.release_date = in.readString();
         this.vote_average = in.readDouble();
     }
 

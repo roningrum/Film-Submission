@@ -1,23 +1,34 @@
 package co.id.roni.film_submission;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ProgressBar;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private MovieAdapter movieAdapter;
     private ProgressBar progressBar;
     private MovieViewModel movieViewModel;
+
+    private Observer<List<MovieModel>> getMovies = new Observer<List<MovieModel>>() {
+        @Override
+        public void onChanged(List<MovieModel> movieModels) {
+            if (movieModels != null) {
+                movieAdapter.setMovieData((ArrayList<MovieModel>) movieModels);
+                showLoading(false);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +46,23 @@ public class MainActivity extends AppCompatActivity {
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
         rvMovies.setAdapter(movieAdapter);
 
-        movieViewModel.setListMovies(1, "en_US");
+        movieAdapter.setOnItemClickCallback(new MovieAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(MovieModel movieData) {
+                Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+                intent.putExtra("EXTRA_MOVIES", movieData);
+                intent.putExtra("id", movieData.getId());
+                Log.d("Check Intent Id", "Movie Id" + movieData.getId());
+                startActivity(intent);
+            }
+        });
+
+        movieViewModel.setListMovies(1, "en-US");
         showLoading(true);
 
 
 
     }
-
-    private Observer<ArrayList<MovieModel>> getMovies = new Observer<ArrayList<MovieModel>>() {
-        @Override
-        public void onChanged(ArrayList<MovieModel> movieModels) {
-            if (movieModels != null) {
-                movieAdapter.setMovieData(movieModels);
-                showLoading(false);
-            }
-        }
-    };
 
     private void showLoading(Boolean state) {
         if (state) {

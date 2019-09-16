@@ -6,51 +6,63 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieViewModel extends ViewModel {
-    private static final String API_KEY = "925c18bd71917db0242931c2fce8c338";
-    private MutableLiveData<ArrayList<MovieModel>> listMovies = new MutableLiveData<>();
+    private MutableLiveData<List<MovieModel>> listMovies = new MutableLiveData<>();
+    private MutableLiveData<MovieModel> movieDetails = new MutableLiveData<>();
+
+
+    private Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(Api.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    private Api api = retrofit.create(Api.class);
 
     void setListMovies( final int page, String language ){
-        AsyncHttpClient client = new AsyncHttpClient();
-        final ArrayList<MovieModel> listItems = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/discover/movie?api_key="+API_KEY+"&language="+language+"&sort_by=popularity.desc&include_adult=false&include_video=false&page="+page;
-        client.get(url, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                try{
-                    String result = new String(responseBody);
-                    JSONObject responseObject = new JSONObject(result);
-                    JSONArray list = responseObject.getJSONArray("results");
-                    for (int i = 0; i< list.length(); i++){
-                        JSONObject movie = list.getJSONObject(i);
-                        MovieModel movieModel = new MovieModel(movie);
-                        listItems.add(movieModel);
-                    }
-                    listMovies.postValue(listItems);
 
-                } catch (Exception e){
-                    Log.d("Exception", e.getMessage());
+        Call<MovieObjectData> movieObjectCall = api.getMovieList(page, language);
+        movieObjectCall.enqueue(new Callback<MovieObjectData>() {
+            @Override
+            public void onResponse(Call<MovieObjectData> call, Response<MovieObjectData> response) {
+                if (response.isSuccessful()) {
+                    listMovies.setValue(response.body().getResults());
                 }
+
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.e("onFailure", error.getMessage());
+            public void onFailure(Call<MovieObjectData> call, Throwable t) {
+                Log.w("Response Failed", "" + t.getMessage());
             }
         });
     }
 
-    LiveData<ArrayList<MovieModel>> getListMovies() {
+//    void setDetailMovies( final int id, String language ){
+//        Call<MovieModel> movieModelCall = api.getMovieDetail(id, language);
+//        movieModelCall.enqueue(new Callback<MovieModel>() {
+//            @Override
+//            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+//                movieDetails.setValue(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MovieModel> call, Throwable t) {
+//                Log.w("Response Detail Failed", "Show message"+t.getMessage());
+//            }
+//        });
+
+    LiveData<List<MovieModel>> getListMovies() {
         return listMovies;
     }
+//    LiveData<MovieModel> getMovieDetail(){
+//        return movieDetails;
+//    }
 }

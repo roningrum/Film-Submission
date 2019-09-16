@@ -17,6 +17,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private ArrayList<MovieModel> movieData = new ArrayList<>();
     private MovieAdapter.OnItemClickCallback onItemClickCallback;
 
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
+    }
+
     public void setMovieData(ArrayList<MovieModel> movies) {
         movieData.clear();
         movieData.addAll(movies);
