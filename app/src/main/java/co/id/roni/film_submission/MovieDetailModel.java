@@ -1,11 +1,14 @@
 package co.id.roni.film_submission;
 
+import java.util.List;
+
 public class MovieDetailModel {
     private int id;
     private String backdrop_path;
     private String overview;
     private String poster_path;
     private String title;
+    private List<Genre> genres;
     private String release_date;
     private int runtime;
     private String vote_average;
@@ -35,7 +38,7 @@ public class MovieDetailModel {
     }
 
     public String getPoster_path() {
-        return poster_path;
+        return "https://image.tmdb.org/t/p/w500" + poster_path;
     }
 
     public void setPoster_path(String poster_path) {
@@ -75,4 +78,11 @@ public class MovieDetailModel {
     }
 
 
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
 }

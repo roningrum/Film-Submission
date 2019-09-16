@@ -18,14 +18,15 @@
         tools:srcCompat="@android:color/darker_gray"
         android:contentDescription="@string/movie_banner" />
 
+
     <View
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/bg_poster_banner"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/img_detail_photo_banner"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/tv_name_movie_detail"
@@ -47,7 +48,7 @@
         android:drawableStart="@drawable/ic_access_time_black_24dp"
         android:textColor="#BEB4B4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name_movie_detail"
         tools:text=" 2hr 04 min" />

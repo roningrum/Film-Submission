@@ -16,8 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieViewModel extends ViewModel {
     private MutableLiveData<List<MovieModel>> listMovies = new MutableLiveData<>();
-    private MutableLiveData<MovieModel> movieDetails = new MutableLiveData<>();
-
 
     private Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Api.BASE_URL)
@@ -45,24 +43,8 @@ public class MovieViewModel extends ViewModel {
         });
     }
 
-//    void setDetailMovies( final int id, String language ){
-//        Call<MovieModel> movieModelCall = api.getMovieDetail(id, language);
-//        movieModelCall.enqueue(new Callback<MovieModel>() {
-//            @Override
-//            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
-//                movieDetails.setValue(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MovieModel> call, Throwable t) {
-//                Log.w("Response Detail Failed", "Show message"+t.getMessage());
-//            }
-//        });
 
     LiveData<List<MovieModel>> getListMovies() {
         return listMovies;
     }
-//    LiveData<MovieModel> getMovieDetail(){
-//        return movieDetails;
-//    }
 }

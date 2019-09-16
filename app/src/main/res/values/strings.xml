@@ -3,7 +3,7 @@
     <string name="cd_poster_image">For Poster Image</string>
     <string name="sample_overview">lorem ipsum</string>
     <string name="movie_banner">backdrop</string>
-    <string name="release">14 Januari</string>
+    <string name="release">Release</string>
     <string name="genre">Genre</string>
     <string name="synopsis">Overview</string>
 </resources>

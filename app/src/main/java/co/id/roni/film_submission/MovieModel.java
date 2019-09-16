@@ -25,12 +25,11 @@ public class MovieModel implements Parcelable {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public MovieModel() {
-    }
-
     public void setPoster_path(String poster_path) {
         this.poster_path = poster_path;
+    }
+
+    public MovieModel() {
     }
 
     public String getOverview() {
@@ -49,6 +48,10 @@ public class MovieModel implements Parcelable {
         this.vote_average = vote_average;
     }
 
+    public String getPoster_path() {
+        return "https://image.tmdb.org/t/p/w500" + poster_path;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -63,9 +66,6 @@ public class MovieModel implements Parcelable {
         dest.writeDouble(this.vote_average);
     }
 
-    public String getPoster_path() {
-        return "" + poster_path;
-    }
 
     protected MovieModel(Parcel in) {
         this.id = in.readInt();
