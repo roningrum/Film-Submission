@@ -7,11 +7,13 @@
     <string name="release">Rilis</string>
     <string name="genre">Kategori</string>
     <string name="synopsis">Ringkasan</string>
-    <string name="change_language">ganti bahasa</string>
+    <string name="change_language">Ganti bahasa</string>
     <string name="movie">Film</string>
     <string name="tv_series">Acara TV</string>
     <string name="hello_blank_fragment">Hello fragmen kosong</string>
     <string name="language">id-ID</string>
-    <string name="content_desc_rate_image">rate</string>
-    <string name="number_of_seasons">Number of Seasons</string>
+    <string name="content_desc_rate_image">Rating</string>
+    <string name="number_of_seasons">Jumlah Musim</string>
+    <string name="minute">menit</string>
+    <string name="season">Musim</string>
 </resources>

@@ -14,4 +14,6 @@
     <string name="language">en-US</string>
     <string name="content_desc_rate_image">rate</string>
     <string name="number_of_seasons">Number of Seasons</string>
+    <string name="minute">minute</string>
+    <string name="season">season</string>
 </resources>

@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import co.id.roni.film_submission.model.TvShowModel;
+import co.id.roni.film_submission.model.TVShowModel;
 import co.id.roni.film_submission.objectdata.TvShowsObject;
 import co.id.roni.film_submission.service.Api;
 import retrofit2.Call;
@@ -17,8 +17,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TvShowsViewModel extends ViewModel {
-    private MutableLiveData<List<TvShowModel>> listTvs = new MutableLiveData<>();
+public class TVShowsViewModel extends ViewModel {
+    private MutableLiveData<List<TVShowModel>> listTvs = new MutableLiveData<>();
 
     private Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Api.BASE_URL)
@@ -47,7 +47,7 @@ public class TvShowsViewModel extends ViewModel {
     }
 
 
-    LiveData<List<TvShowModel>> getListTvs() {
+    LiveData<List<TVShowModel>> getListTvs() {
         return listTvs;
     }
 }

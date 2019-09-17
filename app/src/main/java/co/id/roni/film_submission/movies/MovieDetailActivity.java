@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.GenreAdapter;
@@ -74,25 +75,23 @@ public class MovieDetailActivity extends AppCompatActivity {
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
         movieDetailViewModel.setDetailMovies(id, getString(string.language));
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         showLoading(true);
 
     }
 
     @SuppressLint("SetTextI18n")
     private void showDetailMovie(MovieDetailModel movieDetailModel) {
-        if (id == movieDetailModel.getId()) {
-            if (movieDetailModel.getBackdrop_path() == null) {
-                Glide.with(getApplicationContext()).load("http://www.termatools.com/Public/images/nopic.png").into(imgDetailBackDropMovie);
-            } else {
-                Glide.with(getApplicationContext()).load(movieDetailModel.getBackdrop_path()).into(imgDetailBackDropMovie);
-            }
+        if (id == movieDetailModel.getId() && getSupportActionBar() != null) {
+
+            getSupportActionBar().setTitle(movieDetailModel.getTitle());
 
             String duration = String.valueOf(movieDetailModel.getRuntime());
-            tvDetailRunTimeMovie.setText(duration + "minute");
+            tvDetailRunTimeMovie.setText(duration + " " + getString(R.string.minute));
             tvDetailTitleMovie.setText(movieDetailModel.getTitle());
             tvDetailOverviewMovie.setText(movieDetailModel.getOverview());
-            tvDetailReleaseDateMovie.setText(movieDetailModel.getRelease_date());
             Glide.with(getApplicationContext()).load(movieDetailModel.getPoster_path()).into(imgDetailPosterMovie);
+            Glide.with(getApplicationContext()).load(movieDetailModel.getBackdrop_path()).into(imgDetailBackDropMovie);
 
             List<Genre> genres = movieDetailModel.getGenres();
             GenreAdapter genreAdapter = new GenreAdapter();

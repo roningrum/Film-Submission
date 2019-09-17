@@ -1,7 +1,7 @@
 package co.id.roni.film_submission.service;
 
 import co.id.roni.film_submission.model.MovieDetailModel;
-import co.id.roni.film_submission.model.TvShowDetailModel;
+import co.id.roni.film_submission.model.TVShowDetailModel;
 import co.id.roni.film_submission.objectdata.MovieObjectData;
 import co.id.roni.film_submission.objectdata.TvShowsObject;
 import retrofit2.Call;
@@ -23,5 +23,5 @@ public interface Api {
     Call<MovieDetailModel> getMovieDetail(@Path("movie_id") int Id, @Query("language") String language);
 
     @GET("/3/tv/{tv_id}?api_key=" + API_KEY)
-    Call<TvShowDetailModel> getTvShowDetail(@Path("tv_id") int Id, @Query("language") String language);
+    Call<TVShowDetailModel> getTvShowDetail(@Path("tv_id") int Id, @Query("language") String language);
 }

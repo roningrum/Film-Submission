@@ -1,7 +1,9 @@
 package co.id.roni.film_submission.tvshows;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,7 @@ import java.util.List;
 
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.TvShowsAdapter;
-import co.id.roni.film_submission.model.TvShowModel;
+import co.id.roni.film_submission.model.TVShowModel;
 
 
 /**
@@ -31,11 +33,11 @@ public class TVShowsFragment extends Fragment {
     private TvShowsAdapter tvShowsAdapter;
     private ProgressBar progressBar;
 
-    private Observer<List<TvShowModel>> getTvshow = new Observer<List<TvShowModel>>() {
+    private Observer<List<TVShowModel>> getTvshow = new Observer<List<TVShowModel>>() {
         @Override
-        public void onChanged(List<TvShowModel> tvModels) {
+        public void onChanged(List<TVShowModel> tvModels) {
             if (tvModels != null) {
-                tvShowsAdapter.setMovieData((ArrayList<TvShowModel>) tvModels);
+                tvShowsAdapter.setMovieData((ArrayList<TVShowModel>) tvModels);
                 showLoading(false);
             }
         }
@@ -56,7 +58,7 @@ public class TVShowsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TvShowsViewModel tvViewModel = ViewModelProviders.of(this).get(TvShowsViewModel.class);
+        TVShowsViewModel tvViewModel = ViewModelProviders.of(this).get(TVShowsViewModel.class);
         tvViewModel.getListTvs().observe(this, getTvshow);
 
         tvShowsAdapter = new TvShowsAdapter();
@@ -66,6 +68,15 @@ public class TVShowsFragment extends Fragment {
         RecyclerView rvTvShows = view.findViewById(R.id.rv_tv_shows);
         rvTvShows.setLayoutManager(new LinearLayoutManager(getContext()));
         rvTvShows.setAdapter(tvShowsAdapter);
+        tvShowsAdapter.setOnItemClickCallback(new TvShowsAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(TVShowModel tvShowModel) {
+                Intent intent = new Intent(getActivity(), TVShowsDetailActivity.class);
+                intent.putExtra("id", tvShowModel.getId());
+                Log.d("Check Intent Id", "TV_id" + tvShowModel.getId());
+                startActivity(intent);
+            }
+        });
 
         tvViewModel.setListTVs(1, getString(R.string.language));
         showLoading(true);

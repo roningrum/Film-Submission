@@ -14,17 +14,17 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import co.id.roni.film_submission.R;
-import co.id.roni.film_submission.model.TvShowModel;
+import co.id.roni.film_submission.model.TVShowModel;
 
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder> {
-    private ArrayList<TvShowModel> tvSData = new ArrayList<>();
-//    private TvShowsAdapter.OnItemClickCallback onItemClickCallback;
+    private ArrayList<TVShowModel> tvSData = new ArrayList<>();
+    private TvShowsAdapter.OnItemClickCallback onItemClickCallback;
 
-//    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
-//        this.onItemClickCallback = onItemClickCallback;
-//    }
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
+    }
 
-    public void setMovieData(ArrayList<TvShowModel> tvs) {
+    public void setMovieData(ArrayList<TVShowModel> tvs) {
         tvSData.clear();
         tvSData.addAll(tvs);
         notifyDataSetChanged();
@@ -46,6 +46,11 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
         return tvSData.size();
     }
 
+    //
+    public interface OnItemClickCallback {
+        void onItemClicked(TVShowModel tvShowModel);
+    }
+
     class TvShowViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTitleTvShow;
         private TextView tvOverviewTvShow;
@@ -60,21 +65,17 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
             imgPosterTvShow = itemView.findViewById(R.id.img_poster_tv_item);
         }
 
-        void bind(final TvShowModel tvs) {
+        void bind(final TVShowModel tvs) {
             tvTitleTvShow.setText(tvs.getName());
             tvOverviewTvShow.setText(tvs.getOverview());
             tvRateTvShow.setText(String.valueOf(tvs.getVote_average()));
             Glide.with(itemView.getContext()).load(tvs.getPoster_path()).into(imgPosterTvShow);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    onItemClickCallback.onItemClicked(movieData.get(getAdapterPosition()));
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickCallback.onItemClicked(tvSData.get(getAdapterPosition()));
+                }
+            });
         }
     }
-//
-//    public interface OnItemClickCallback {
-//        void onItemClicked(MovieModel movieData);
-//    }
 }
