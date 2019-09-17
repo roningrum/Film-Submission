@@ -1,6 +1,8 @@
-package co.id.roni.film_submission.model;
+package co.id.roni.film_submission.model.detailmodel;
 
 import java.util.List;
+
+import co.id.roni.film_submission.model.Genre;
 
 public class MovieDetailModel {
     private int id;

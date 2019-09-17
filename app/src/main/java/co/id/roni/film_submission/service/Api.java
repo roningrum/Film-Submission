@@ -1,7 +1,7 @@
 package co.id.roni.film_submission.service;
 
-import co.id.roni.film_submission.model.MovieDetailModel;
-import co.id.roni.film_submission.model.TVShowDetailModel;
+import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
+import co.id.roni.film_submission.model.detailmodel.TVShowDetailModel;
 import co.id.roni.film_submission.objectdata.MovieObjectData;
 import co.id.roni.film_submission.objectdata.TvShowsObject;
 import retrofit2.Call;

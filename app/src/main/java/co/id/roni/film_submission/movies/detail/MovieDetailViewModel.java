@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import co.id.roni.film_submission.model.MovieDetailModel;
+import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
 import co.id.roni.film_submission.service.Api;
 import retrofit2.Call;
 import retrofit2.Callback;

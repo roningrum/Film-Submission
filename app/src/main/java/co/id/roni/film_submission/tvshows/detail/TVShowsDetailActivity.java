@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.GenreAdapter;
 import co.id.roni.film_submission.model.Genre;
-import co.id.roni.film_submission.model.TVShowDetailModel;
+import co.id.roni.film_submission.model.detailmodel.TVShowDetailModel;
 
 public class TVShowsDetailActivity extends AppCompatActivity {
     @BindView(R.id.img_detail_photo_banner)
