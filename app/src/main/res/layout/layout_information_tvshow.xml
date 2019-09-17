@@ -19,54 +19,72 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_release_time_detail"
+        android:id="@+id/tv_release_time_tv_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="86dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/img_movie_poster_detail"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toEndOf="@+id/tv_release_time"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="14 August 2019" />
+
+    <TextView
+        android:id="@+id/tv_season_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/number_of_seasons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_release_time" />
+
+
+    <TextView
+        android:id="@+id/tv_season_tv_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/img_movie_poster_detail"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/tv_season_tv_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_release_time_tv_detail"
+        tools:text="4" />
 
     <ImageView
         android:id="@+id/img_movie_poster_detail"
         android:layout_width="125dp"
         android:layout_height="180dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:scaleType="fitXY"
         android:src="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/cd_poster_image"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/tv_genre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/genre"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_release_time" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_season_tv_time" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_genre_movie_detail"
-        android:layout_width="0dp"
+        android:layout_width="214dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:nestedScrollingEnabled="false"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/img_movie_poster_detail"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

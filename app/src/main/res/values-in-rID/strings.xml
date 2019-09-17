@@ -13,4 +13,5 @@
     <string name="hello_blank_fragment">Hello fragmen kosong</string>
     <string name="language">id-ID</string>
     <string name="content_desc_rate_image">rate</string>
+    <string name="number_of_seasons">Number of Seasons</string>
 </resources>
