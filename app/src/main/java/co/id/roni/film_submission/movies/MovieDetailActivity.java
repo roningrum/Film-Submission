@@ -1,4 +1,4 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.movies;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -25,6 +25,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.adapter.GenreAdapter;
+import co.id.roni.film_submission.model.Genre;
+import co.id.roni.film_submission.model.MovieDetailModel;
+
+import static co.id.roni.film_submission.R.layout;
+import static co.id.roni.film_submission.R.string;
+
 public class MovieDetailActivity extends AppCompatActivity {
     private ImageView imgDetailBackDropMovie;
     private ImageView imgDetailPosterMovie;
@@ -50,7 +58,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
+        setContentView(layout.activity_movie_detail);
         imgDetailBackDropMovie = findViewById(R.id.img_detail_photo_banner);
         imgDetailPosterMovie = findViewById(R.id.img_movie_poster_detail);
         tvDetailTitleMovie = findViewById(R.id.tv_name_movie_detail);
@@ -65,7 +73,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
-        movieDetailViewModel.setDetailMovies(id, "en-US");
+        movieDetailViewModel.setDetailMovies(id, getString(string.language));
         showLoading(true);
 
     }
@@ -103,6 +111,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             try {
                 Date newDate = dateFormat.parse(date);
                 dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+                assert newDate != null;
                 tvDetailReleaseDateMovie.setText(dateFormat.format(newDate));
             } catch (ParseException e) {
                 e.printStackTrace();

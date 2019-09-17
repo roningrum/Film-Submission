@@ -1,4 +1,4 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.movies;
 
 import android.util.Log;
 
@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import co.id.roni.film_submission.model.MovieDetailModel;
+import co.id.roni.film_submission.service.Api;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,7 +24,7 @@ public class MovieDetailViewModel extends ViewModel {
 
     private Api api = retrofit.create(Api.class);
 
-    void setDetailMovies(final int id, String language) {
+    void setDetailMovies(int id, String language) {
         Call<MovieDetailModel> movieModelCall = api.getMovieDetail(id, language);
         movieModelCall.enqueue(new Callback<MovieDetailModel>() {
             @Override

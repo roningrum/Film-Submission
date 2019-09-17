@@ -1,4 +1,4 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.movies;
 
 
 import android.content.Intent;
@@ -19,6 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.adapter.MovieAdapter;
+import co.id.roni.film_submission.model.MovieModel;
 
 
 /**
@@ -71,14 +75,13 @@ public class MovieFragment extends Fragment {
             @Override
             public void onItemClicked(MovieModel movieData) {
                 Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-                intent.putExtra("EXTRA_MOVIES", movieData);
                 intent.putExtra("id", movieData.getId());
                 Log.d("Check Intent Id", "Movie Id" + movieData.getId());
                 startActivity(intent);
             }
         });
 
-        movieViewModel.setListMovies(1, "en-US");
+        movieViewModel.setListMovies(1, getString(R.string.language));
         showLoading(true);
     }
 

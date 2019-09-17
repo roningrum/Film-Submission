@@ -1,4 +1,4 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.model.MovieModel;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private ArrayList<MovieModel> movieData = new ArrayList<>();

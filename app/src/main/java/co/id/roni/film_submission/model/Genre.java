@@ -1,8 +1,8 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.model;
 
 public class Genre {
-    String id;
-    String name;
+    private String id;
+    private String name;
 
     public String getId() {
         return id;

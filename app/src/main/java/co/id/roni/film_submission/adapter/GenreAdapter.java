@@ -1,4 +1,4 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.model.Genre;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHolder> {
     private List<Genre> genreList = new ArrayList<>();
@@ -35,10 +38,10 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         return genreList.size();
     }
 
-    public class GenreViewHolder extends RecyclerView.ViewHolder {
+    class GenreViewHolder extends RecyclerView.ViewHolder {
         private TextView genreMovieItem;
 
-        public GenreViewHolder(@NonNull View itemView) {
+        GenreViewHolder(@NonNull View itemView) {
             super(itemView);
             genreMovieItem = itemView.findViewById(R.id.genre_text);
         }

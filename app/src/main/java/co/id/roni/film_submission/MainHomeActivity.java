@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import co.id.roni.film_submission.movies.MovieFragment;
+import co.id.roni.film_submission.tvshows.TVShowsFragment;
+
 public class MainHomeActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
