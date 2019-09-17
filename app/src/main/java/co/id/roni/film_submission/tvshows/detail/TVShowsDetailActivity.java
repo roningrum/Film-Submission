@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.tvshows;
+package co.id.roni.film_submission.tvshows.detail;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -26,32 +26,38 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.GenreAdapter;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.TVShowDetailModel;
 
 public class TVShowsDetailActivity extends AppCompatActivity {
+    @BindView(R.id.img_detail_photo_banner)
+    ImageView imgDetailBackDropTV;
+    @BindView(R.id.img_poster_tv_detail)
+    ImageView imgDetailPosterTV;
+    @BindView(R.id.tv_name_tv_detail)
+    TextView tvDetailTitleTvShow;
+    @BindView(R.id.tv_sinopsis_tv_detail)
+    TextView tvDetailOverviewTvShow;
+    @BindView(R.id.tv_release_time_tv_detail)
+    TextView tvReleaseFirstDateTvShow;
+    @BindView(R.id.tv_season_tv_detail)
+    TextView tvNumberSeasonTvShow;
+    @BindView(R.id.rv_genre_tv_detail)
+    RecyclerView rvGenreList;
+    @BindView(R.id.pb_loading)
+    ProgressBar progressBar;
 
-    private ImageView imgDetailBackDropTV;
-    private ImageView imgDetailPosterTV;
-    private TextView tvDetailTitleTvShow;
-    private TextView tvDetailOverviewTvShow;
-    private TextView tvReleaseFirstDateTvShow;
-    private TextView tvNumberSeasonTvShow;
-    private RecyclerView rvGenreList;
-
-    private ProgressBar progressBar;
     private int id;
 
 
-    private Observer<TVShowDetailModel> getTvDetail = new Observer<TVShowDetailModel>() {
-        @Override
-        public void onChanged(TVShowDetailModel tvShowDetailModel) {
-            if (tvShowDetailModel != null) {
-                showDetailtvModel(tvShowDetailModel);
-                showLoading(false);
-            }
+    private Observer<TVShowDetailModel> getTvDetail = tvShowDetailModel -> {
+        if (tvShowDetailModel != null) {
+            showDetailtvModel(tvShowDetailModel);
+            showLoading(false);
         }
     };
 
@@ -60,15 +66,7 @@ public class TVShowsDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_shows_detail);
-        tvDetailTitleTvShow = findViewById(R.id.tv_name_tv_detail);
-        tvDetailOverviewTvShow = findViewById(R.id.tv_sinopsis_tv_detail);
-        imgDetailBackDropTV = findViewById(R.id.img_detail_photo_banner);
-        imgDetailPosterTV = findViewById(R.id.img_poster_tv_detail);
-        tvReleaseFirstDateTvShow = findViewById(R.id.tv_release_time_tv_detail);
-        tvNumberSeasonTvShow = findViewById(R.id.tv_season_tv_detail);
-
-        progressBar = findViewById(R.id.pb_loading);
-        rvGenreList = findViewById(R.id.rv_genre_tv_detail);
+        ButterKnife.bind(this);
 
         TVShowsDetailViewModel tvShowsDetailViewModel = ViewModelProviders.of(this).get(TVShowsDetailViewModel.class);
         tvShowsDetailViewModel.getTvShowsDetail().observe(this, getTvDetail);
@@ -92,29 +90,36 @@ public class TVShowsDetailActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(tvShowDetailModel.getBackdrop_path()).into(imgDetailBackDropTV);
             Glide.with(getApplicationContext()).load(tvShowDetailModel.getPoster_path()).into(imgDetailPosterTV);
 
-            List<Genre> genres = tvShowDetailModel.getGenres();
-            GenreAdapter genreAdapter = new GenreAdapter();
-            genreAdapter.setGenreList(genres);
+            getGenreList(tvShowDetailModel);
+            getFirstReleaseDate(tvShowDetailModel);
 
-            FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
-            layoutManager.setFlexDirection(FlexDirection.ROW);
-            layoutManager.setJustifyContent(JustifyContent.FLEX_START);
-            layoutManager.setAlignItems(AlignItems.BASELINE);
-            rvGenreList.setLayoutManager(layoutManager);
-            rvGenreList.setAdapter(genreAdapter);
-
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            String date = tvShowDetailModel.getFirst_air_date();
-            try {
-                Date newDate = dateFormat.parse(date);
-                dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
-                assert newDate != null;
-                tvReleaseFirstDateTvShow.setText(dateFormat.format(newDate));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
         }
+    }
+
+    private void getFirstReleaseDate(TVShowDetailModel tvShowDetailModel) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        String date = tvShowDetailModel.getFirst_air_date();
+        try {
+            Date newDate = dateFormat.parse(date);
+            dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+            assert newDate != null;
+            tvReleaseFirstDateTvShow.setText(dateFormat.format(newDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getGenreList(TVShowDetailModel tvShowDetailModel) {
+        List<Genre> genres = tvShowDetailModel.getGenres();
+        GenreAdapter genreAdapter = new GenreAdapter();
+        genreAdapter.setGenreList(genres);
+
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        layoutManager.setAlignItems(AlignItems.BASELINE);
+        rvGenreList.setLayoutManager(layoutManager);
+        rvGenreList.setAdapter(genreAdapter);
     }
 
     private void showLoading(Boolean state) {

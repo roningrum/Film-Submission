@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.movies;
+package co.id.roni.film_submission.movies.detail;
 
 import android.util.Log;
 
@@ -14,7 +14,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MovieDetailViewModel extends ViewModel {
+class MovieDetailViewModel extends ViewModel {
     private MutableLiveData<MovieDetailModel> movieDetails = new MutableLiveData<>();
 
     private Retrofit retrofit = new Retrofit.Builder()

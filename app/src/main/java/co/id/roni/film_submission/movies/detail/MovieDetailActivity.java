@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.movies;
+package co.id.roni.film_submission.movies.detail;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.GenreAdapter;
 import co.id.roni.film_submission.model.Genre;
@@ -35,24 +37,30 @@ import static co.id.roni.film_submission.R.layout;
 import static co.id.roni.film_submission.R.string;
 
 public class MovieDetailActivity extends AppCompatActivity {
-    private ImageView imgDetailBackDropMovie;
-    private ImageView imgDetailPosterMovie;
-    private TextView tvDetailRunTimeMovie;
-    private TextView tvDetailTitleMovie;
-    private TextView tvDetailOverviewMovie;
-    private TextView tvDetailReleaseDateMovie;
-    private RecyclerView rvGenreList;
 
-    private ProgressBar progressBar;
+    @BindView(R.id.img_detail_photo_banner)
+    ImageView imgDetailBackDropMovie;
+    @BindView(R.id.img_movie_poster_detail)
+    ImageView imgDetailPosterMovie;
+    @BindView(R.id.tv_name_movie_detail)
+    TextView tvDetailRunTimeMovie;
+    @BindView(R.id.tv_duration_movie_item)
+    TextView tvDetailTitleMovie;
+    @BindView(R.id.tv_sinopsis_detail)
+    TextView tvDetailOverviewMovie;
+    @BindView(R.id.tv_release_time_detail)
+    TextView tvDetailReleaseDateMovie;
+    @BindView(R.id.rv_genre_movie_detail)
+    RecyclerView rvGenreList;
+    @BindView(R.id.pb_loading)
+    ProgressBar progressBar;
+
     private int id;
 
-    private Observer<MovieDetailModel> getMovieDetail = new Observer<MovieDetailModel>() {
-        @Override
-        public void onChanged(MovieDetailModel movieDetailModel) {
-            if (movieDetailModel != null) {
-                showDetailMovie(movieDetailModel);
-                showLoading(false);
-            }
+    private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
+        if (movieDetailModel != null) {
+            showDetailMovie(movieDetailModel);
+            showLoading(false);
         }
     };
 
@@ -60,14 +68,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_movie_detail);
-        imgDetailBackDropMovie = findViewById(R.id.img_detail_photo_banner);
-        imgDetailPosterMovie = findViewById(R.id.img_movie_poster_detail);
-        tvDetailTitleMovie = findViewById(R.id.tv_name_movie_detail);
-        tvDetailRunTimeMovie = findViewById(R.id.tv_duration_movie_item);
-        tvDetailOverviewMovie = findViewById(R.id.tv_sinopsis_detail);
-        tvDetailReleaseDateMovie = findViewById(R.id.tv_release_time_detail);
-        rvGenreList = findViewById(R.id.rv_genre_movie_detail);
-        progressBar = findViewById(R.id.pb_loading);
+
+        ButterKnife.bind(this);
 
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
@@ -93,31 +95,38 @@ public class MovieDetailActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(movieDetailModel.getPoster_path()).into(imgDetailPosterMovie);
             Glide.with(getApplicationContext()).load(movieDetailModel.getBackdrop_path()).into(imgDetailBackDropMovie);
 
-            List<Genre> genres = movieDetailModel.getGenres();
-            GenreAdapter genreAdapter = new GenreAdapter();
-            genreAdapter.setGenreList(genres);
-
-            FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
-            layoutManager.setFlexDirection(FlexDirection.ROW);
-            layoutManager.setJustifyContent(JustifyContent.FLEX_START);
-            layoutManager.setAlignItems(AlignItems.BASELINE);
-            rvGenreList.setLayoutManager(layoutManager);
-            rvGenreList.setAdapter(genreAdapter);
-
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            String date = movieDetailModel.getRelease_date();
-            try {
-                Date newDate = dateFormat.parse(date);
-                dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
-                assert newDate != null;
-                tvDetailReleaseDateMovie.setText(dateFormat.format(newDate));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            getGenreList(movieDetailModel);
+            getReleaseDate(movieDetailModel);
 
 
         }
+    }
+
+    private void getReleaseDate(MovieDetailModel movieDetailModel) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        String date = movieDetailModel.getRelease_date();
+        try {
+            Date newDate = dateFormat.parse(date);
+            dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+            assert newDate != null;
+            tvDetailReleaseDateMovie.setText(dateFormat.format(newDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getGenreList(MovieDetailModel movieDetailModel) {
+        List<Genre> genres = movieDetailModel.getGenres();
+        GenreAdapter genreAdapter = new GenreAdapter();
+        genreAdapter.setGenreList(genres);
+
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        layoutManager.setAlignItems(AlignItems.BASELINE);
+        rvGenreList.setLayoutManager(layoutManager);
+        rvGenreList.setAdapter(genreAdapter);
+
     }
 
     private void showLoading(Boolean state) {

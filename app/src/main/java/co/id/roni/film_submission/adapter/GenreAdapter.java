@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.model.Genre;
 
@@ -39,11 +41,12 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     }
 
     class GenreViewHolder extends RecyclerView.ViewHolder {
-        private TextView genreMovieItem;
+        @BindView(R.id.genre_text)
+        TextView genreMovieItem;
 
         GenreViewHolder(@NonNull View itemView) {
             super(itemView);
-            genreMovieItem = itemView.findViewById(R.id.genre_text);
+            ButterKnife.bind(this, itemView);
         }
 
         void bind(Genre genre) {

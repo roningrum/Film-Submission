@@ -13,9 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:fullBackupContent="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".tvshows.TVShowsDetailActivity"
+            android:name=".tvshows.detail.TVShowsDetailActivity"
             android:parentActivityName=".MainHomeActivity" />
         <activity android:name=".MainHomeActivity">
             <intent-filter>
@@ -26,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movies.MovieDetailActivity"
+            android:name=".movies.detail.MovieDetailActivity"
             android:parentActivityName=".MainHomeActivity" />
     </application>
 

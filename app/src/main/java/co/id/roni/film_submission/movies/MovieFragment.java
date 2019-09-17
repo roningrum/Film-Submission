@@ -20,9 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.MovieAdapter;
 import co.id.roni.film_submission.model.MovieModel;
+import co.id.roni.film_submission.movies.detail.MovieDetailActivity;
 
 
 /**
@@ -30,9 +33,12 @@ import co.id.roni.film_submission.model.MovieModel;
  */
 public class MovieFragment extends Fragment {
 
+    @BindView(R.id.pb_loading)
+    ProgressBar progressBar;
+    @BindView(R.id.rv_movies)
+    RecyclerView rvMovies;
+
     private MovieAdapter movieAdapter;
-    private ProgressBar progressBar;
-    private MovieViewModel movieViewModel;
 
     private Observer<List<MovieModel>> getMovies = new Observer<List<MovieModel>>() {
         @Override
@@ -59,26 +65,23 @@ public class MovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
-        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+        MovieViewModel movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
         movieViewModel.getListMovies().observe(this, getMovies);
 
         movieAdapter = new MovieAdapter();
         movieAdapter.notifyDataSetChanged();
         progressBar = view.findViewById(R.id.pb_loading);
 
-        RecyclerView rvMovies = view.findViewById(R.id.rv_movies);
         rvMovies.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMovies.setAdapter(movieAdapter);
 
-        movieAdapter.setOnItemClickCallback(new MovieAdapter.OnItemClickCallback() {
-            @Override
-            public void onItemClicked(MovieModel movieData) {
-                Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-                intent.putExtra("id", movieData.getId());
-                Log.d("Check Intent Id", "Movie Id" + movieData.getId());
-                startActivity(intent);
-            }
+        movieAdapter.setOnItemClickCallback(movieData -> {
+            Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+            intent.putExtra("id", movieData.getId());
+            Log.d("Check Intent Id", "Movie Id" + movieData.getId());
+            startActivity(intent);
         });
 
         movieViewModel.setListMovies(1, getString(R.string.language));

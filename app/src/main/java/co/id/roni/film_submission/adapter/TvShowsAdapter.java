@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.model.TVShowModel;
 
@@ -46,23 +48,24 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
         return tvSData.size();
     }
 
-    //
+
     public interface OnItemClickCallback {
         void onItemClicked(TVShowModel tvShowModel);
     }
 
     class TvShowViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitleTvShow;
-        private TextView tvOverviewTvShow;
-        private TextView tvRateTvShow;
-        private ImageView imgPosterTvShow;
+        @BindView(R.id.tv_title_tv_item)
+        TextView tvTitleTvShow;
+        @BindView(R.id.tv_overview_tv_item)
+        TextView tvOverviewTvShow;
+        @BindView(R.id.tv_rate_average)
+        TextView tvRateTvShow;
+        @BindView(R.id.img_poster_tv_item)
+        ImageView imgPosterTvShow;
 
         TvShowViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitleTvShow = itemView.findViewById(R.id.tv_title_tv_item);
-            tvOverviewTvShow = itemView.findViewById(R.id.tv_overview_tv_item);
-            tvRateTvShow = itemView.findViewById(R.id.tv_rate_average);
-            imgPosterTvShow = itemView.findViewById(R.id.img_poster_tv_item);
+            ButterKnife.bind(this, itemView);
         }
 
         void bind(final TVShowModel tvs) {
@@ -70,12 +73,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
             tvOverviewTvShow.setText(tvs.getOverview());
             tvRateTvShow.setText(String.valueOf(tvs.getVote_average()));
             Glide.with(itemView.getContext()).load(tvs.getPoster_path()).into(imgPosterTvShow);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickCallback.onItemClicked(tvSData.get(getAdapterPosition()));
-                }
-            });
+            itemView.setOnClickListener(v -> onItemClickCallback.onItemClicked(tvSData.get(getAdapterPosition())));
         }
     }
 }
