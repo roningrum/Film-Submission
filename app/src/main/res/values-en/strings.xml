@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Film-Submission</string>
+    <string name="cd_poster_image">For Poster Image</string>
+    <string name="sample_overview">Lorem Ipsum</string>
+    <string name="movie_banner">backdrop</string>
+    <string name="release">Release</string>
+    <string name="genre">Genre</string>
+    <string name="synopsis">Overview</string>
+    <string name="change_language">change_language</string>
+    <string name="movie">Movies</string>
+    <string name="tv_series">TV Shows</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="language">en-US</string>
+    <string name="content_desc_rate_image">rate</string>
+</resources>

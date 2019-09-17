@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Film-Submission</string>
+    <string name="cd_poster_image">Untuk Poster Gambar</string>
+    <string name="sample_overview">lorem ipsum</string>
+    <string name="movie_banner">latar belakang</string>
+    <string name="release">Rilis</string>
+    <string name="genre">Kategori</string>
+    <string name="synopsis">Ringkasan</string>
+    <string name="change_language">ganti bahasa</string>
+    <string name="movie">Film</string>
+    <string name="tv_series">Acara TV</string>
+    <string name="hello_blank_fragment">Hello fragmen kosong</string>
+    <string name="language">id-ID</string>
+    <string name="content_desc_rate_image">rate</string>
+</resources>
