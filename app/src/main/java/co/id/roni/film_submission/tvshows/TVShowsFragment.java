@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
@@ -36,6 +37,9 @@ public class TVShowsFragment extends Fragment {
     ProgressBar progressBar;
     @BindView(R.id.rv_tv_shows)
     RecyclerView rvTvShows;
+
+    @BindString(R.string.language)
+    String language;
 
     private TvShowsAdapter tvShowsAdapter;
 
@@ -80,7 +84,7 @@ public class TVShowsFragment extends Fragment {
             startActivity(intent);
         });
 
-        tvViewModel.setListTVs(1, getString(R.string.language));
+        tvViewModel.setListTVs(1, language);
         showLoading(true);
     }
 

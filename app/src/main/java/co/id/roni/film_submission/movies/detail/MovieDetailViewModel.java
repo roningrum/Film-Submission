@@ -14,7 +14,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-class MovieDetailViewModel extends ViewModel {
+public class MovieDetailViewModel extends ViewModel {
     private MutableLiveData<MovieDetailModel> movieDetails = new MutableLiveData<>();
 
     private Retrofit retrofit = new Retrofit.Builder()

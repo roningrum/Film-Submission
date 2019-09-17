@@ -24,8 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
@@ -51,7 +51,11 @@ public class TVShowsDetailActivity extends AppCompatActivity {
     @BindView(R.id.pb_loading)
     ProgressBar progressBar;
 
+    @BindString(R.string.language)
+    String language;
+
     private int id;
+    private String title = "";
 
 
     private Observer<TVShowDetailModel> getTvDetail = tvShowDetailModel -> {
@@ -73,17 +77,17 @@ public class TVShowsDetailActivity extends AppCompatActivity {
 
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        setActionBarTitle(title);
 
-        tvShowsDetailViewModel.setDetailTvShows(id, getString(R.string.language));
+        tvShowsDetailViewModel.setDetailTvShows(id, language);
         showLoading(true);
     }
 
     @SuppressLint("SetTextI18n")
     private void showDetailtvModel(TVShowDetailModel tvShowDetailModel) {
-        if (id == tvShowDetailModel.getId() && getSupportActionBar() != null) {
-
-            getSupportActionBar().setTitle(tvShowDetailModel.getName());
+        if (id == tvShowDetailModel.getId()) {
+            title = tvShowDetailModel.getName();
+            setActionBarTitle(title);
             tvDetailTitleTvShow.setText(tvShowDetailModel.getName());
             tvDetailOverviewTvShow.setText(tvShowDetailModel.getOverview());
             tvNumberSeasonTvShow.setText(tvShowDetailModel.getNumber_of_seasons() + " " + getString(R.string.season));
@@ -122,6 +126,11 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         rvGenreList.setAdapter(genreAdapter);
     }
 
+    private void setActionBarTitle(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+    }
     private void showLoading(Boolean state) {
         if (state) {
             progressBar.setVisibility(View.VISIBLE);

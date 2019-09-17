@@ -24,8 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
@@ -42,9 +42,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     ImageView imgDetailBackDropMovie;
     @BindView(R.id.img_movie_poster_detail)
     ImageView imgDetailPosterMovie;
-    @BindView(R.id.tv_name_movie_detail)
-    TextView tvDetailRunTimeMovie;
     @BindView(R.id.tv_duration_movie_item)
+    TextView tvDetailRunTimeMovie;
+    @BindView(R.id.tv_name_movie_detail)
     TextView tvDetailTitleMovie;
     @BindView(R.id.tv_sinopsis_detail)
     TextView tvDetailOverviewMovie;
@@ -55,7 +55,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.pb_loading)
     ProgressBar progressBar;
 
+    @BindString(string.language)
+    String language;
+    @BindString(string.minute)
+    String minute;
+
     private int id;
+    private String title = "";
 
     private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
         if (movieDetailModel != null) {
@@ -74,22 +80,23 @@ public class MovieDetailActivity extends AppCompatActivity {
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
 
+        setActionBarTitle(title);
+
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
-        movieDetailViewModel.setDetailMovies(id, getString(string.language));
-        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        movieDetailViewModel.setDetailMovies(id, language);
         showLoading(true);
 
     }
 
     @SuppressLint("SetTextI18n")
     private void showDetailMovie(MovieDetailModel movieDetailModel) {
-        if (id == movieDetailModel.getId() && getSupportActionBar() != null) {
-
-            getSupportActionBar().setTitle(movieDetailModel.getTitle());
+        if (id == movieDetailModel.getId()) {
+            title = movieDetailModel.getTitle();
+            setActionBarTitle(title);
 
             String duration = String.valueOf(movieDetailModel.getRuntime());
-            tvDetailRunTimeMovie.setText(duration + " " + getString(R.string.minute));
+            tvDetailRunTimeMovie.setText(duration + " " + minute);
             tvDetailTitleMovie.setText(movieDetailModel.getTitle());
             tvDetailOverviewMovie.setText(movieDetailModel.getOverview());
             Glide.with(getApplicationContext()).load(movieDetailModel.getPoster_path()).into(imgDetailPosterMovie);
@@ -127,6 +134,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         rvGenreList.setLayoutManager(layoutManager);
         rvGenreList.setAdapter(genreAdapter);
 
+    }
+
+    private void setActionBarTitle(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 
     private void showLoading(Boolean state) {

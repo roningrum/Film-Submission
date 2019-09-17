@@ -1,4 +1,4 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.movies.MovieFragment;
 import co.id.roni.film_submission.tvshows.TVShowsFragment;
 
@@ -26,12 +27,16 @@ public class MainHomeActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_movie_menu:
+                        String title = getString(R.string.movie);
+                        setActionBarTitle(title);
                         fragment = new MovieFragment();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
                                 .commit();
                         return true;
                     case R.id.nav_tvseries_menu:
+                        title = getString(R.string.tv_series);
+                        setActionBarTitle(title);
                         fragment = new TVShowsFragment();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
@@ -51,6 +56,12 @@ public class MainHomeActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             navigationView.setSelectedItemId(R.id.nav_movie_menu);
+        }
+    }
+
+    private void setActionBarTitle(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
         }
     }
 
