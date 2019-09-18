@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.movies;
+package co.id.roni.film_submission.movies.detail;
 
 import android.util.Log;
 
@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import co.id.roni.film_submission.model.MovieDetailModel;
+import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
 import co.id.roni.film_submission.service.Api;
 import retrofit2.Call;
 import retrofit2.Callback;

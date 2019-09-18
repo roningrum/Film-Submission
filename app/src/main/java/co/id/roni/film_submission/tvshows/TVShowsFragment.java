@@ -20,18 +20,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.TvShowsAdapter;
 import co.id.roni.film_submission.model.TVShowModel;
+import co.id.roni.film_submission.tvshows.detail.TVShowsDetailActivity;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TVShowsFragment extends Fragment {
+    @BindView(R.id.pb_loading)
+    ProgressBar progressBar;
+    @BindView(R.id.rv_tv_shows)
+    RecyclerView rvTvShows;
+
+    @BindString(R.string.language)
+    String language;
 
     private TvShowsAdapter tvShowsAdapter;
-    private ProgressBar progressBar;
 
     private Observer<List<TVShowModel>> getTvshow = new Observer<List<TVShowModel>>() {
         @Override
@@ -58,27 +68,23 @@ public class TVShowsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         TVShowsViewModel tvViewModel = ViewModelProviders.of(this).get(TVShowsViewModel.class);
         tvViewModel.getListTvs().observe(this, getTvshow);
 
         tvShowsAdapter = new TvShowsAdapter();
         tvShowsAdapter.notifyDataSetChanged();
-        progressBar = view.findViewById(R.id.pb_loading);
 
-        RecyclerView rvTvShows = view.findViewById(R.id.rv_tv_shows);
         rvTvShows.setLayoutManager(new LinearLayoutManager(getContext()));
         rvTvShows.setAdapter(tvShowsAdapter);
-        tvShowsAdapter.setOnItemClickCallback(new TvShowsAdapter.OnItemClickCallback() {
-            @Override
-            public void onItemClicked(TVShowModel tvShowModel) {
-                Intent intent = new Intent(getActivity(), TVShowsDetailActivity.class);
-                intent.putExtra("id", tvShowModel.getId());
-                Log.d("Check Intent Id", "TV_id" + tvShowModel.getId());
-                startActivity(intent);
-            }
+        tvShowsAdapter.setOnItemClickCallback(tvShowModel -> {
+            Intent intent = new Intent(getActivity(), TVShowsDetailActivity.class);
+            intent.putExtra("id", tvShowModel.getId());
+            Log.d("Check Intent Id", "TV_id" + tvShowModel.getId());
+            startActivity(intent);
         });
 
-        tvViewModel.setListTVs(1, getString(R.string.language));
+        tvViewModel.setListTVs(1, language);
         showLoading(true);
     }
 
