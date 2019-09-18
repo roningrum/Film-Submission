@@ -25,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
@@ -51,8 +50,7 @@ public class TVShowsDetailActivity extends AppCompatActivity {
     @BindView(R.id.pb_loading)
     ProgressBar progressBar;
 
-    @BindString(R.string.language)
-    String language;
+    private String language = getString(R.string.language);
 
     private int id;
     private String title = "";
