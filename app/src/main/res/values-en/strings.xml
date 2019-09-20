@@ -15,4 +15,5 @@
     <string name="number_of_seasons">Number of Seasons</string>
     <string name="minute">minute</string>
     <string name="season">season</string>
+    <string name="unavailable_overview">Overview version is unavailable  in your language</string>
 </resources>

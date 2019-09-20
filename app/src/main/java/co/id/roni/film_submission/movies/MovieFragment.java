@@ -83,9 +83,16 @@ public class MovieFragment extends Fragment {
             Log.d("Check Intent Id", "Movie Id" + movieData.getId());
             startActivity(intent);
         });
-
         movieViewModel.setListMovies(1, getString(R.string.language));
         showLoading(true);
+
+        if (savedInstanceState == null) {
+            movieViewModel.getListMovies().observe(this, getMovies);
+        } else {
+            savedInstanceState.getInt("id");
+            movieViewModel.setListMovies(1, getString(R.string.language));
+            showLoading(true);
+        }
     }
 
     private void showLoading(Boolean state) {
@@ -94,6 +101,12 @@ public class MovieFragment extends Fragment {
         } else {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.getInt("id");
+        super.onSaveInstanceState(outState);
     }
 
 }

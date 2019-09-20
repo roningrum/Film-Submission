@@ -6,6 +6,7 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -18,28 +19,34 @@ import co.id.roni.film_submission.movies.MovieFragment;
 import co.id.roni.film_submission.tvshows.TVShowsFragment;
 
 public class MainHomeActivity extends AppCompatActivity {
+
+    private String KEY_TITLE = "title";
+    private String KEY_FRAGMENT = "fragment";
+    private String title = "Movie";
+    private Fragment pageContent;
+
     @BindView(R.id.navigation_menu_home)
     BottomNavigationView navigationView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             menuItem -> {
-                Fragment fragment;
+
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_movie_menu:
-                        String title = getString(R.string.movie);
+                        title = getString(R.string.movie);
                         setActionBarTitle(title);
-                        fragment = new MovieFragment();
+                        pageContent = new MovieFragment();
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
+                                .replace(R.id.container_layout, pageContent, pageContent.getClass().getSimpleName())
                                 .commit();
                         return true;
                     case R.id.nav_tvseries_menu:
                         title = getString(R.string.tv_series);
                         setActionBarTitle(title);
-                        fragment = new TVShowsFragment();
+                        pageContent = new TVShowsFragment();
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
+                                .replace(R.id.container_layout, pageContent, pageContent.getClass().getSimpleName())
                                 .commit();
                         return true;
                 }
@@ -56,6 +63,11 @@ public class MainHomeActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             navigationView.setSelectedItemId(R.id.nav_movie_menu);
+        } else {
+            pageContent = getSupportFragmentManager().getFragment(savedInstanceState, KEY_FRAGMENT);
+            title = savedInstanceState.getString(KEY_TITLE);
+            setActionBarTitle(title);
+
         }
     }
 
@@ -79,5 +91,12 @@ public class MainHomeActivity extends AppCompatActivity {
             startActivity(mIntent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(KEY_TITLE, title);
+        getSupportFragmentManager().putFragment(outState, KEY_FRAGMENT, pageContent);
+        super.onSaveInstanceState(outState);
     }
 }

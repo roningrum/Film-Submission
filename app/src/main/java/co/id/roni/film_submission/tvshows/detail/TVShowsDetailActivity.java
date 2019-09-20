@@ -50,7 +50,6 @@ public class TVShowsDetailActivity extends AppCompatActivity {
     @BindView(R.id.pb_loading)
     ProgressBar progressBar;
 
-    private String language = getString(R.string.language);
 
     private int id;
     private String title = "";
@@ -77,7 +76,7 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         id = getIntent().getIntExtra("id", id);
         setActionBarTitle(title);
 
-        tvShowsDetailViewModel.setDetailTvShows(id, language);
+        tvShowsDetailViewModel.setDetailTvShows(id, getString(R.string.language));
         showLoading(true);
     }
 
@@ -86,6 +85,12 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         if (id == tvShowDetailModel.getId()) {
             title = tvShowDetailModel.getName();
             setActionBarTitle(title);
+
+            String detail = tvShowDetailModel.getName();
+
+            if (detail == null) {
+                tvDetailTitleTvShow.setText(R.string.unavailable_overview);
+            }
             tvDetailTitleTvShow.setText(tvShowDetailModel.getName());
             tvDetailOverviewTvShow.setText(tvShowDetailModel.getOverview());
             tvNumberSeasonTvShow.setText(tvShowDetailModel.getNumber_of_seasons() + " " + getString(R.string.season));
