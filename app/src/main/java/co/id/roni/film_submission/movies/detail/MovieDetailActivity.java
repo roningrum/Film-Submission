@@ -54,8 +54,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.pb_loading)
     ProgressBar progressBar;
 
-    private String language = getString(string.language);
-    private String minute = getString(string.minute);
 
     private int id;
     private String title = "";
@@ -81,7 +79,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
-        movieDetailViewModel.setDetailMovies(id, language);
+        movieDetailViewModel.setDetailMovies(id, getString(string.language));
         showLoading(true);
 
     }
@@ -93,7 +91,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             setActionBarTitle(title);
 
             String duration = String.valueOf(movieDetailModel.getRuntime());
-            tvDetailRunTimeMovie.setText(duration + " " + minute);
+            tvDetailRunTimeMovie.setText(duration + " " + getString(string.minute));
             tvDetailTitleMovie.setText(movieDetailModel.getTitle());
             tvDetailOverviewMovie.setText(movieDetailModel.getOverview());
             Glide.with(getApplicationContext()).load(movieDetailModel.getPoster_path()).into(imgDetailPosterMovie);
