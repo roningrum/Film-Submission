@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,8 @@ import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,9 +57,15 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.pb_loading)
     ProgressBar progressBar;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.collapse_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.appbar)
+    AppBarLayout appBarLayout;
+
 
     private int id;
-    private String title = "";
 
     private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
         if (movieDetailModel != null) {
@@ -75,7 +84,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
 
-        setActionBarTitle(title);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        collapsingToolbarLayout.setTitleEnabled(false);
 
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
@@ -84,11 +97,31 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     private void showDetailMovie(MovieDetailModel movieDetailModel) {
         if (id == movieDetailModel.getId()) {
-            title = movieDetailModel.getTitle();
-            setActionBarTitle(title);
+
+            String title = movieDetailModel.getTitle();
+            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                boolean isVisible = true;
+                int scrollRange = -1;
+
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    if (scrollRange == -1) {
+                        scrollRange = appBarLayout.getTotalScrollRange();
+                    }
+                    if (scrollRange + verticalOffset == 0) {
+                        toolbar.setTitle(title);
+                        isVisible = true;
+                    } else if (isVisible) {
+                        toolbar.setTitle("");
+                        isVisible = false;
+                    }
+
+                }
+            });
+
 
             String duration = String.valueOf(movieDetailModel.getRuntime());
             tvDetailRunTimeMovie.setText(duration + " " + getString(string.minute));
@@ -131,11 +164,11 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setActionBarTitle(String title) {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
-        }
-    }
+//    private void setActionBarTitle(String title) {
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().setTitle(title);
+//        }
+//    }
 
     private void showLoading(Boolean state) {
         if (state) {

@@ -20,7 +20,7 @@ public class DetailTestActivity extends AppCompatActivity {
         ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
             @Override
             public void getOutline(View view, Outline outline) {
-                outline.setRoundRect(0, 0, view.getWidth(), view.getWidth(), 16);
+                outline.setRoundRect(0, -16, view.getWidth(), view.getHeight(), 16f);
             }
         };
         imgTestClipOutline.setClipToOutline(true);
