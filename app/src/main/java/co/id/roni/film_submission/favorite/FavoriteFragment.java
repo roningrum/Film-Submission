@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.favorite.adapter.ViewPagerAdapter;
+import co.id.roni.film_submission.favorite.movie.MovieFavoriteFragment;
 
 
 /**

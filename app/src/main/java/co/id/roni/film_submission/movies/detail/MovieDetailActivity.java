@@ -37,9 +37,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.GenreAdapter;
-import co.id.roni.film_submission.favorite.MovieFavModel;
 import co.id.roni.film_submission.favorite.data.MovieDao;
 import co.id.roni.film_submission.favorite.data.MovieDatabase;
+import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
 

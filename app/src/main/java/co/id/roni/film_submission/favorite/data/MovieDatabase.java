@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import co.id.roni.film_submission.favorite.MovieFavModel;
+import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 
 @Database(entities = {MovieFavModel.class}, version = 1)
 public abstract class MovieDatabase extends RoomDatabase {

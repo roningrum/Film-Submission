@@ -8,7 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import co.id.roni.film_submission.favorite.MovieFavModel;
+import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 
 @Dao
 public interface MovieDao {

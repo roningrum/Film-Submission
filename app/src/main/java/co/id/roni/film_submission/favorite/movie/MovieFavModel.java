@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.favorite;
+package co.id.roni.film_submission.favorite.movie;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
