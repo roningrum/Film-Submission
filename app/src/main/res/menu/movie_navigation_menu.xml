@@ -8,4 +8,8 @@
         android:id="@+id/nav_tvseries_menu"
         android:icon="@drawable/ic_tv"
         android:title="@string/tv_series" />
+    <item
+        android:id="@+id/nav_favorite_menu"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/favorite_menu" />
 </menu>

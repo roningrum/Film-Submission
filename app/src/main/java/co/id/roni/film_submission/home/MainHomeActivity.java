@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.favorite.FavoriteFragment;
 import co.id.roni.film_submission.movies.MovieFragment;
 import co.id.roni.film_submission.tvshows.TVShowsFragment;
 
@@ -38,6 +39,14 @@ public class MainHomeActivity extends AppCompatActivity {
                         title = getString(R.string.tv_series);
                         setActionBarTitle(title);
                         fragment = new TVShowsFragment();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
+                                .commit();
+                        return true;
+                    case R.id.nav_favorite_menu:
+                        title = getString(R.string.favorite_menu);
+                        setActionBarTitle(title);
+                        fragment = new FavoriteFragment();
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
                                 .commit();
