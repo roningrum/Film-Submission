@@ -172,6 +172,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Add Favorite", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
 

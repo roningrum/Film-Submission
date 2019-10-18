@@ -1,4 +1,5 @@
-# Film-Submission (Submission 3)
+# Film-Submission
+Aplikasi Submission Dicoding ke 3 
 ## Summary of MADE Submission 3
 + List terdiri dari fragment yang menampilkan daftar film dan TVShows. List menggunakan RecyclerView
 + Terdapat komponennavigasi berupa BottomNavigationView u/ transisi antar fragment

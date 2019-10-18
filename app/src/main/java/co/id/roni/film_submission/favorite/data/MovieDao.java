@@ -10,9 +10,11 @@ import java.util.List;
 
 import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface MovieDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = REPLACE)
     void insert(MovieFavModel movieFavModel);
 
     @Query("SELECT * FROM tbMovieFav")
