@@ -25,11 +25,9 @@ public abstract class MovieDatabase extends RoomDatabase {
     public static MovieDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             synchronized (MovieDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), MovieDatabase.class, "movie_db")
-                            .addCallback(sRoomDatabaseCallback)
-                            .build();
-                }
+                INSTANCE = Room.databaseBuilder(context, MovieDatabase.class, "movie_db")
+                        .addCallback(sRoomDatabaseCallback)
+                        .build();
             }
         }
         return INSTANCE;

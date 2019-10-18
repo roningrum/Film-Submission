@@ -6,9 +6,8 @@
     tools:context=".favorite.MovieFavoriteFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movies_favs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Coming Soon" />
-
+        android:layout_height="match_parent" />
 </FrameLayout>
