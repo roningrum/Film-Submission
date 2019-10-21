@@ -3,7 +3,6 @@ package co.id.roni.film_submission.favorite.data;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -17,12 +16,15 @@ public interface MovieDao {
     @Insert(onConflict = REPLACE)
     void insert(MovieFavModel movieFavModel);
 
-    @Query("SELECT * FROM tbMovieFav")
+    @Query("SELECT * FROM tbMovieFav ORDER BY id DESC")
     LiveData<List<MovieFavModel>> getAllMovieFavs();
 
-//    @Query("SELECT EXISTS (SELECT 1 FROM tbMovieFav WHERE id=id)")
-//    int isFavorite(int id);
+    @Query("SELECT * FROM tbMovieFav WHERE id = :id")
+    MovieFavModel selectByIdMovie(int id);
+
+    @Query("DELETE FROM tbMovieFav WHERE id = :id")
+    void deleteFavorite(int id);
 
     @Query("DELETE FROM tbMovieFav")
-    void deleteAll();
+    void deleteAllFavorite();
 }

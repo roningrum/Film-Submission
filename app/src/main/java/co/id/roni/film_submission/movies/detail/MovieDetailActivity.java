@@ -16,10 +16,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.stetho.Stetho;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -37,8 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.GenreAdapter;
-import co.id.roni.film_submission.favorite.data.MovieDao;
-import co.id.roni.film_submission.favorite.data.MovieDatabase;
+import co.id.roni.film_submission.favorite.movie.FavoriteViewModel;
 import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
@@ -80,12 +81,17 @@ public class MovieDetailActivity extends AppCompatActivity {
     boolean isFavorite = false;
     Menu menuItem;
 
+    FavoriteViewModel favoriteViewModel;
+    MovieDetailViewModel movieDetailViewModel;
+    MovieDetailModel movieDetailModel;
+
     private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
         if (movieDetailModel != null) {
             showDetailMovie(movieDetailModel);
             showLoading(false);
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +100,10 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
+        movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
 
+        favoriteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(FavoriteViewModel.class);
 
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -118,9 +125,17 @@ public class MovieDetailActivity extends AppCompatActivity {
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
         movieDetailViewModel.setDetailMovies(id, getString(string.language));
+        if (favoriteViewModel.selectMovieFav(id) != null) {
+            isFavorite = true;
+            invalidateOptionsMenu();
+
+        }
         showLoading(true);
 
+        Stetho.initializeWithDefaults(this);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -166,15 +181,27 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void addToFavorite() {
-        try {
-            MovieDao movieDao = MovieDatabase.getDatabase(this.getApplicationContext()).movieDao();
-            movieDao.insert(new MovieFavModel());
-            Toast.makeText(this, "Add Favorite", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+        this.movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
+        int Favid = movieDetailModel.getId();
+        String title = movieDetailModel.getTitle();
+        String poster_path = movieDetailModel.getPoster_path();
+        String overview = movieDetailModel.getOverview();
+        double vote_average = movieDetailModel.getVote_average();
 
+        Log.d("Test Data Insert", "Test : " + title);
+        Log.d("Test Data Insert", "Test : " + poster_path);
+        Log.d("Test Data Insert", "Test : " + overview);
+
+
+        MovieFavModel favorite = new MovieFavModel();
+        favorite.setId(Favid);
+        favorite.setTitle(title);
+        favorite.setPoster_path(poster_path);
+        favorite.setOverview(overview);
+        favorite.setVote_average(vote_average);
+
+        favoriteViewModel.insert(favorite);
+        isFavorite = true;
 
     }
 

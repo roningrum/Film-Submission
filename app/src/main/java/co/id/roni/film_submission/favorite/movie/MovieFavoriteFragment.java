@@ -9,11 +9,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 
 
@@ -41,11 +45,19 @@ public class MovieFavoriteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
         MovieFavoriteAdapter movieFavoriteAdapter = new MovieFavoriteAdapter();
         rvMoviesFavs.setAdapter(movieFavoriteAdapter);
         rvMoviesFavs.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FavoriteViewModel movieFavModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
-        movieFavModel.getMovieLivesData().observe(this, movieFavoriteAdapter::setMovieFavModels);
+        movieFavModel.getMovieLivesData().observe(this, new Observer<List<MovieFavModel>>() {
+            @Override
+            public void onChanged(List<MovieFavModel> movieFavModels) {
+                movieFavoriteAdapter.setMovieFavModels(movieFavModels);
+            }
+        });
+
+
     }
 }

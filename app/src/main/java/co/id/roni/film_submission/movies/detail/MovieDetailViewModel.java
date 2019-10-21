@@ -39,6 +39,12 @@ public class MovieDetailViewModel extends ViewModel {
         });
     }
 
+    public LiveData<MovieDetailModel> getMovieDetail1(int id, String language) {
+        if (movieDetails == null) {
+            setDetailMovies(id, language);
+        }
+        return movieDetails;
+    }
     LiveData<MovieDetailModel> getMovieDetail() {
         return movieDetails;
     }

@@ -13,7 +13,7 @@ public class MovieDetailModel {
     private List<Genre> genres;
     private String release_date;
     private int runtime;
-    private String vote_average;
+    private double vote_average;
 
     public int getId() {
         return id;
@@ -71,11 +71,11 @@ public class MovieDetailModel {
         this.runtime = runtime;
     }
 
-    public String getVote_average() {
+    public double getVote_average() {
         return vote_average;
     }
 
-    public void setVote_average(String vote_average) {
+    public void setVote_average(double vote_average) {
         this.vote_average = vote_average;
     }
 

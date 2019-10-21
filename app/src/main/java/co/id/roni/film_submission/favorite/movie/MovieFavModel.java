@@ -3,6 +3,7 @@ package co.id.roni.film_submission.favorite.movie;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tbMovieFav")
@@ -19,7 +20,17 @@ public class MovieFavModel {
     @ColumnInfo(name = "vote_average")
     private double vote_average;
 
+    @Ignore
     public MovieFavModel() {
+
+    }
+
+    public MovieFavModel(int id, String title, String poster_path, String overview, double vote_average) {
+        this.id = id;
+        this.title = title;
+        this.poster_path = poster_path;
+        this.overview = overview;
+        this.vote_average = vote_average;
     }
 
     @NonNull
