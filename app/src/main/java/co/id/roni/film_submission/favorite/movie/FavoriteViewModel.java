@@ -25,7 +25,7 @@ public class FavoriteViewModel extends AndroidViewModel {
     }
 
 
-    public MovieFavModel selectMovieFav(int movieId) {
+    public LiveData<MovieFavModel> selectMovieFav(int movieId) {
         return favoriteRepository.selectMovieAsFav(movieId);
     }
 
