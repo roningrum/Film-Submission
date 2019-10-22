@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -78,12 +79,14 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
     private int id;
-    boolean isFavorite = false;
     Menu menuItem;
 
     FavoriteViewModel favoriteViewModel;
     MovieDetailViewModel movieDetailViewModel;
     MovieDetailModel movieDetailModel;
+
+    LiveData<MovieFavModel> movieFavModelLiveData;
+    boolean isFavorite = false;
 
     private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
         if (movieDetailModel != null) {
@@ -126,7 +129,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         id = getIntent().getIntExtra("id", id);
         movieDetailViewModel.setDetailMovies(id, getString(string.language));
 
-        favoriteState();
+        movieFavModelLiveData = favoriteViewModel.selectMovieFav(id);
+//        favoriteState();
         showLoading(true);
 
         Stetho.initializeWithDefaults(this);
@@ -134,11 +138,17 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void favoriteState() {
-        if (favoriteViewModel.selectMovieFav(id) != null) {
-            isFavorite = true;
-            invalidateOptionsMenu();
-
-        }
+        movieFavModelLiveData.observe(this, it -> {
+            if(it != null) {
+                menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
+                isFavorite = true;
+                invalidateOptionsMenu();
+            }
+            else{
+                menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
+                isFavorite = false;
+            }
+        });
     }
 
 
@@ -146,20 +156,21 @@ public class MovieDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.fav_detail_menu, menu);
         menuItem = menu;
-        setFavorite();
+//        setFavorite();
+        favoriteState();
         return true;
     }
 
-    private void setFavorite() {
-        if (isFavorite) {
-            menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
-//            isFavorite = true;
-        } else {
-            menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
-//            isFavorite = false;
-        }
-
-    }
+//    private void setFavorite() {
+//        if (isFavorite) {
+//            menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
+////            isFavorite = true;
+//        } else {
+//            menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
+////            isFavorite = false;
+//        }
+//
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -171,8 +182,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                 addToFavorite();
 
             }
-            isFavorite = !isFavorite;
-            setFavorite();
+//            isFavorite = !isFavorite;
+//            setFavorite();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -181,18 +192,18 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void removeFavorite() {
-        if (favoriteViewModel.selectMovieFav(id) != null) {
-            isFavorite = false;
+//        if (favoriteViewModel.selectMovieFav(id) != null) {
+//            isFavorite = false;
             favoriteViewModel.delete(id);
 //            menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
             Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
-        }
-        menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
+//        }
+//        menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
 
     }
 
     private void addToFavorite() {
-        if (favoriteViewModel.selectMovieFav(id) == null) {
+//        if (favoriteViewModel.selectMovieFav(id) == null) {
             this.movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
             int Favid = movieDetailModel.getId();
             String title = movieDetailModel.getTitle();
@@ -212,12 +223,12 @@ public class MovieDetailActivity extends AppCompatActivity {
             favorite.setOverview(overview);
             favorite.setVote_average(vote_average);
 
-            isFavorite = true;
+//            isFavorite = true;
             favoriteViewModel.insert(favorite);
 //            menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
             Toast.makeText(this, "Sukses Favorite", Toast.LENGTH_SHORT).show();
-        }
-        menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
+//        }
+//        menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
     }
 
     @SuppressLint("SetTextI18n")

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -34,8 +35,8 @@ public class FavoriteRepository {
         }
     }
 
-    public MovieFavModel selectMovieAsFav(int movieId) {
-        MovieFavModel movieFavModel = null;
+    public LiveData<MovieFavModel> selectMovieAsFav(int movieId) {
+        LiveData<MovieFavModel> movieFavModel = new MutableLiveData<>();
         try {
             movieFavModel = new SelectMovieFavAsycTask(movieDao).execute(movieId).get();
         } catch (ExecutionException | InterruptedException e) {
@@ -64,7 +65,7 @@ public class FavoriteRepository {
     }
 
 
-    private class SelectMovieFavAsycTask extends AsyncTask<Integer, Void, MovieFavModel> {
+    private class SelectMovieFavAsycTask extends AsyncTask<Integer, Void, LiveData<MovieFavModel>> {
         private MovieDao movieDao;
 
         SelectMovieFavAsycTask(MovieDao movieDao) {
@@ -72,7 +73,7 @@ public class FavoriteRepository {
         }
 
         @Override
-        protected MovieFavModel doInBackground(Integer... integers) {
+        protected LiveData<MovieFavModel> doInBackground(Integer... integers) {
             return movieDao.selectByIdMovie(integers[0]);
         }
     }
