@@ -11,39 +11,43 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
-import co.id.roni.film_submission.model.MovieModel;
+import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 
-public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdapter.MovieViewHolder> {
-    private ArrayList<MovieModel> movieData = new ArrayList<>();
+public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavoriteHolder> {
+    private List<MovieFavModel> movieFavModels;
 
-    public void setMovieData(ArrayList<MovieModel> movies) {
-        movieData.clear();
-        movieData.addAll(movies);
-        notifyDataSetChanged();
+    public MovieFavoriteAdapter(List<MovieFavModel> movieFavModels) {
+        this.movieFavModels = movieFavModels;
     }
 
     @NonNull
     @Override
-    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MovieViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_list, parent, false));
+    public MovieFavoriteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new MovieFavoriteHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_fav_list, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        holder.bind(movieData.get(position));
+    public void onBindViewHolder(@NonNull MovieFavoriteHolder holder, int position) {
+        holder.bind(movieFavModels.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return movieData.size();
+        return movieFavModels.size();
     }
 
-    class MovieViewHolder extends RecyclerView.ViewHolder {
+    public void setMovieFavModels(List<MovieFavModel> movieFavs) {
+        this.movieFavModels.clear();
+        this.movieFavModels.addAll(movieFavs);
+        notifyDataSetChanged();
+    }
+
+    class MovieFavoriteHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_title_movie_item)
         TextView tvMovieTitle;
         @BindView(R.id.tv_overview_item)
@@ -53,17 +57,16 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
         @BindView(R.id.img_poster_item)
         ImageView imgMoviePoster;
 
-        MovieViewHolder(@NonNull View itemView) {
+        MovieFavoriteHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        void bind(final MovieModel movies) {
+        void bind(final MovieFavModel movies) {
             tvMovieTitle.setText(movies.getTitle());
             tvOverview.setText(movies.getOverview());
             tvMovieRate.setText(String.valueOf(movies.getVote_average()));
             Glide.with(itemView.getContext()).load(movies.getPoster_path()).into(imgMoviePoster);
-//            itemView.setOnClickListener(v -> onItemClickCallback.onItemClicked(movieData.get(getAdapterPosition())));
         }
     }
 }

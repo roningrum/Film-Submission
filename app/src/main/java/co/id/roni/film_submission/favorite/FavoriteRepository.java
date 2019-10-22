@@ -26,6 +26,14 @@ public class FavoriteRepository {
         new InsertMovieFavsAsyncTask(movieDao).execute(movieFavModel);
     }
 
+    public void delete(int movieId) {
+        try {
+            new DeleteMovieFavsAsyncTask(movieDao).execute(movieId).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public MovieFavModel selectMovieAsFav(int movieId) {
         MovieFavModel movieFavModel = null;
         try {
@@ -44,7 +52,7 @@ public class FavoriteRepository {
     private class InsertMovieFavsAsyncTask extends AsyncTask<MovieFavModel, Void, Void> {
         private MovieDao movieDao;
 
-        public InsertMovieFavsAsyncTask(MovieDao movieDao) {
+        InsertMovieFavsAsyncTask(MovieDao movieDao) {
             this.movieDao = movieDao;
         }
 
@@ -59,13 +67,28 @@ public class FavoriteRepository {
     private class SelectMovieFavAsycTask extends AsyncTask<Integer, Void, MovieFavModel> {
         private MovieDao movieDao;
 
-        public SelectMovieFavAsycTask(MovieDao movieDao) {
+        SelectMovieFavAsycTask(MovieDao movieDao) {
             this.movieDao = movieDao;
         }
 
         @Override
         protected MovieFavModel doInBackground(Integer... integers) {
             return movieDao.selectByIdMovie(integers[0]);
+        }
+    }
+
+    private class DeleteMovieFavsAsyncTask extends AsyncTask<Integer, Void, Void> {
+        private MovieDao movieDao;
+
+        public DeleteMovieFavsAsyncTask(MovieDao movieDao) {
+            this.movieDao = movieDao;
+
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            movieDao.deleteFavorite(integers[0]);
+            return null;
         }
     }
 }

@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -25,13 +24,17 @@ public class FavoriteViewModel extends AndroidViewModel {
         favoriteRepository.insert(movieFavModel);
     }
 
+
     public MovieFavModel selectMovieFav(int movieId) {
         return favoriteRepository.selectMovieAsFav(movieId);
     }
 
+    public void delete(int movieId) {
+        favoriteRepository.delete(movieId);
+    }
+
     public LiveData<List<MovieFavModel>> getMovieLivesData() {
         if (movieLivesData == null) {
-            movieLivesData = new MutableLiveData<>();
             movieLivesData = favoriteRepository.getAllMovieFavs();
         }
         return movieLivesData;

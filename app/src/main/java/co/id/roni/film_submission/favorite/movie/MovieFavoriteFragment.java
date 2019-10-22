@@ -9,16 +9,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.favorite.adapter.MovieFavoriteAdapter;
 
 
 /**
@@ -46,17 +46,12 @@ public class MovieFavoriteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        MovieFavoriteAdapter movieFavoriteAdapter = new MovieFavoriteAdapter();
+        MovieFavoriteAdapter movieFavoriteAdapter = new MovieFavoriteAdapter(new ArrayList<MovieFavModel>());
         rvMoviesFavs.setAdapter(movieFavoriteAdapter);
         rvMoviesFavs.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        FavoriteViewModel movieFavModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
-        movieFavModel.getMovieLivesData().observe(this, new Observer<List<MovieFavModel>>() {
-            @Override
-            public void onChanged(List<MovieFavModel> movieFavModels) {
-                movieFavoriteAdapter.setMovieFavModels(movieFavModels);
-            }
-        });
+        FavoriteViewModel movieFavModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(FavoriteViewModel.class);
+        movieFavModel.getMovieLivesData().observe(this, movieFavoriteAdapter::setMovieFavModels);
 
 
     }

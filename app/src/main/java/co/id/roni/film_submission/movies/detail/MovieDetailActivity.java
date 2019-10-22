@@ -125,15 +125,20 @@ public class MovieDetailActivity extends AppCompatActivity {
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
         movieDetailViewModel.setDetailMovies(id, getString(string.language));
+
+        favoriteState();
+        showLoading(true);
+
+        Stetho.initializeWithDefaults(this);
+
+    }
+
+    private void favoriteState() {
         if (favoriteViewModel.selectMovieFav(id) != null) {
             isFavorite = true;
             invalidateOptionsMenu();
 
         }
-        showLoading(true);
-
-        Stetho.initializeWithDefaults(this);
-
     }
 
 
@@ -156,7 +161,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_fav) {
@@ -177,32 +181,43 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void removeFavorite() {
-        Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
+        if (favoriteViewModel.selectMovieFav(id) != null) {
+            isFavorite = false;
+            favoriteViewModel.delete(id);
+//            menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
+            Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
+        }
+        menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
+
     }
 
     private void addToFavorite() {
-        this.movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
-        int Favid = movieDetailModel.getId();
-        String title = movieDetailModel.getTitle();
-        String poster_path = movieDetailModel.getPoster_path();
-        String overview = movieDetailModel.getOverview();
-        double vote_average = movieDetailModel.getVote_average();
+        if (favoriteViewModel.selectMovieFav(id) == null) {
+            this.movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
+            int Favid = movieDetailModel.getId();
+            String title = movieDetailModel.getTitle();
+            String poster_path = movieDetailModel.getPoster_path();
+            String overview = movieDetailModel.getOverview();
+            double vote_average = movieDetailModel.getVote_average();
 
-        Log.d("Test Data Insert", "Test : " + title);
-        Log.d("Test Data Insert", "Test : " + poster_path);
-        Log.d("Test Data Insert", "Test : " + overview);
+            Log.d("Test Data Insert", "Test : " + title);
+            Log.d("Test Data Insert", "Test : " + poster_path);
+            Log.d("Test Data Insert", "Test : " + overview);
 
 
-        MovieFavModel favorite = new MovieFavModel();
-        favorite.setId(Favid);
-        favorite.setTitle(title);
-        favorite.setPoster_path(poster_path);
-        favorite.setOverview(overview);
-        favorite.setVote_average(vote_average);
+            MovieFavModel favorite = new MovieFavModel();
+            favorite.setId(Favid);
+            favorite.setTitle(title);
+            favorite.setPoster_path(poster_path);
+            favorite.setOverview(overview);
+            favorite.setVote_average(vote_average);
 
-        favoriteViewModel.insert(favorite);
-        isFavorite = true;
-
+            isFavorite = true;
+            favoriteViewModel.insert(favorite);
+//            menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
+            Toast.makeText(this, "Sukses Favorite", Toast.LENGTH_SHORT).show();
+        }
+        menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
     }
 
     @SuppressLint("SetTextI18n")
