@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DetailTestActivity" />
         <activity
             android:name=".tvshows.detail.TVShowsDetailActivity"
             android:parentActivityName=".home.MainHomeActivity" />

@@ -33,7 +33,7 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
     @NonNull
     @Override
     public MovieFavoriteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MovieFavoriteHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_fav_list, parent, false));
+        return new MovieFavoriteHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_list, parent, false));
     }
 
     @Override
