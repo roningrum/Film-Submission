@@ -1,7 +1,9 @@
 package co.id.roni.film_submission.favorite.movie;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.favorite.adapter.MovieFavoriteAdapter;
+import co.id.roni.film_submission.movies.detail.MovieDetailActivity;
 
 
 /**
@@ -49,6 +52,12 @@ public class MovieFavoriteFragment extends Fragment {
         MovieFavoriteAdapter movieFavoriteAdapter = new MovieFavoriteAdapter(new ArrayList<MovieFavModel>());
         rvMoviesFavs.setAdapter(movieFavoriteAdapter);
         rvMoviesFavs.setLayoutManager(new LinearLayoutManager(getContext()));
+        movieFavoriteAdapter.setOnItemClickCallback(movieData -> {
+            Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+            intent.putExtra("id", movieData.getId());
+            Log.d("Check Intent Id", "Movie Id" + movieData.getId());
+            startActivity(intent);
+        });
 
         FavoriteViewModel movieFavModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(FavoriteViewModel.class);
         movieFavModel.getMovieLivesData().observe(this, movieFavoriteAdapter::setMovieFavModels);

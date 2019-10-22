@@ -161,17 +161,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         return true;
     }
 
-//    private void setFavorite() {
-//        if (isFavorite) {
-//            menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
-////            isFavorite = true;
-//        } else {
-//            menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
-////            isFavorite = false;
-//        }
-//
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_fav) {
@@ -182,8 +171,6 @@ public class MovieDetailActivity extends AppCompatActivity {
                 addToFavorite();
 
             }
-//            isFavorite = !isFavorite;
-//            setFavorite();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

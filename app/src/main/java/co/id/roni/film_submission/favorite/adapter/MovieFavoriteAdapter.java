@@ -20,9 +20,14 @@ import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 
 public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavoriteHolder> {
     private List<MovieFavModel> movieFavModels;
+    private MovieFavoriteAdapter.OnItemClickCallback onItemClickCallback;
 
     public MovieFavoriteAdapter(List<MovieFavModel> movieFavModels) {
         this.movieFavModels = movieFavModels;
+    }
+
+    public void setOnItemClickCallback(MovieFavoriteAdapter.OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
     }
 
     @NonNull
@@ -47,6 +52,10 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
         notifyDataSetChanged();
     }
 
+    public interface OnItemClickCallback {
+        void onItemClicked(MovieFavModel movieData);
+    }
+
     class MovieFavoriteHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_title_movie_item)
         TextView tvMovieTitle;
@@ -67,6 +76,8 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
             tvOverview.setText(movies.getOverview());
             tvMovieRate.setText(String.valueOf(movies.getVote_average()));
             Glide.with(itemView.getContext()).load(movies.getPoster_path()).into(imgMoviePoster);
+            itemView.setOnClickListener(v -> onItemClickCallback.onItemClicked(movieFavModels.get(getAdapterPosition())));
         }
+
     }
 }
