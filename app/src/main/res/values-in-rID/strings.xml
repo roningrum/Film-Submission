@@ -16,4 +16,6 @@
     <string name="minute">menit</string>
     <string name="season">Musim</string>
     <string name="favorite_menu">Favorit</string>
+    <string name="coming_soon">Segera Hadir</string>
+    <string name="casts">Pemain</string>
 </resources>

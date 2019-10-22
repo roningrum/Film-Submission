@@ -45,7 +45,6 @@ import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
 
-import static co.id.roni.film_submission.R.layout;
 import static co.id.roni.film_submission.R.string;
 
 public class MovieDetailActivity extends AppCompatActivity {
@@ -99,7 +98,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_movie_detail);
+        setContentView(R.layout.activity_movie_detail);
 
         ButterKnife.bind(this);
 
