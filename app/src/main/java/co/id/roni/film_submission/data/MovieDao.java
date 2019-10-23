@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.favorite.data;
+package co.id.roni.film_submission.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,7 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import co.id.roni.film_submission.favorite.movie.MovieFavModel;
+import co.id.roni.film_submission.model.favorite.MovieFavModel;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 

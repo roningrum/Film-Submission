@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.home;
+package co.id.roni.film_submission.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
-import co.id.roni.film_submission.favorite.FavoriteFragment;
-import co.id.roni.film_submission.movies.MovieFragment;
-import co.id.roni.film_submission.tvshows.TVShowsFragment;
+import co.id.roni.film_submission.fragment.MovieFragment;
+import co.id.roni.film_submission.fragment.TVShowsFragment;
+import co.id.roni.film_submission.fragment.favorite.FavoriteFragment;
 
 public class MainHomeActivity extends AppCompatActivity {
     @BindView(R.id.navigation_menu_home)

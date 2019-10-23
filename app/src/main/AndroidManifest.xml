@@ -18,9 +18,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".tvshows.detail.TVShowsDetailActivity"
-            android:parentActivityName=".home.MainHomeActivity" />
-        <activity android:name=".home.MainHomeActivity">
+            android:name=".activity.TVShowsDetailActivity"
+            android:parentActivityName=".activity.MainHomeActivity" />
+        <activity android:name=".activity.MainHomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,8 +29,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movies.detail.MovieDetailActivity"
-            android:parentActivityName=".home.MainHomeActivity" />
+            android:name=".activity.MovieDetailActivity"
+            android:parentActivityName=".activity.MainHomeActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

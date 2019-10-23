@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.movies.detail;
+package co.id.roni.film_submission.viewmodel;
 
 import android.util.Log;
 
@@ -39,11 +39,11 @@ public class CastDetailViewModel extends ViewModel {
 
     private Api api = retrofit.create(Api.class);
 
-    LiveData<List<Cast>> getCastCreditMovies() {
+    public LiveData<List<Cast>> getCastCreditMovies() {
         return castCreditMovieList;
     }
 
-    void setCastCreditMovies(int id, String apiKey) {
+    public void setCastCreditMovies(int id, String apiKey) {
         Call<CreditObjectData> castCreditCall = api.getCastMovieList(id, apiKey);
         castCreditCall.enqueue(new Callback<CreditObjectData>() {
             @Override

@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.favorite.movie;
+package co.id.roni.film_submission.viewmodel;
 
 import android.app.Application;
 
@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import co.id.roni.film_submission.favorite.FavoriteRepository;
+import co.id.roni.film_submission.model.favorite.MovieFavModel;
 
 public class FavoriteViewModel extends AndroidViewModel {
     private FavoriteRepository favoriteRepository;

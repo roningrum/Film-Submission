@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.tvshows.detail;
+package co.id.roni.film_submission.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -31,6 +31,7 @@ import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.GenreAdapter;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.detailmodel.TVShowDetailModel;
+import co.id.roni.film_submission.viewmodel.TVShowsDetailViewModel;
 
 public class TVShowsDetailActivity extends AppCompatActivity {
     @BindView(R.id.img_detail_photo_banner)

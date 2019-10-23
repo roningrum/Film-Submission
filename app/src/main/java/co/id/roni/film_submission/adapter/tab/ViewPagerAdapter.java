@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.favorite.adapter;
+package co.id.roni.film_submission.adapter.tab;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

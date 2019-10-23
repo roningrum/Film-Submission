@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.tvshows.detail;
+package co.id.roni.film_submission.viewmodel;
 
 import android.util.Log;
 
@@ -24,7 +24,7 @@ public class TVShowsDetailViewModel extends ViewModel {
 
     private Api api = retrofit.create(Api.class);
 
-    void setDetailTvShows(int id, String language) {
+    public void setDetailTvShows(int id, String language) {
         Call<TVShowDetailModel> tvShowModelCall = api.getTvShowDetail(id, language);
         tvShowModelCall.enqueue(new Callback<TVShowDetailModel>() {
             @Override
@@ -39,7 +39,7 @@ public class TVShowsDetailViewModel extends ViewModel {
         });
     }
 
-    LiveData<TVShowDetailModel> getTvShowsDetail() {
+    public LiveData<TVShowDetailModel> getTvShowsDetail() {
         return tvDetails;
     }
 }

@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.movies;
+package co.id.roni.film_submission.fragment;
 
 
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -23,9 +24,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.activity.MovieDetailActivity;
 import co.id.roni.film_submission.adapter.MovieAdapter;
 import co.id.roni.film_submission.model.MovieModel;
-import co.id.roni.film_submission.movies.detail.MovieDetailActivity;
+import co.id.roni.film_submission.viewmodel.MovieViewModel;
 
 
 /**
@@ -37,6 +39,9 @@ public class MovieFragment extends Fragment {
     ProgressBar progressBar;
     @BindView(R.id.rv_movies)
     RecyclerView rvMovies;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbarMovie;
 
     private MovieAdapter movieAdapter;
 
@@ -83,9 +88,11 @@ public class MovieFragment extends Fragment {
             Log.d("Check Intent Id", "Movie Id" + movieData.getId());
             startActivity(intent);
         });
-
         movieViewModel.setListMovies(1, getString(R.string.language));
         showLoading(true);
+        toolbarMovie.setTitle(R.string.movie);
+        toolbarMovie.setTitleTextColor(getResources().getColor(android.R.color.white));
+
     }
 
     private void showLoading(Boolean state) {

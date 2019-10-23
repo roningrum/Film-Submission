@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.movies;
+package co.id.roni.film_submission.viewmodel;
 
 import android.util.Log;
 
@@ -27,7 +27,7 @@ public class MovieViewModel extends ViewModel {
 
     private Api api = retrofit.create(Api.class);
 
-    void setListMovies(int page, String language) {
+    public void setListMovies(int page, String language) {
 
         Call<MovieObjectData> movieObjectCall = api.getMovieList(page, language);
         movieObjectCall.enqueue(new Callback<MovieObjectData>() {
@@ -47,7 +47,7 @@ public class MovieViewModel extends ViewModel {
     }
 
 
-    LiveData<List<MovieModel>> getListMovies() {
+    public LiveData<List<MovieModel>> getListMovies() {
         return listMovies;
     }
 }

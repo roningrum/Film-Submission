@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.favorite.data;
+package co.id.roni.film_submission.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import co.id.roni.film_submission.favorite.movie.MovieFavModel;
+import co.id.roni.film_submission.model.favorite.MovieFavModel;
 
 @Database(entities = {MovieFavModel.class}, version = 1)
 public abstract class MovieDatabase extends RoomDatabase {

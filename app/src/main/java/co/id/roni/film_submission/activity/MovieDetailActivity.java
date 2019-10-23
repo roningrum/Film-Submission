@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.movies.detail;
+package co.id.roni.film_submission.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Outline;
@@ -44,11 +44,13 @@ import co.id.roni.film_submission.BuildConfig;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.CastAdapter;
 import co.id.roni.film_submission.adapter.GenreAdapter;
-import co.id.roni.film_submission.favorite.movie.FavoriteViewModel;
-import co.id.roni.film_submission.favorite.movie.MovieFavModel;
 import co.id.roni.film_submission.model.Cast;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
+import co.id.roni.film_submission.model.favorite.MovieFavModel;
+import co.id.roni.film_submission.viewmodel.CastDetailViewModel;
+import co.id.roni.film_submission.viewmodel.FavoriteViewModel;
+import co.id.roni.film_submission.viewmodel.MovieDetailViewModel;
 
 import static co.id.roni.film_submission.R.string;
 

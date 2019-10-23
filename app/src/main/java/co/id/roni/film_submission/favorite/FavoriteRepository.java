@@ -9,9 +9,9 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import co.id.roni.film_submission.favorite.data.MovieDao;
-import co.id.roni.film_submission.favorite.data.MovieDatabase;
-import co.id.roni.film_submission.favorite.movie.MovieFavModel;
+import co.id.roni.film_submission.data.MovieDao;
+import co.id.roni.film_submission.data.MovieDatabase;
+import co.id.roni.film_submission.model.favorite.MovieFavModel;
 
 public class FavoriteRepository {
     private MovieDao movieDao;

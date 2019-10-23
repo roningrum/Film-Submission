@@ -1,4 +1,4 @@
-package co.id.roni.film_submission.tvshows;
+package co.id.roni.film_submission.fragment;
 
 
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -24,9 +25,10 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.activity.TVShowsDetailActivity;
 import co.id.roni.film_submission.adapter.TvShowsAdapter;
 import co.id.roni.film_submission.model.TVShowModel;
-import co.id.roni.film_submission.tvshows.detail.TVShowsDetailActivity;
+import co.id.roni.film_submission.viewmodel.TVShowsViewModel;
 
 
 /**
@@ -37,6 +39,8 @@ public class TVShowsFragment extends Fragment {
     ProgressBar progressBar;
     @BindView(R.id.rv_tv_shows)
     RecyclerView rvTvShows;
+    @BindView(R.id.toolbar)
+    Toolbar tvToolbar;
 
     @BindString(R.string.language)
     String language;
@@ -86,6 +90,8 @@ public class TVShowsFragment extends Fragment {
 
         tvViewModel.setListTVs(1, language);
         showLoading(true);
+        tvToolbar.setTitle(R.string.tv_series);
+        tvToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
     }
 
     private void showLoading(Boolean state) {
