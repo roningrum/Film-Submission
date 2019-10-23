@@ -22,7 +22,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastMovieViewH
     private ArrayList<Cast> castMovieList = new ArrayList<>();
 
     public void setCastMovieList(ArrayList<Cast> castMovieList) {
-        this.castMovieList.addAll(castMovieList);
+        this.castMovieList = castMovieList;
     }
 
     @NonNull

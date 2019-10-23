@@ -105,16 +105,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
     };
 
-    private Observer<List<Cast>> getCastListMovie = new Observer<List<Cast>>() {
-        @Override
-        public void onChanged(List<Cast> casts) {
-            if (casts != null) {
-                adapter.setCastMovieList((ArrayList<Cast>) casts);
-                showLoading(false);
-                Log.w("Check ae", "" + casts);
-            }
-        }
-    };
 
 
     @Override
@@ -128,7 +118,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
 
         castDetailViewModel = ViewModelProviders.of(this).get(CastDetailViewModel.class);
-        castDetailViewModel.getCastCreditMovies().observe(this, getCastListMovie);
+        castDetailViewModel.getCastCreditMovies().observe(this, casts -> setCastMovie());
 
         favoriteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(FavoriteViewModel.class);
 
@@ -154,10 +144,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDetailViewModel.setDetailMovies(id, getString(string.language));
         castDetailViewModel.setCastCreditMovies(id, api);
 
+        movieFavModelLiveData = favoriteViewModel.selectMovieFav(id);
+//        favoriteState();
+        showLoading(true);
 
+        Stetho.initializeWithDefaults(this);
+
+    }
+
+    private void setCastMovie() {
+        ArrayList<Cast> casts = new ArrayList<>();
         adapter = new CastAdapter();
         adapter.notifyDataSetChanged();
-
+        adapter.setCastMovieList(casts);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -166,15 +165,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         rvCasts.setAdapter(adapter);
         rvCasts.setHasFixedSize(true);
 
-
-
-        movieFavModelLiveData = favoriteViewModel.selectMovieFav(id);
-//        favoriteState();
-        showLoading(true);
-
-        Stetho.initializeWithDefaults(this);
-
     }
+
     private void favoriteState() {
         movieFavModelLiveData.observe(this, it -> {
             if(it != null) {
