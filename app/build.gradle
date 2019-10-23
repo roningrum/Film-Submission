@@ -46,12 +46,17 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
+
     implementation 'com.jcminarro:RoundKornerLayouts:0.4.0'
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
     implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
 
 
 }

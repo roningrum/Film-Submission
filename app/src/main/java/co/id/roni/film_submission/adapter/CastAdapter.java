@@ -19,10 +19,10 @@ import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.model.Cast;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastMovieViewHolder> {
-    private ArrayList<Cast> castMovieList;
+    private ArrayList<Cast> castMovieList = new ArrayList<>();
 
-    public CastAdapter(ArrayList<Cast> castMovieList) {
-        this.castMovieList = castMovieList;
+    public void setCastMovieList(ArrayList<Cast> castMovieList) {
+        this.castMovieList.addAll(castMovieList);
     }
 
     @NonNull
