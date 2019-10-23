@@ -105,7 +105,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
     };
 
+    private Observer<List<Cast>> getCastMovieDetail = castMovieDetail -> {
+        if(castMovieDetail != null){
+            adapter = new CastAdapter();
+            adapter.setCastMovieList(castMovieDetail);
 
+            LinearLayoutManager llm = new LinearLayoutManager(this);
+            llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+            rvCasts.setLayoutManager(llm);
+            rvCasts.setAdapter(adapter);
+            rvCasts.setHasFixedSize(true);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +130,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
 
         castDetailViewModel = ViewModelProviders.of(this).get(CastDetailViewModel.class);
-        castDetailViewModel.getCastCreditMovies().observe(this, casts -> setCastMovie());
+        castDetailViewModel.getCastCreditMovies().observe(this, getCastMovieDetail);
 
         favoriteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(FavoriteViewModel.class);
 
@@ -152,21 +164,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setCastMovie() {
-        ArrayList<Cast> casts = new ArrayList<>();
-        adapter = new CastAdapter();
-        adapter.notifyDataSetChanged();
-        adapter.setCastMovieList(casts);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-
-        rvCasts.setLayoutManager(llm);
-        rvCasts.setAdapter(adapter);
-        rvCasts.setHasFixedSize(true);
-
-    }
-
     private void favoriteState() {
         movieFavModelLiveData.observe(this, it -> {
             if(it != null) {
@@ -180,7 +177,6 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -5,13 +5,13 @@ import java.util.List;
 import co.id.roni.film_submission.model.Cast;
 
 public class CreditObjectData {
-    private List<Cast> casts;
+    private List<Cast> cast;
 
     public List<Cast> getCasts() {
-        return casts;
+        return cast;
     }
 
     public void setCasts(List<Cast> casts) {
-        this.casts = casts;
+        this.cast = casts;
     }
 }

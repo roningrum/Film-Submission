@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,10 +20,11 @@ import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.model.Cast;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastMovieViewHolder> {
-    private ArrayList<Cast> castMovieList = new ArrayList<>();
+    private List<Cast> castMovieList = new ArrayList<>();
 
-    public void setCastMovieList(ArrayList<Cast> castMovieList) {
+    public void setCastMovieList(List<Cast> castMovieList) {
         this.castMovieList = castMovieList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -38,7 +40,10 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastMovieViewH
 
     @Override
     public int getItemCount() {
-        return castMovieList.size();
+        if(castMovieList != null)
+            return castMovieList.size();
+        else
+            return 0;
     }
 
 
