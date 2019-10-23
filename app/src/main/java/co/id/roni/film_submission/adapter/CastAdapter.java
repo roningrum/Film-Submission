@@ -1,5 +1,6 @@
 package co.id.roni.film_submission.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,6 +51,8 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastMovieViewH
     class CastMovieViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_cast)
         TextView movieCastName;
+        @BindView(R.id.tv_character)
+        TextView movieCastCharacter;
         @BindView(R.id.img_cast)
         ImageView imgMovieCast;
 
@@ -58,9 +61,17 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastMovieViewH
             ButterKnife.bind(this, itemView);
         }
 
+        @SuppressLint("ResourceAsColor")
         void bind(Cast cast) {
-            movieCastName.setText(cast.getName());
-            Glide.with(itemView.getContext()).load(cast.getProfile_path()).into(imgMovieCast);
+            if (!cast.getProfile_path().equals("http://image.tmdb.org/t/p/w185/" + null)) {
+                movieCastName.setText(cast.getName());
+                movieCastCharacter.setText(cast.getCharacter());
+                Glide.with(itemView.getContext()).load(cast.getProfile_path()).into(imgMovieCast);
+            } else {
+                //do nonthing
+                Glide.with(itemView.getContext()).load("https://ikapolban.id/wp-content/plugins/lima-custom-ikapolban/images/no-image.jpg").into(imgMovieCast);
+            }
+
         }
     }
 }

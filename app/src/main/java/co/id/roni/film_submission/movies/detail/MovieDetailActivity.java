@@ -33,10 +33,10 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,7 +106,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     };
 
     private Observer<List<Cast>> getCastMovieDetail = castMovieDetail -> {
-        if(castMovieDetail != null){
+        if (castMovieDetail != null) {
             adapter = new CastAdapter();
             adapter.setCastMovieList(castMovieDetail);
 
@@ -137,7 +137,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         collapsingToolbarLayout.setTitleEnabled(false);
 
@@ -165,29 +165,13 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setCastMovie() {
-        ArrayList<Cast> casts = new ArrayList<>();
-        adapter = new CastAdapter();
-        adapter.notifyDataSetChanged();
-        adapter.setCastMovieList(casts);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-
-        rvCasts.setLayoutManager(llm);
-        rvCasts.setAdapter(adapter);
-        rvCasts.setHasFixedSize(true);
-
-    }
-
     private void favoriteState() {
         movieFavModelLiveData.observe(this, it -> {
-            if(it != null) {
+            if (it != null) {
                 menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
                 isFavorite = true;
                 invalidateOptionsMenu();
-            }
-            else{
+            } else {
                 menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
                 isFavorite = false;
             }
@@ -223,9 +207,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     private void removeFavorite() {
 //        if (favoriteViewModel.selectMovieFav(id) != null) {
 //            isFavorite = false;
-            favoriteViewModel.delete(id);
+        favoriteViewModel.delete(id);
 //            menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
-            Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
 //        }
 //        menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
 
@@ -233,29 +217,30 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private void addToFavorite() {
 //        if (favoriteViewModel.selectMovieFav(id) == null) {
-            this.movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
-            int Favid = movieDetailModel.getId();
-            String title = movieDetailModel.getTitle();
-            String poster_path = movieDetailModel.getPoster_path();
-            String overview = movieDetailModel.getOverview();
-            double vote_average = movieDetailModel.getVote_average();
+        this.movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
+        assert movieDetailModel != null;
+        int Favid = movieDetailModel.getId();
+        String title = movieDetailModel.getTitle();
+        String poster_path = movieDetailModel.getPoster_path();
+        String overview = movieDetailModel.getOverview();
+        double vote_average = movieDetailModel.getVote_average();
 
-            Log.d("Test Data Insert", "Test : " + title);
-            Log.d("Test Data Insert", "Test : " + poster_path);
-            Log.d("Test Data Insert", "Test : " + overview);
+        Log.d("Test Data Insert", "Test : " + title);
+        Log.d("Test Data Insert", "Test : " + poster_path);
+        Log.d("Test Data Insert", "Test : " + overview);
 
 
-            MovieFavModel favorite = new MovieFavModel();
-            favorite.setId(Favid);
-            favorite.setTitle(title);
-            favorite.setPoster_path(poster_path);
-            favorite.setOverview(overview);
-            favorite.setVote_average(vote_average);
+        MovieFavModel favorite = new MovieFavModel();
+        favorite.setId(Favid);
+        favorite.setTitle(title);
+        favorite.setPoster_path(poster_path);
+        favorite.setOverview(overview);
+        favorite.setVote_average(vote_average);
 
 //            isFavorite = true;
-            favoriteViewModel.insert(favorite);
+        favoriteViewModel.insert(favorite);
 //            menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
-            Toast.makeText(this, "Sukses Favorite", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sukses Favorite", Toast.LENGTH_SHORT).show();
 //        }
 //        menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
     }

@@ -3,6 +3,7 @@ package co.id.roni.film_submission.model;
 public class Cast {
     private String name;
     private String profile_path;
+    private String character;
 
     public String getName() {
         return name;
@@ -18,5 +19,13 @@ public class Cast {
 
     public void setProfile_path(String profile_path) {
         this.profile_path = profile_path;
+    }
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(String character) {
+        this.character = character;
     }
 }
