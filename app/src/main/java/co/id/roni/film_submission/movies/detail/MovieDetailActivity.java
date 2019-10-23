@@ -119,6 +119,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,6 +162,21 @@ public class MovieDetailActivity extends AppCompatActivity {
         showLoading(true);
 
         Stetho.initializeWithDefaults(this);
+
+    }
+
+    private void setCastMovie() {
+        ArrayList<Cast> casts = new ArrayList<>();
+        adapter = new CastAdapter();
+        adapter.notifyDataSetChanged();
+        adapter.setCastMovieList(casts);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvCasts.setLayoutManager(llm);
+        rvCasts.setAdapter(adapter);
+        rvCasts.setHasFixedSize(true);
 
     }
 

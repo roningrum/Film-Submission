@@ -50,7 +50,6 @@ public class CastDetailViewModel extends ViewModel {
             public void onResponse(Call<CreditObjectData> call, Response<CreditObjectData> response) {
                 if (response.isSuccessful()) {
                     castCreditMovieList.setValue(response.body().getCasts());
-                    Log.d("Response Success", "Show Data " + response.body().getCasts());
                 }
 
             }
