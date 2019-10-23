@@ -30,4 +30,7 @@ public interface Api {
     @GET("/3/movie/{movie_id}/credits?api_key=" + BuildConfig.API_KEY)
     Call<CreditObjectData> getCastMovieList(@Path("movie_id") int Id, @Query("api") String api);
 
+    @GET("/3/tv/{tv_id}/credits?api_key=" + BuildConfig.API_KEY)
+    Call<CreditObjectData> getCastTvList(@Path("tv_id") int Id, @Query("api") String api);
+
 }

@@ -88,17 +88,13 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
     private int id;
-    Menu menuItem;
+    private Menu menuItem;
 
-    FavoriteViewModel favoriteViewModel;
-    MovieDetailViewModel movieDetailViewModel;
-    CastDetailViewModel castDetailViewModel;
-    MovieDetailModel movieDetailModel;
-    CastAdapter adapter;
+    private FavoriteViewModel favoriteViewModel;
+    private MovieDetailViewModel movieDetailViewModel;
 
     LiveData<MovieFavModel> movieFavModelLiveData;
     boolean isFavorite = false;
-    String api = BuildConfig.API_KEY;
 
     private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
         if (movieDetailModel != null) {
@@ -109,7 +105,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private Observer<List<Cast>> getCastMovieDetail = castMovieDetail -> {
         if (castMovieDetail != null) {
-            adapter = new CastAdapter();
+            CastAdapter adapter = new CastAdapter();
             adapter.setCastMovieList(castMovieDetail);
 
             LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -132,7 +128,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
 
-        castDetailViewModel = ViewModelProviders.of(this).get(CastDetailViewModel.class);
+        CastDetailViewModel castDetailViewModel = ViewModelProviders.of(this).get(CastDetailViewModel.class);
         castDetailViewModel.getCastCreditMovies().observe(this, getCastMovieDetail);
 
         favoriteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(FavoriteViewModel.class);
@@ -157,6 +153,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
         movieDetailViewModel.setDetailMovies(id, getString(string.language));
+        String api = BuildConfig.API_KEY;
         castDetailViewModel.setCastCreditMovies(id, api);
 
         movieFavModelLiveData = favoriteViewModel.selectMovieFav(id);
@@ -219,7 +216,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private void addToFavorite() {
 //        if (favoriteViewModel.selectMovieFav(id) == null) {
-        this.movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
+        MovieDetailModel movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
         assert movieDetailModel != null;
         int Favid = movieDetailModel.getId();
         String title = movieDetailModel.getTitle();

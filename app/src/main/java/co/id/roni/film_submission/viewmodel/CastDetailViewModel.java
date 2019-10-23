@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CastDetailViewModel extends ViewModel {
     public MutableLiveData<List<Cast>> castCreditMovieList = new MutableLiveData<>();
+    public MutableLiveData<List<Cast>> castCreditTvList = new MutableLiveData<>();
 
     private HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     private OkHttpClient client = new OkHttpClient.Builder()
@@ -43,6 +44,10 @@ public class CastDetailViewModel extends ViewModel {
         return castCreditMovieList;
     }
 
+    public LiveData<List<Cast>> getCastCreditTvs() {
+        return castCreditTvList;
+    }
+
     public void setCastCreditMovies(int id, String apiKey) {
         Call<CreditObjectData> castCreditCall = api.getCastMovieList(id, apiKey);
         castCreditCall.enqueue(new Callback<CreditObjectData>() {
@@ -50,6 +55,24 @@ public class CastDetailViewModel extends ViewModel {
             public void onResponse(Call<CreditObjectData> call, Response<CreditObjectData> response) {
                 if (response.isSuccessful()) {
                     castCreditMovieList.setValue(response.body().getCasts());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CreditObjectData> call, Throwable t) {
+                Log.w("Response Failed", "Show Error" + t.getMessage());
+            }
+        });
+    }
+
+    public void setCastCreditTvs(int id, String apiKey) {
+        Call<CreditObjectData> castCreditCall = api.getCastTvList(id, apiKey);
+        castCreditCall.enqueue(new Callback<CreditObjectData>() {
+            @Override
+            public void onResponse(Call<CreditObjectData> call, Response<CreditObjectData> response) {
+                if (response.isSuccessful()) {
+                    castCreditTvList.setValue(response.body().getCasts());
                 }
 
             }

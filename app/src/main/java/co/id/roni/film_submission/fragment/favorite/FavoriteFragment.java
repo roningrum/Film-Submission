@@ -56,7 +56,7 @@ public class FavoriteFragment extends Fragment {
 
         viewPager.setAdapter(favPagerAdapter);
         tabFavorite.setupWithViewPager(viewPager);
-        favToolbar.setTitle(R.string.tv_series);
+        favToolbar.setTitle(R.string.favorite_menu);
         favToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
     }
 
