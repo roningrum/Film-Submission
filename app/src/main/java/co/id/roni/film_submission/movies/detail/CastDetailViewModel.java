@@ -21,7 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CastDetailViewModel extends ViewModel {
-    private MutableLiveData<List<Cast>> castCreditMovieList = new MutableLiveData<>();
+    public MutableLiveData<List<Cast>> castCreditMovieList = new MutableLiveData<>();
 
     private HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     private OkHttpClient client = new OkHttpClient.Builder()
@@ -37,7 +37,6 @@ public class CastDetailViewModel extends ViewModel {
             .client(client)
             .build();
 
-
     private Api api = retrofit.create(Api.class);
 
     LiveData<List<Cast>> getCastCreditMovies() {
@@ -51,7 +50,6 @@ public class CastDetailViewModel extends ViewModel {
             public void onResponse(Call<CreditObjectData> call, Response<CreditObjectData> response) {
                 if (response.isSuccessful()) {
                     castCreditMovieList.setValue(response.body().getCasts());
-                    Log.d("Response Success", "Show Data ");
                 }
 
             }

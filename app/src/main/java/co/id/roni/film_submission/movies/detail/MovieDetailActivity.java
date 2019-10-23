@@ -105,6 +105,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
     };
 
+    private Observer<List<Cast>> getCastMovieDetail = castMovieDetail -> {
+        if(castMovieDetail != null){
+            adapter = new CastAdapter();
+            adapter.setCastMovieList(castMovieDetail);
+
+            LinearLayoutManager llm = new LinearLayoutManager(this);
+            llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+            rvCasts.setLayoutManager(llm);
+            rvCasts.setAdapter(adapter);
+            rvCasts.setHasFixedSize(true);
+        }
+    };
 
 
     @Override
@@ -118,7 +131,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
 
         castDetailViewModel = ViewModelProviders.of(this).get(CastDetailViewModel.class);
-        castDetailViewModel.getCastCreditMovies().observe(this, casts -> setCastMovie());
+        castDetailViewModel.getCastCreditMovies().observe(this, getCastMovieDetail);
 
         favoriteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(FavoriteViewModel.class);
 
@@ -180,7 +193,6 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
