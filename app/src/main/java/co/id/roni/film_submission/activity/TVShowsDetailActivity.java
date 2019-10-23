@@ -4,15 +4,20 @@ import android.annotation.SuppressLint;
 import android.graphics.Outline;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +46,9 @@ import co.id.roni.film_submission.adapter.GenreAdapter;
 import co.id.roni.film_submission.model.Cast;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.detailmodel.TVShowDetailModel;
+import co.id.roni.film_submission.model.favorite.TVShowFavModel;
 import co.id.roni.film_submission.viewmodel.CastDetailViewModel;
+import co.id.roni.film_submission.viewmodel.FavoriteViewModel;
 import co.id.roni.film_submission.viewmodel.TVShowsDetailViewModel;
 
 public class TVShowsDetailActivity extends AppCompatActivity {
@@ -77,6 +84,12 @@ public class TVShowsDetailActivity extends AppCompatActivity {
     private int id;
     private String title = "";
 
+    boolean isFavorite = false;
+    private LiveData<TVShowFavModel> tvShowFavModelLiveData;
+    private Menu menuItem;
+    private FavoriteViewModel favoriteViewModel;
+    private TVShowsDetailViewModel tvShowsDetailViewModel;
+
 
     private Observer<TVShowDetailModel> getTvDetail = tvShowDetailModel -> {
         if (tvShowDetailModel != null) {
@@ -105,16 +118,20 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tv_shows_detail);
         ButterKnife.bind(this);
 
-        TVShowsDetailViewModel tvShowsDetailViewModel = ViewModelProviders.of(this).get(TVShowsDetailViewModel.class);
+        tvShowsDetailViewModel = ViewModelProviders.of(this).get(TVShowsDetailViewModel.class);
         tvShowsDetailViewModel.getTvShowsDetail().observe(this, getTvDetail);
 
         CastDetailViewModel castDetailViewModel = ViewModelProviders.of(this).get(CastDetailViewModel.class);
         castDetailViewModel.getCastCreditTvs().observe(this, getCastTVDetail);
 
+        //favorit
+        favoriteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(FavoriteViewModel.class);
 
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
         setActionBarTitle(title);
+
+        tvShowFavModelLiveData = favoriteViewModel.selectTvFav(id);
 
         tvShowsDetailViewModel.setDetailTvShows(id, getString(R.string.language));
         String api = BuildConfig.API_KEY;
@@ -139,6 +156,70 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         bgBackdrop.setOutlineProvider(viewOutlineProvider);
     }
 
+    private void favoriteState() {
+        tvShowFavModelLiveData.observe(this, tvShowFavModel -> {
+            if (tvShowFavModel != null) {
+                menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
+                isFavorite = true;
+                invalidateOptionsMenu();
+            } else {
+                menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
+                isFavorite = false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.fav_detail_menu, menu);
+        menuItem = menu;
+//        setFavorite();
+        favoriteState();
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add_fav) {
+            if (isFavorite) {
+                removeFavorite();
+
+            } else {
+                addToFavorite();
+
+            }
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void addToFavorite() {
+        TVShowDetailModel tvShowDetailModel = tvShowsDetailViewModel.getTvShowsDetail().getValue();
+        assert tvShowDetailModel != null;
+        int favId = tvShowDetailModel.getId();
+        String name = tvShowDetailModel.getName();
+        String poster_path = tvShowDetailModel.getPoster_path();
+        String overview = tvShowDetailModel.getOverview();
+        double vote_overage = tvShowDetailModel.getVote_average();
+
+        TVShowFavModel tvShowFavModel = new TVShowFavModel();
+        tvShowFavModel.setId(favId);
+        tvShowFavModel.setName(name);
+        tvShowFavModel.setPoster_path(poster_path);
+        tvShowFavModel.setOverview(overview);
+        tvShowFavModel.setVote_average(vote_overage);
+        favoriteViewModel.insertTv(tvShowFavModel);
+
+    }
+
+    private void removeFavorite() {
+        favoriteViewModel.deleteTv(id);
+        Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
+
+
+    }
     @SuppressLint("SetTextI18n")
     private void showDetailtvModel(TVShowDetailModel tvShowDetailModel) {
         if (id == tvShowDetailModel.getId()) {
@@ -205,6 +286,7 @@ public class TVShowsDetailActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(title);
         }
     }
+
     private void showLoading(Boolean state) {
         if (state) {
             progressBar.setVisibility(View.VISIBLE);

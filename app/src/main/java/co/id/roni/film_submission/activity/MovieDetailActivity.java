@@ -87,14 +87,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     View bgBackdrop;
 
 
+    boolean isFavorite = false;
+    private LiveData<MovieFavModel> movieFavModelLiveData;
     private int id;
     private Menu menuItem;
-
     private FavoriteViewModel favoriteViewModel;
     private MovieDetailViewModel movieDetailViewModel;
 
-    LiveData<MovieFavModel> movieFavModelLiveData;
-    boolean isFavorite = false;
 
     private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
         if (movieDetailModel != null) {

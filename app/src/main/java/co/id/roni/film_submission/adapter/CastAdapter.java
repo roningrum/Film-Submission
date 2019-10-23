@@ -41,7 +41,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastMovieViewH
 
     @Override
     public int getItemCount() {
-        if(castMovieList != null)
+        if (castMovieList != null)
             return castMovieList.size();
         else
             return 0;

@@ -48,6 +48,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movieData.size();
     }
 
+    public interface OnItemClickCallback {
+        void onItemClicked(MovieModel movieData);
+    }
+
     class MovieViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_title_movie_item)
         TextView tvMovieTitle;
@@ -62,16 +66,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-        void bind(final MovieModel movies){
+
+        void bind(final MovieModel movies) {
             tvMovieTitle.setText(movies.getTitle());
             tvOverview.setText(movies.getOverview());
             tvMovieRate.setText(String.valueOf(movies.getVote_average()));
             Glide.with(itemView.getContext()).load(movies.getPoster_path()).into(imgMoviePoster);
             itemView.setOnClickListener(v -> onItemClickCallback.onItemClicked(movieData.get(getAdapterPosition())));
         }
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(MovieModel movieData);
     }
 }

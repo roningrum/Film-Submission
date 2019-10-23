@@ -11,18 +11,26 @@ import java.util.concurrent.ExecutionException;
 
 import co.id.roni.film_submission.data.MovieDao;
 import co.id.roni.film_submission.data.MovieDatabase;
+import co.id.roni.film_submission.data.TvDao;
 import co.id.roni.film_submission.model.favorite.MovieFavModel;
+import co.id.roni.film_submission.model.favorite.TVShowFavModel;
 
 public class FavoriteRepository {
     private MovieDao movieDao;
+    private TvDao tvDao;
     private LiveData<List<MovieFavModel>> allMovieFavs;
+    private LiveData<List<TVShowFavModel>> allTvFavs;
 
     public FavoriteRepository(Application application) {
         MovieDatabase database = MovieDatabase.getDatabase(application);
         movieDao = database.movieDao();
+        tvDao = database.tvDao();
+
         allMovieFavs = movieDao.getAllMovieFavs();
+        allTvFavs = tvDao.getAllTvFavs();
     }
 
+    //Movie Favorite
     public void insert(MovieFavModel movieFavModel) {
         new InsertMovieFavsAsyncTask(movieDao).execute(movieFavModel);
     }
@@ -34,7 +42,6 @@ public class FavoriteRepository {
             e.printStackTrace();
         }
     }
-
     public LiveData<MovieFavModel> selectMovieAsFav(int movieId) {
         LiveData<MovieFavModel> movieFavModel = new MutableLiveData<>();
         try {
@@ -49,8 +56,34 @@ public class FavoriteRepository {
         return allMovieFavs;
     }
 
+    //Tv Favorite
+    public void insertTvFav(TVShowFavModel tvShowFavModel) {
+        new InsertTvFavsAsyncTask(tvDao).execute(tvShowFavModel);
+    }
 
-    private class InsertMovieFavsAsyncTask extends AsyncTask<MovieFavModel, Void, Void> {
+    public void deleteTvFav(int tvId) {
+        try {
+            new DeleteTvFavsAsyncTask(tvDao).execute(tvId).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public LiveData<TVShowFavModel> selectTvAsFav(int tvId) {
+        LiveData<TVShowFavModel> tvFavModel = new MutableLiveData<>();
+        try {
+            tvFavModel = new SelectTvFavAsyncTask(tvDao).execute(tvId).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return tvFavModel;
+    }
+
+    public LiveData<List<TVShowFavModel>> getAllTvFavs() {
+        return allTvFavs;
+    }
+
+    private static class InsertMovieFavsAsyncTask extends AsyncTask<MovieFavModel, Void, Void> {
         private MovieDao movieDao;
 
         InsertMovieFavsAsyncTask(MovieDao movieDao) {
@@ -64,8 +97,7 @@ public class FavoriteRepository {
         }
     }
 
-
-    private class SelectMovieFavAsycTask extends AsyncTask<Integer, Void, LiveData<MovieFavModel>> {
+    private static class SelectMovieFavAsycTask extends AsyncTask<Integer, Void, LiveData<MovieFavModel>> {
         private MovieDao movieDao;
 
         SelectMovieFavAsycTask(MovieDao movieDao) {
@@ -78,10 +110,10 @@ public class FavoriteRepository {
         }
     }
 
-    private class DeleteMovieFavsAsyncTask extends AsyncTask<Integer, Void, Void> {
+    private static class DeleteMovieFavsAsyncTask extends AsyncTask<Integer, Void, Void> {
         private MovieDao movieDao;
 
-        public DeleteMovieFavsAsyncTask(MovieDao movieDao) {
+        DeleteMovieFavsAsyncTask(MovieDao movieDao) {
             this.movieDao = movieDao;
 
         }
@@ -89,6 +121,49 @@ public class FavoriteRepository {
         @Override
         protected Void doInBackground(Integer... integers) {
             movieDao.deleteFavorite(integers[0]);
+            return null;
+        }
+    }
+
+    //tambah, hapus, menampilkan data tv favorit ke TvFragment
+    private static class InsertTvFavsAsyncTask extends AsyncTask<TVShowFavModel, Void, Void> {
+        private TvDao tvDao;
+
+        InsertTvFavsAsyncTask(TvDao tvDao) {
+            this.tvDao = tvDao;
+        }
+
+        @Override
+        protected Void doInBackground(TVShowFavModel... tvShowFavModels) {
+            tvDao.insert(tvShowFavModels[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteTvFavsAsyncTask extends AsyncTask<Integer, Void, Void> {
+        private TvDao tvDao;
+
+        DeleteTvFavsAsyncTask(TvDao tvDao) {
+            this.tvDao = tvDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            tvDao.deleteFavorite(integers[0]);
+            return null;
+        }
+    }
+
+    private static class SelectTvFavAsyncTask extends AsyncTask<Integer, Void, LiveData<TVShowFavModel>> {
+        private TvDao tvDao;
+
+        SelectTvFavAsyncTask(TvDao tvDao) {
+            this.tvDao = tvDao;
+        }
+
+        @Override
+        protected LiveData<TVShowFavModel> doInBackground(Integer... integers) {
+            tvDao.selectByIdTv(integers[0]);
             return null;
         }
     }

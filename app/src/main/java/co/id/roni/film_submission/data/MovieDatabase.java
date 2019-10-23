@@ -10,11 +10,10 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import co.id.roni.film_submission.model.favorite.MovieFavModel;
+import co.id.roni.film_submission.model.favorite.TVShowFavModel;
 
-@Database(entities = {MovieFavModel.class}, version = 1)
+@Database(entities = {MovieFavModel.class, TVShowFavModel.class}, version = 4)
 public abstract class MovieDatabase extends RoomDatabase {
-    public abstract MovieDao movieDao();
-
     private static MovieDatabase instance;
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
@@ -36,17 +35,24 @@ public abstract class MovieDatabase extends RoomDatabase {
         return instance;
     }
 
+    public abstract MovieDao movieDao();
+
+    public abstract TvDao tvDao();
+
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private MovieDao movieDao;
+        private TvDao tvDao;
 
-        public PopulateDbAsyncTask(MovieDatabase db) {
+        PopulateDbAsyncTask(MovieDatabase db) {
             movieDao = db.movieDao();
+            tvDao = db.tvDao();
 
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             movieDao.insert(new MovieFavModel());
+            tvDao.insert(new TVShowFavModel());
             return null;
         }
     }
