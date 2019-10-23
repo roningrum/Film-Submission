@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.stetho.Stetho;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -127,18 +128,6 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         //favorit
         favoriteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(FavoriteViewModel.class);
 
-        Log.d("Check Id", "Movie Id" + id);
-        id = getIntent().getIntExtra("id", id);
-        setActionBarTitle(title);
-
-        tvShowFavModelLiveData = favoriteViewModel.selectTvFav(id);
-
-        tvShowsDetailViewModel.setDetailTvShows(id, getString(R.string.language));
-        String api = BuildConfig.API_KEY;
-        castDetailViewModel.setCastCreditTvs(id, api);
-        showLoading(true);
-
-        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -154,6 +143,19 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         bgBackdrop.setClipToOutline(true);
         imgDetailBackDropTV.setOutlineProvider(viewOutlineProvider);
         bgBackdrop.setOutlineProvider(viewOutlineProvider);
+
+        Log.d("Check Id", "Movie Id" + id);
+        id = getIntent().getIntExtra("id", id);
+        setActionBarTitle(title);
+
+        tvShowsDetailViewModel.setDetailTvShows(id, getString(R.string.language));
+        String api = BuildConfig.API_KEY;
+        castDetailViewModel.setCastCreditTvs(id, api);
+        showLoading(true);
+        tvShowFavModelLiveData = favoriteViewModel.selectTvFav(id);
+
+
+        Stetho.initializeWithDefaults(this);
     }
 
     private void favoriteState() {
