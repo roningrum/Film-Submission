@@ -19,6 +19,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -32,16 +33,20 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.id.roni.film_submission.BuildConfig;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.adapter.CastAdapter;
 import co.id.roni.film_submission.adapter.GenreAdapter;
 import co.id.roni.film_submission.favorite.movie.FavoriteViewModel;
 import co.id.roni.film_submission.favorite.movie.MovieFavModel;
+import co.id.roni.film_submission.model.Cast;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
 
@@ -63,6 +68,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView tvDetailReleaseDateMovie;
     @BindView(R.id.rv_genre_movie_detail)
     RecyclerView rvGenreList;
+    @BindView(R.id.rv_casts)
+    RecyclerView rvCasts;
+
     @BindView(R.id.pb_loading)
     ProgressBar progressBar;
 
@@ -82,15 +90,29 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     FavoriteViewModel favoriteViewModel;
     MovieDetailViewModel movieDetailViewModel;
+    CastDetailViewModel castDetailViewModel;
     MovieDetailModel movieDetailModel;
+    CastAdapter adapter;
 
     LiveData<MovieFavModel> movieFavModelLiveData;
     boolean isFavorite = false;
+    String api = BuildConfig.API_KEY;
 
     private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
         if (movieDetailModel != null) {
             showDetailMovie(movieDetailModel);
             showLoading(false);
+        }
+    };
+
+    private Observer<List<Cast>> getCastListMovie = new Observer<List<Cast>>() {
+        @Override
+        public void onChanged(List<Cast> casts) {
+            if (casts != null) {
+                adapter.setCastMovieList((ArrayList<Cast>) casts);
+                showLoading(false);
+                Log.w("Check ae", "" + casts);
+            }
         }
     };
 
@@ -104,6 +126,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.getMovieDetail().observe(this, getMovieDetail);
+
+        castDetailViewModel = ViewModelProviders.of(this).get(CastDetailViewModel.class);
+        castDetailViewModel.getCastCreditMovies().observe(this, getCastListMovie);
 
         favoriteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(FavoriteViewModel.class);
 
@@ -127,6 +152,21 @@ public class MovieDetailActivity extends AppCompatActivity {
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
         movieDetailViewModel.setDetailMovies(id, getString(string.language));
+        castDetailViewModel.setCastCreditMovies(id, api);
+
+
+        adapter = new CastAdapter();
+        adapter.notifyDataSetChanged();
+
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvCasts.setLayoutManager(llm);
+        rvCasts.setAdapter(adapter);
+        rvCasts.setHasFixedSize(true);
+
+
 
         movieFavModelLiveData = favoriteViewModel.selectMovieFav(id);
 //        favoriteState();
@@ -135,7 +175,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         Stetho.initializeWithDefaults(this);
 
     }
-
     private void favoriteState() {
         movieFavModelLiveData.observe(this, it -> {
             if(it != null) {

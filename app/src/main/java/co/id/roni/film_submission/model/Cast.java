@@ -13,7 +13,7 @@ public class Cast {
     }
 
     public String getProfile_path() {
-        return profile_path;
+        return "http://image.tmdb.org/t/p/w185/" + profile_path;
     }
 
     public void setProfile_path(String profile_path) {
