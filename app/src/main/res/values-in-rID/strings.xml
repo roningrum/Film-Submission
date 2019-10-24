@@ -20,4 +20,6 @@
     <string name="casts">Pemain</string>
     <string name="Language">Bahasa</string>
     <string name="setting">Pengaturan</string>
+    <string name="add_favorite">DiTambah Ke Favorit</string>
+    <string name="remove_favorite">Dihapus dari Favorit</string>
 </resources>

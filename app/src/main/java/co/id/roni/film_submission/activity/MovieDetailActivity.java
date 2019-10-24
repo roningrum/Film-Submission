@@ -205,14 +205,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void removeFavorite() {
-//        if (favoriteViewModel.selectMovieFav(id) != null) {
-//            isFavorite = false;
         favoriteViewModel.delete(id);
-//            menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
-        Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
-//        }
-//        menuItem.getItem(0).setIcon(R.drawable.ic_favorite_border);
-
+        Toast.makeText(this, getString(R.string.remove_favorite), Toast.LENGTH_SHORT).show();
     }
 
     private void addToFavorite() {
@@ -240,7 +234,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 //            isFavorite = true;
         favoriteViewModel.insert(favorite);
 //            menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
-        Toast.makeText(this, "Sukses Favorite", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.add_favorite), Toast.LENGTH_SHORT).show();
 //        }
 //        menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
     }

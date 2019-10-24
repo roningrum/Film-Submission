@@ -20,4 +20,6 @@
     <string name="casts">Cast</string>
     <string name="Language">Language</string>
     <string name="setting">Setting</string>
+    <string name="remove_favorite">Removed from favorite</string>
+    <string name="add_favorite">Add to Favorite</string>
 </resources>
