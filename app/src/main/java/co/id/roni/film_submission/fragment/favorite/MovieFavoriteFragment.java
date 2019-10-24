@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.activity.MovieDetailActivity;
 import co.id.roni.film_submission.adapter.favorite.MovieFavoriteAdapter;
-import co.id.roni.film_submission.model.favorite.MovieFavModel;
 import co.id.roni.film_submission.viewmodel.FavoriteViewModel;
 
 
@@ -51,7 +50,7 @@ public class MovieFavoriteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        MovieFavoriteAdapter movieFavoriteAdapter = new MovieFavoriteAdapter(new ArrayList<MovieFavModel>());
+        MovieFavoriteAdapter movieFavoriteAdapter = new MovieFavoriteAdapter(new ArrayList<>());
         rvMoviesFavs.setAdapter(movieFavoriteAdapter);
         rvMoviesFavs.setLayoutManager(new LinearLayoutManager(getContext()));
         movieFavoriteAdapter.setOnItemClickCallback(movieData -> {
