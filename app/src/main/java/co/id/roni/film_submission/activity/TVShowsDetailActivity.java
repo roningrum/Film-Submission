@@ -215,12 +215,13 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         tvShowFavModel.setOverview(overview);
         tvShowFavModel.setVote_average(vote_overage);
         favoriteViewModel.insertTv(tvShowFavModel);
+        Toast.makeText(this, getString(R.string.add_favorite), Toast.LENGTH_SHORT).show();
 
     }
 
     private void removeFavorite() {
         favoriteViewModel.deleteTv(id);
-        Toast.makeText(this, "Remove Favorite", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.remove_favorite), Toast.LENGTH_SHORT).show();
 
 
     }
