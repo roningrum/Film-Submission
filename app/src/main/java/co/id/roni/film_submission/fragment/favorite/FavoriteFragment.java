@@ -37,8 +37,6 @@ public class FavoriteFragment extends Fragment {
     @BindView(R.id.toolbar)
     Toolbar favToolbar;
 
-    private ViewPagerAdapter favPagerAdapter;
-
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -57,7 +55,7 @@ public class FavoriteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        favPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        ViewPagerAdapter favPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         favPagerAdapter.addFragment(new MovieFavoriteFragment(), getString(R.string.movie));
         favPagerAdapter.addFragment(new TVFavoriteFragment(), getString(R.string.tv_series));
 

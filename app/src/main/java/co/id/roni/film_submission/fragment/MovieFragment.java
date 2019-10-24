@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -25,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.activity.MovieDetailActivity;
+import co.id.roni.film_submission.activity.SettingActivity;
 import co.id.roni.film_submission.adapter.MovieAdapter;
 import co.id.roni.film_submission.model.MovieModel;
 import co.id.roni.film_submission.viewmodel.MovieViewModel;
@@ -64,6 +69,7 @@ public class MovieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_movie, container, false);
     }
 
@@ -92,8 +98,23 @@ public class MovieFragment extends Fragment {
         showLoading(true);
         toolbarMovie.setTitle(R.string.movie);
         toolbarMovie.setTitleTextColor(getResources().getColor(android.R.color.white));
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbarMovie);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_setting) {
+            Intent settingIntent = new Intent(getActivity(), SettingActivity.class);
+            startActivity(settingIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void showLoading(Boolean state) {
         if (state) {
             progressBar.setVisibility(View.VISIBLE);
