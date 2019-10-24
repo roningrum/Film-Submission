@@ -163,8 +163,7 @@ public class FavoriteRepository {
 
         @Override
         protected LiveData<TVShowFavModel> doInBackground(Integer... integers) {
-            tvDao.selectByIdTv(integers[0]);
-            return null;
+            return tvDao.selectByIdTv(integers[0]);
         }
     }
 }

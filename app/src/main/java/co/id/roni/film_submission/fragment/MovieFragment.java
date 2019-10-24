@@ -92,7 +92,6 @@ public class MovieFragment extends Fragment {
         showLoading(true);
         toolbarMovie.setTitle(R.string.movie);
         toolbarMovie.setTitleTextColor(getResources().getColor(android.R.color.white));
-
     }
 
     private void showLoading(Boolean state) {
@@ -102,5 +101,4 @@ public class MovieFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
         }
     }
-
 }
