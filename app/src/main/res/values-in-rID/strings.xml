@@ -18,4 +18,6 @@
     <string name="favorite_menu">Favorit</string>
     <string name="coming_soon">Segera Hadir</string>
     <string name="casts">Pemain</string>
+    <string name="Language">Bahasa</string>
+    <string name="setting">Pengaturan</string>
 </resources>

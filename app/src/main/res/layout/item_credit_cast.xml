@@ -10,7 +10,6 @@
     android:padding="4dp">
 
     <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
-        android:id="@+id/img_cast_layout"
         android:layout_width="125dp"
         android:layout_height="150dp"
         app:corner_radius="8dp">
