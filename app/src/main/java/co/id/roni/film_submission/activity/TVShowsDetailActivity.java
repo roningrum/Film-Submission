@@ -96,6 +96,8 @@ public class TVShowsDetailActivity extends AppCompatActivity {
         if (tvShowDetailModel != null) {
             showDetailtvModel(tvShowDetailModel);
             showLoading(false);
+        } else {
+            showLoading(true);
         }
     };
 

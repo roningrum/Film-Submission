@@ -56,6 +56,8 @@ public class MovieFragment extends Fragment {
             if (movieModels != null) {
                 movieAdapter.setMovieData((ArrayList<MovieModel>) movieModels);
                 showLoading(false);
+            } else {
+                showLoading(true);
             }
         }
     };
@@ -115,6 +117,8 @@ public class MovieFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
     private void showLoading(Boolean state) {
         if (state) {
             progressBar.setVisibility(View.VISIBLE);

@@ -99,6 +99,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (movieDetailModel != null) {
             showDetailMovie(movieDetailModel);
             showLoading(false);
+        } else {
+            showLoading(true);
         }
     };
 

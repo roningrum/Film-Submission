@@ -60,6 +60,8 @@ public class TVShowsFragment extends Fragment {
             if (tvModels != null) {
                 tvShowsAdapter.setMovieData((ArrayList<TVShowModel>) tvModels);
                 showLoading(false);
+            } else {
+                showLoading(true);
             }
         }
     };
