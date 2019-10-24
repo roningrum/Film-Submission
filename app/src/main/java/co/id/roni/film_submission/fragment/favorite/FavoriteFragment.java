@@ -1,13 +1,18 @@
 package co.id.roni.film_submission.fragment.favorite;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -17,6 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.activity.SettingActivity;
 import co.id.roni.film_submission.adapter.tab.ViewPagerAdapter;
 
 
@@ -42,6 +48,7 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_favorite, container, false);
     }
 
@@ -58,7 +65,21 @@ public class FavoriteFragment extends Fragment {
         tabFavorite.setupWithViewPager(viewPager);
         favToolbar.setTitle(R.string.favorite_menu);
         favToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        ((AppCompatActivity) getActivity()).setSupportActionBar(favToolbar);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_setting) {
+            Intent settingIntent = new Intent(getActivity(), SettingActivity.class);
+            startActivity(settingIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

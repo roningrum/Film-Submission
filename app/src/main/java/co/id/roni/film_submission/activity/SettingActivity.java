@@ -26,8 +26,7 @@ public class SettingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(settingToolbar);
-        settingToolbar.setTitle(R.string.setting);
-        settingToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        getSupportActionBar().setTitle(R.string.setting);
 
         tvSettingLanguage.setOnClickListener(v -> {
             Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);

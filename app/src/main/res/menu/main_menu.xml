@@ -5,5 +5,5 @@
         android:id="@+id/action_setting"
         android:icon="@drawable/ic_settings"
         android:title="@string/change_language"
-        app:showAsAction="ifRoom|always" />
+        app:showAsAction="ifRoom" />
 </menu>
