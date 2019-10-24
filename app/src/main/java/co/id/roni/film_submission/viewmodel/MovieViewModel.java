@@ -19,7 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieViewModel extends ViewModel {
     private MutableLiveData<List<MovieModel>> listMovies = new MutableLiveData<>();
-
     private Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Api.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
