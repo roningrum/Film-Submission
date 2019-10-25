@@ -31,16 +31,13 @@ import com.google.android.flexbox.JustifyContent;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.BuildConfig;
+import co.id.roni.film_submission.Helper;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.CastAdapter;
 import co.id.roni.film_submission.adapter.GenreAdapter;
@@ -257,21 +254,10 @@ public class MovieDetailActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(movieDetailModel.getBackdrop_path()).into(imgDetailBackDropMovie);
             Glide.with(getApplicationContext()).load(movieDetailModel.getPoster_path()).into(imgDetailPosterMovie);
 
+            String release_date = movieDetailModel.getRelease_date();
+            Helper datehelper = new Helper();
+            tvDetailReleaseDateMovie.setText(datehelper.getReleaseDate(release_date));
             getGenreList(movieDetailModel);
-            getReleaseDate(movieDetailModel);
-        }
-    }
-
-    private void getReleaseDate(MovieDetailModel movieDetailModel) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        String date = movieDetailModel.getRelease_date();
-        try {
-            Date newDate = dateFormat.parse(date);
-            dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
-            assert newDate != null;
-            tvDetailReleaseDateMovie.setText(dateFormat.format(newDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
     }
 

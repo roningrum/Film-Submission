@@ -31,16 +31,13 @@ import com.google.android.flexbox.JustifyContent;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.BuildConfig;
+import co.id.roni.film_submission.Helper;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.CastAdapter;
 import co.id.roni.film_submission.adapter.GenreAdapter;
@@ -245,7 +242,6 @@ public class TVShowsDetailActivity extends AppCompatActivity {
                         toolbar.setTitle("");
                         isVisible = false;
                     }
-
                 }
             });
             tvDetailTitleTvShow.setText(tvShowDetailModel.getName());
@@ -254,22 +250,11 @@ public class TVShowsDetailActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(tvShowDetailModel.getBackdrop_path()).into(imgDetailBackDropTV);
             Glide.with(getApplicationContext()).load(tvShowDetailModel.getPoster_path()).into(imgDetailPosterTV);
 
+            String release_date = tvShowDetailModel.getFirst_air_date();
+            Helper datehelper = new Helper();
+            tvReleaseFirstDateTvShow.setText(datehelper.getReleaseDate(release_date));
+
             getGenreList(tvShowDetailModel);
-            getFirstReleaseDate(tvShowDetailModel);
-
-        }
-    }
-
-    private void getFirstReleaseDate(TVShowDetailModel tvShowDetailModel) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        String date = tvShowDetailModel.getFirst_air_date();
-        try {
-            Date newDate = dateFormat.parse(date);
-            dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
-            assert newDate != null;
-            tvReleaseFirstDateTvShow.setText(dateFormat.format(newDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
     }
 
