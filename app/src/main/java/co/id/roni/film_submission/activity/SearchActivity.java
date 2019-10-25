@@ -3,8 +3,8 @@ package co.id.roni.film_submission.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -15,10 +15,14 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.fragment.SearchMovieFragment;
 
 public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar searchToolbar;
+
+    public static String SEARCH_QUERY = "search";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(searchToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
     @Override
@@ -44,7 +49,12 @@ public class SearchActivity extends AppCompatActivity {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    Toast.makeText(SearchActivity.this, query, Toast.LENGTH_LONG).show();
+                    Bundle data = new Bundle();
+                    data.putString(SEARCH_QUERY, query);
+                    SearchMovieFragment fragment = new SearchMovieFragment();
+                    fragment.setArguments(data);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container_result, fragment).commit();
+                    Log.d("Query", " Key " + SEARCH_QUERY + " queyKey " + query);
                     return true;
                 }
 

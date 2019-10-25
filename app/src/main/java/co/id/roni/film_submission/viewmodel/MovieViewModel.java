@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import co.id.roni.film_submission.BuildConfig;
 import co.id.roni.film_submission.model.MovieModel;
 import co.id.roni.film_submission.objectdata.MovieObjectData;
 import co.id.roni.film_submission.service.Api;
@@ -45,8 +44,8 @@ public class MovieViewModel extends ViewModel {
         });
     }
 
-    public void setListSearchMovieResult(String language, String query) {
-        Call<MovieObjectData> movieSearchObjectCall = api.getMovieSearchResult(BuildConfig.API_KEY, language, query);
+    public void setListSearchMovieResult(String apiKey, String query, String language) {
+        Call<MovieObjectData> movieSearchObjectCall = api.getMovieSearchResult(apiKey, query, language);
         movieSearchObjectCall.enqueue(new Callback<MovieObjectData>() {
             @Override
             public void onResponse(Call<MovieObjectData> call, Response<MovieObjectData> response) {

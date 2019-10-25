@@ -1,19 +1,51 @@
 package co.id.roni.film_submission.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import co.id.roni.film_submission.BuildConfig;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.activity.MovieDetailActivity;
+import co.id.roni.film_submission.activity.SearchActivity;
+import co.id.roni.film_submission.adapter.MovieAdapter;
+import co.id.roni.film_submission.model.MovieModel;
+import co.id.roni.film_submission.viewmodel.MovieViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchMovieFragment extends Fragment {
+    @BindView(R.id.rv_movie_search_result)
+    RecyclerView rvMovieSearchResult;
+
+    private MovieAdapter movieAdapter;
+
+    private Observer<List<MovieModel>> getMovieResults = new Observer<List<MovieModel>>() {
+        @Override
+        public void onChanged(List<MovieModel> movieModels) {
+            if (movieModels != null) {
+                movieAdapter.setMovieData((ArrayList<MovieModel>) movieModels);
+            }
+        }
+    };
 
 
     public SearchMovieFragment() {
@@ -28,4 +60,30 @@ public class SearchMovieFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search_movie, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+
+        MovieViewModel movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+        movieViewModel.getListMovies().observe(this, getMovieResults);
+
+        movieAdapter = new MovieAdapter();
+        movieAdapter.notifyDataSetChanged();
+
+        movieAdapter.setOnItemClickCallback(movieData -> {
+            Intent searchMovieResultIntent = new Intent(getActivity(), MovieDetailActivity.class);
+            searchMovieResultIntent.putExtra("id", movieData.getId());
+            startActivity(searchMovieResultIntent);
+
+        });
+
+        rvMovieSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvMovieSearchResult.setAdapter(movieAdapter);
+
+        String queryResult = getArguments().getString(SearchActivity.SEARCH_QUERY);
+        Log.d("Query Result", " Result " + queryResult);
+        movieViewModel.setListSearchMovieResult(BuildConfig.API_KEY, queryResult, getResources().getString(R.string.language));
+
+    }
 }
