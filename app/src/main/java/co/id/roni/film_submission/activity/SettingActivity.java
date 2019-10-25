@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
@@ -27,7 +29,9 @@ public class SettingActivity extends AppCompatActivity {
 
         setSupportActionBar(settingToolbar);
         settingToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        getSupportActionBar().setTitle(R.string.setting);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.setting);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         tvSettingLanguage.setOnClickListener(v -> {
             Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);

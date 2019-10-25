@@ -17,7 +17,6 @@ import co.id.roni.film_submission.fragment.favorite.FavoriteFragment;
 public class MainHomeActivity extends AppCompatActivity {
     @BindView(R.id.navigation_menu_home)
     BottomNavigationView navigationView;
-
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             menuItem -> {
                 Fragment fragment;

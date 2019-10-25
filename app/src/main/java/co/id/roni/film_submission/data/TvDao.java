@@ -26,6 +26,4 @@ public interface TvDao {
     @Query("DELETE FROM tbTVShowFav WHERE id = :id")
     void deleteFavorite(int id);
 
-    @Query("DELETE FROM tbTVShowFav")
-    void deleteAllFavorite();
 }

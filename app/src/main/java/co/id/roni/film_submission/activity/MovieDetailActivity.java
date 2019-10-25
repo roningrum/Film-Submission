@@ -158,9 +158,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         castDetailViewModel.setCastCreditMovies(id, api);
 
         movieFavModelLiveData = favoriteViewModel.selectMovieFav(id);
-//        favoriteState();
         showLoading(true);
-
         Stetho.initializeWithDefaults(this);
 
     }
@@ -182,7 +180,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.fav_detail_menu, menu);
         menuItem = menu;
-//        setFavorite();
         favoriteState();
         return true;
     }
@@ -192,16 +189,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_add_fav) {
             if (isFavorite) {
                 removeFavorite();
-
             } else {
                 addToFavorite();
-
             }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
-
     }
 
     private void removeFavorite() {
@@ -210,7 +204,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void addToFavorite() {
-//        if (favoriteViewModel.selectMovieFav(id) == null) {
         MovieDetailModel movieDetailModel = movieDetailViewModel.getMovieDetail1(id, getString(string.language)).getValue();
         assert movieDetailModel != null;
         int Favid = movieDetailModel.getId();
@@ -230,24 +223,17 @@ public class MovieDetailActivity extends AppCompatActivity {
         favorite.setPoster_path(poster_path);
         favorite.setOverview(overview);
         favorite.setVote_average(vote_average);
-
-//            isFavorite = true;
         favoriteViewModel.insert(favorite);
-//            menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
         Toast.makeText(this, getString(R.string.add_favorite), Toast.LENGTH_SHORT).show();
-//        }
-//        menuItem.getItem(0).setIcon(R.drawable.ic_add_favorite_24dp);
     }
 
     @SuppressLint("SetTextI18n")
     private void showDetailMovie(MovieDetailModel movieDetailModel) {
         if (id == movieDetailModel.getId()) {
-
             String title = movieDetailModel.getTitle();
             appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                 boolean isVisible = true;
                 int scrollRange = -1;
-
                 @Override
                 public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                     if (scrollRange == -1) {
@@ -260,10 +246,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                         toolbar.setTitle("");
                         isVisible = false;
                     }
-
                 }
             });
-
 
             String duration = String.valueOf(movieDetailModel.getRuntime());
             tvDetailRunTimeMovie.setText(duration + " " + getString(string.minute));
@@ -302,9 +286,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         layoutManager.setAlignItems(AlignItems.BASELINE);
         rvGenreList.setLayoutManager(layoutManager);
         rvGenreList.setAdapter(genreAdapter);
-
     }
-
 
     private void showLoading(Boolean state) {
         if (state) {

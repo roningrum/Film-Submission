@@ -46,7 +46,6 @@ public abstract class MovieDatabase extends RoomDatabase {
         PopulateDbAsyncTask(MovieDatabase db) {
             movieDao = db.movieDao();
             tvDao = db.tvDao();
-
         }
 
         @Override
