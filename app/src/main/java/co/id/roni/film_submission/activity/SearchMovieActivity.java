@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.fragment.SearchMovieFragment;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchMovieActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar searchToolbar;
 

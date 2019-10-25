@@ -30,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.activity.MovieDetailActivity;
-import co.id.roni.film_submission.activity.SearchActivity;
+import co.id.roni.film_submission.activity.SearchMovieActivity;
 import co.id.roni.film_submission.activity.SettingActivity;
 import co.id.roni.film_submission.adapter.MovieAdapter;
 import co.id.roni.film_submission.model.MovieModel;
@@ -115,7 +115,7 @@ public class MovieFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                Intent searchIntent = new Intent(getActivity(), SearchActivity.class);
+                Intent searchIntent = new Intent(getActivity(), SearchMovieActivity.class);
                 startActivity(searchIntent);
                 return true;
             case R.id.action_setting:

@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import co.id.roni.film_submission.BuildConfig;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.activity.MovieDetailActivity;
-import co.id.roni.film_submission.activity.SearchActivity;
+import co.id.roni.film_submission.activity.SearchMovieActivity;
 import co.id.roni.film_submission.adapter.MovieAdapter;
 import co.id.roni.film_submission.model.MovieModel;
 import co.id.roni.film_submission.viewmodel.MovieViewModel;
@@ -81,7 +81,8 @@ public class SearchMovieFragment extends Fragment {
         rvMovieSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMovieSearchResult.setAdapter(movieAdapter);
 
-        String queryResult = getArguments().getString(SearchActivity.SEARCH_QUERY);
+        assert getArguments() != null;
+        String queryResult = getArguments().getString(SearchMovieActivity.SEARCH_QUERY);
         Log.d("Query Result", " Result " + queryResult);
         movieViewModel.setListSearchMovieResult(BuildConfig.API_KEY, queryResult, getResources().getString(R.string.language));
 
