@@ -18,6 +18,9 @@ public interface Api {
     @GET("3/discover/movie?api_key=" + BuildConfig.API_KEY + "&sort_by=popularity.desc&include_adult=false&include_video=false")
     Call<MovieObjectData> getMovieList(@Query("id") int Id, @Query("language") String language);
 
+    @GET("3/discover/movie?api_key=" + BuildConfig.API_KEY)
+    Call<MovieObjectData> getNowPlayMovieList(@Query("id") int Id, @Query("language") String language, @Query("api") String api);
+
     @GET("3/discover/tv?api_key=" + BuildConfig.API_KEY + "&sort_by=popularity.desc&include_adult=false&include_video=false")
     Call<TvShowsObject> getTVList(@Query("id") int Id, @Query("language") String language);
 

@@ -96,7 +96,7 @@ public class MovieFragment extends Fragment {
             Log.d("Check Intent Id", "Movie Id" + movieData.getId());
             startActivity(intent);
         });
-        movieViewModel.setListMovies(1, getString(R.string.language));
+        movieViewModel.setListMovies(getId(), getString(R.string.language));
         showLoading(true);
         toolbarMovie.setTitle(R.string.movie);
         toolbarMovie.setTitleTextColor(getResources().getColor(android.R.color.white));

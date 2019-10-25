@@ -21,4 +21,6 @@
     <string name="setting">Pengaturan</string>
     <string name="add_favorite">DiTambah Ke Favorit</string>
     <string name="remove_favorite">Dihapus dari Favorit</string>
+    <string name="playing_now">Tayang Sekarang</string>
+    <string name="popular">Populer</string>
 </resources>

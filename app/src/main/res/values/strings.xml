@@ -21,5 +21,7 @@
     <string name="setting">Setting</string>
     <string name="remove_favorite">Removed from favorite</string>
     <string name="add_favorite">Add to Favorite</string>
+    <string name="playing_now">Playing Now</string>
+    <string name="popular">Popular</string>
 
 </resources>
