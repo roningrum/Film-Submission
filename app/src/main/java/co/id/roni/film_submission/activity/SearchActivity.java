@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -40,6 +41,18 @@ public class SearchActivity extends AppCompatActivity {
             searchView.setIconified(false);
             searchView.setQueryHint(getString(R.string.key_search));
             searchView.onActionViewExpanded();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Toast.makeText(SearchActivity.this, query, Toast.LENGTH_LONG).show();
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
 
         }
 
