@@ -22,4 +22,5 @@
     <string name="add_favorite">DiTambah Ke Favorit</string>
     <string name="remove_favorite">Dihapus dari Favorit</string>
     <string name="search">Cari</string>
+    <string name="key_search">Cari Film</string>
 </resources>
