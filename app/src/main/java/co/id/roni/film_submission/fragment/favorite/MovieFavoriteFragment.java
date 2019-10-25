@@ -58,6 +58,10 @@ public class MovieFavoriteFragment extends Fragment {
             startActivity(intent);
         });
         FavoriteViewModel movieFavModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(FavoriteViewModel.class);
-        movieFavModel.getMovieLivesData().observe(this, movieFavoriteAdapter::setMovieFavModels);
+        movieFavModel.getMovieLivesData().observe(this, movieFavModels -> {
+            if (movieFavModels != null) {
+                movieFavoriteAdapter.setMovieFavModels(movieFavModels);
+            }
+        });
     }
 }

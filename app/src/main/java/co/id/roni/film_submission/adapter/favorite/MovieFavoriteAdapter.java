@@ -43,6 +43,7 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
 
     @Override
     public int getItemCount() {
+
         return movieFavModels.size();
     }
 
