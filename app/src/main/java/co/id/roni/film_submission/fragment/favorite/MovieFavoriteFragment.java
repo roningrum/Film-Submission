@@ -33,11 +33,9 @@ public class MovieFavoriteFragment extends Fragment {
     @BindView(R.id.rv_movies_favs)
     RecyclerView rvMoviesFavs;
 
-
     public MovieFavoriteFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,10 +57,7 @@ public class MovieFavoriteFragment extends Fragment {
             Log.d("Check Intent Id", "Movie Id" + movieData.getId());
             startActivity(intent);
         });
-
         FavoriteViewModel movieFavModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(FavoriteViewModel.class);
         movieFavModel.getMovieLivesData().observe(this, movieFavoriteAdapter::setMovieFavModels);
-
-
     }
 }
