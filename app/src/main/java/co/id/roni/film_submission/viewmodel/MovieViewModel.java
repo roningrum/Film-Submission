@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import co.id.roni.film_submission.BuildConfig;
 import co.id.roni.film_submission.model.MovieModel;
 import co.id.roni.film_submission.objectdata.MovieObjectData;
 import co.id.roni.film_submission.service.Api;
@@ -23,7 +24,6 @@ public class MovieViewModel extends ViewModel {
             .baseUrl(Api.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-
     private Api api = retrofit.create(Api.class);
 
     public void setListMovies(int id, String language) {
@@ -36,6 +36,23 @@ public class MovieViewModel extends ViewModel {
                     listMovies.setValue(response.body().getResults());
                 }
 
+            }
+
+            @Override
+            public void onFailure(Call<MovieObjectData> call, Throwable t) {
+                Log.w("Response Failed", "" + t.getMessage());
+            }
+        });
+    }
+
+    public void setListSearchMovieResult(String language, String query) {
+        Call<MovieObjectData> movieSearchObjectCall = api.getMovieSearchResult(BuildConfig.API_KEY, language, query);
+        movieSearchObjectCall.enqueue(new Callback<MovieObjectData>() {
+            @Override
+            public void onResponse(Call<MovieObjectData> call, Response<MovieObjectData> response) {
+                if (response.isSuccessful()) {
+                    listMovies.setValue(response.body().getResults());
+                }
             }
 
             @Override

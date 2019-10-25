@@ -15,10 +15,10 @@ public interface Api {
     String BASE_URL = "https://api.themoviedb.org/3/";
 
 
-    @GET("discover/movie?api_key=" + BuildConfig.API_KEY + "&sort_by=popularity.desc&include_adult=false&include_video=false")
+    @GET("discover/movie?api_key=" + BuildConfig.API_KEY)
     Call<MovieObjectData> getMovieList(@Query("id") int Id, @Query("language") String language);
 
-    @GET("discover/tv?api_key=" + BuildConfig.API_KEY + "&sort_by=popularity.desc&include_adult=false&include_video=false")
+    @GET("discover/tv?api_key=" + BuildConfig.API_KEY)
     Call<TvShowsObject> getTVList(@Query("id") int Id, @Query("language") String language);
 
     @GET("movie/{movie_id}?api_key=" + BuildConfig.API_KEY)
@@ -32,5 +32,8 @@ public interface Api {
 
     @GET("tv/{tv_id}/credits?api_key=" + BuildConfig.API_KEY)
     Call<CreditObjectData> getCastTvList(@Path("tv_id") int Id, @Query("api") String api);
+
+    @GET("search/movie?api_key=" + BuildConfig.API_KEY)
+    Call<MovieObjectData> getMovieSearchResult(@Query("api_key") String api, @Query("query") String query, @Query("language") String language);
 
 }
