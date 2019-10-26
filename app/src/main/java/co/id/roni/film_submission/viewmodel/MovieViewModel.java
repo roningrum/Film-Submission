@@ -25,9 +25,9 @@ public class MovieViewModel extends ViewModel {
             .build();
     private Api api = retrofit.create(Api.class);
 
-    public void setListMovies(int id, String language) {
+    public void setListMovies(int page, String language) {
 
-        Call<MovieObjectData> movieObjectCall = api.getMovieList(id, language);
+        Call<MovieObjectData> movieObjectCall = api.getMovieList(page, language);
         movieObjectCall.enqueue(new Callback<MovieObjectData>() {
             @Override
             public void onResponse(Call<MovieObjectData> call, Response<MovieObjectData> response) {
@@ -60,7 +60,6 @@ public class MovieViewModel extends ViewModel {
             }
         });
     }
-
 
     public LiveData<List<MovieModel>> getListMovies() {
         return listMovies;

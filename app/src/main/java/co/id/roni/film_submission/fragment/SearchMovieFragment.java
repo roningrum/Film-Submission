@@ -53,11 +53,9 @@ public class SearchMovieFragment extends Fragment {
         }
     };
 
-
     public SearchMovieFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,7 +80,6 @@ public class SearchMovieFragment extends Fragment {
             Intent searchMovieResultIntent = new Intent(getActivity(), MovieDetailActivity.class);
             searchMovieResultIntent.putExtra("id", movieData.getId());
             startActivity(searchMovieResultIntent);
-
         });
 
         rvMovieSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -52,15 +52,13 @@ public class TVShowsFragment extends Fragment {
     @BindString(R.string.language)
     String language;
 
-    Menu menu;
-
     private TvShowsAdapter tvShowsAdapter;
 
     private Observer<List<TVShowModel>> getTvshow = new Observer<List<TVShowModel>>() {
         @Override
         public void onChanged(List<TVShowModel> tvModels) {
             if (tvModels != null) {
-                tvShowsAdapter.setMovieData((ArrayList<TVShowModel>) tvModels);
+                tvShowsAdapter.setTvData((ArrayList<TVShowModel>) tvModels);
                 showLoading(false);
             } else {
                 showLoading(true);
@@ -71,7 +69,6 @@ public class TVShowsFragment extends Fragment {
     public TVShowsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

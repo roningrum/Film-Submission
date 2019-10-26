@@ -28,7 +28,6 @@ public class TVShowsViewModel extends ViewModel {
     private Api api = retrofit.create(Api.class);
 
     public void setListTVs(int page, String language) {
-
         Call<TvShowsObject> tvObjectCall = api.getTVList(page, language);
         tvObjectCall.enqueue(new Callback<TvShowsObject>() {
             @Override
@@ -36,7 +35,22 @@ public class TVShowsViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     listTvs.setValue(response.body().getResults());
                 }
+            }
+            @Override
+            public void onFailure(Call<TvShowsObject> call, Throwable t) {
+                Log.w("Response Failed", "" + t.getMessage());
+            }
+        });
+    }
 
+    public void setListSearchTvResult(String apiKey, String query, String language) {
+        Call<TvShowsObject> tvSearchObjectCall = api.getTVSearchResult(apiKey, query, language);
+        tvSearchObjectCall.enqueue(new Callback<TvShowsObject>() {
+            @Override
+            public void onResponse(Call<TvShowsObject> call, Response<TvShowsObject> response) {
+                if (response.isSuccessful()) {
+                    listTvs.setValue(response.body().getResults());
+                }
             }
 
             @Override
@@ -45,8 +59,6 @@ public class TVShowsViewModel extends ViewModel {
             }
         });
     }
-
-
     public LiveData<List<TVShowModel>> getListTvs() {
         return listTvs;
     }

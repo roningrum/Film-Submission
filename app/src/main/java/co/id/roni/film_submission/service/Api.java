@@ -36,5 +36,7 @@ public interface Api {
     @GET("search/movie?api_key=" + BuildConfig.API_KEY)
     Call<MovieObjectData> getMovieSearchResult(@Query("api_key") String api, @Query("query") String query, @Query("language") String language);
 
+    @GET("search/tv?api_key=" + BuildConfig.API_KEY)
+    Call<TvShowsObject> getTVSearchResult(@Query("api_key") String api, @Query("query") String query, @Query("language") String language);
 
 }
