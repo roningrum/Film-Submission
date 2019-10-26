@@ -25,4 +25,7 @@
     <string name="key_search">Cari Film</string>
     <string name="not_available">Tidak Tersedia</string>
     <string name="key_search_tv">Cari TV Show</string>
+    <string name="add_widget">Tambah Widget</string>
+    <string name="appwidget_text">PINTASAN FILM</string>
+    <string name="empty_text">Tidak ada Item Tersedia</string>
 </resources>

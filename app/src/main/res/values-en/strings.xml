@@ -25,4 +25,7 @@
     <string name="key_search">Search Movie</string>
     <string name="not_available">Not Available</string>
     <string name="key_search_tv">Search TV</string>
+    <string name="empty_text">No Item Available</string>
+    <string name="add_widget">Add Widget</string>
+    <string name="appwidget_text">MOVIE WIDGET</string>
 </resources>
