@@ -19,6 +19,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
@@ -63,7 +65,7 @@ public class FavoriteFragment extends Fragment {
         tabFavorite.setupWithViewPager(viewPager);
         favToolbar.setTitle(R.string.favorite_menu);
         favToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        ((AppCompatActivity) getActivity()).setSupportActionBar(favToolbar);
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(favToolbar);
     }
 
     @Override
@@ -74,9 +76,13 @@ public class FavoriteFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_setting) {
-            Intent settingIntent = new Intent(getActivity(), SettingActivity.class);
-            startActivity(settingIntent);
+        switch (item.getItemId()) {
+            case R.id.action_setting:
+                Intent settingIntent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(settingIntent);
+                return true;
+            case R.id.action_search:
+                item.setVisible(false);
         }
         return super.onOptionsItemSelected(item);
     }
