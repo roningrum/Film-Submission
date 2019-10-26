@@ -1,11 +1,11 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Helper {
+public class DateHelper {
     public String getReleaseDate(String date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Date newDate = null;

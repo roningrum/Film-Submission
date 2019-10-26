@@ -68,10 +68,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(final MovieModel movies) {
-            tvMovieTitle.setText(movies.getTitle());
-            tvOverview.setText(movies.getOverview());
-            tvMovieRate.setText(String.valueOf(movies.getVote_average()));
-            Glide.with(itemView.getContext()).load(movies.getPoster_path()).into(imgMoviePoster);
+            if (movies != null) {
+                tvMovieTitle.setText(movies.getTitle());
+                tvOverview.setText(movies.getOverview());
+                tvMovieRate.setText(String.valueOf(movies.getVote_average()));
+                Glide.with(itemView.getContext()).load(movies.getPoster_path()).into(imgMoviePoster);
+            } else {
+                Glide.with(itemView.getContext()).load(android.R.color.darker_gray).into(imgMoviePoster);
+                tvMovieTitle.setText("");
+                tvOverview.setText(R.string.not_available);
+                tvMovieRate.setText(0);
+            }
+
             itemView.setOnClickListener(v -> onItemClickCallback.onItemClicked(movieData.get(getAdapterPosition())));
         }
     }

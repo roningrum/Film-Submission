@@ -23,5 +23,6 @@
     <string name="add_favorite">Add to Favorite</string>
     <string name="search">Search</string>
     <string name="key_search">Search Movie</string>
+    <string name="not_available">Not Available</string>
 
 </resources>

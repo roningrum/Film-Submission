@@ -37,7 +37,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.BuildConfig;
-import co.id.roni.film_submission.Helper;
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.adapter.CastAdapter;
 import co.id.roni.film_submission.adapter.GenreAdapter;
@@ -45,6 +44,7 @@ import co.id.roni.film_submission.model.Cast;
 import co.id.roni.film_submission.model.Genre;
 import co.id.roni.film_submission.model.detailmodel.MovieDetailModel;
 import co.id.roni.film_submission.model.favorite.MovieFavModel;
+import co.id.roni.film_submission.util.DateHelper;
 import co.id.roni.film_submission.viewmodel.CastDetailViewModel;
 import co.id.roni.film_submission.viewmodel.FavoriteViewModel;
 import co.id.roni.film_submission.viewmodel.MovieDetailViewModel;
@@ -255,7 +255,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(movieDetailModel.getPoster_path()).into(imgDetailPosterMovie);
 
             String release_date = movieDetailModel.getRelease_date();
-            Helper datehelper = new Helper();
+            DateHelper datehelper = new DateHelper();
             tvDetailReleaseDateMovie.setText(datehelper.getReleaseDate(release_date));
             getGenreList(movieDetailModel);
         }

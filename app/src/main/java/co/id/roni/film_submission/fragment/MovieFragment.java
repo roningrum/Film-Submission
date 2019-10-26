@@ -124,11 +124,8 @@ public class MovieFragment extends Fragment {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
-
     }
-
 
     private void showLoading(Boolean state) {
         if (state) {

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,8 @@ import co.id.roni.film_submission.viewmodel.MovieViewModel;
 public class SearchMovieFragment extends Fragment {
     @BindView(R.id.rv_movie_search_result)
     RecyclerView rvMovieSearchResult;
+    @BindView(R.id.pb_loading)
+    ProgressBar pbLoadingSearch;
 
     private MovieAdapter movieAdapter;
 
@@ -43,6 +46,9 @@ public class SearchMovieFragment extends Fragment {
         public void onChanged(List<MovieModel> movieModels) {
             if (movieModels != null) {
                 movieAdapter.setMovieData((ArrayList<MovieModel>) movieModels);
+                showLoading(false);
+            } else {
+                showLoading(true);
             }
         }
     };
@@ -64,6 +70,7 @@ public class SearchMovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        showLoading(true);
 
         MovieViewModel movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
         movieViewModel.getListMovies().observe(this, getMovieResults);
@@ -85,6 +92,13 @@ public class SearchMovieFragment extends Fragment {
         String queryResult = getArguments().getString(SearchMovieActivity.SEARCH_QUERY);
         Log.d("Query Result", " Result " + queryResult);
         movieViewModel.setListSearchMovieResult(BuildConfig.API_KEY, queryResult, getResources().getString(R.string.language));
+    }
 
+    private void showLoading(Boolean state) {
+        if (state) {
+            pbLoadingSearch.setVisibility(View.VISIBLE);
+        } else {
+            pbLoadingSearch.setVisibility(View.GONE);
+        }
     }
 }
