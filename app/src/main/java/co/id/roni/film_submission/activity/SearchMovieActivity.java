@@ -63,10 +63,7 @@ public class SearchMovieActivity extends AppCompatActivity {
                     return false;
                 }
             });
-
         }
-
         return super.onCreateOptionsMenu(menu);
-
     }
 }

@@ -24,4 +24,5 @@
     <string name="search">Search</string>
     <string name="key_search">Search Movie</string>
     <string name="not_available">Not Available</string>
+    <string name="key_search_tv">Search TV</string>
 </resources>

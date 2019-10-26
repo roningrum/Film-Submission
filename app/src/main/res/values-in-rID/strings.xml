@@ -24,4 +24,5 @@
     <string name="search">Cari</string>
     <string name="key_search">Cari Film</string>
     <string name="not_available">Tidak Tersedia</string>
+    <string name="key_search_tv">Cari TV Show</string>
 </resources>

@@ -24,11 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.activity.SearchTVActivity;
 import co.id.roni.film_submission.activity.SettingActivity;
 import co.id.roni.film_submission.activity.TVShowsDetailActivity;
 import co.id.roni.film_submission.adapter.TvShowsAdapter;
@@ -102,7 +104,7 @@ public class TVShowsFragment extends Fragment {
         showLoading(true);
         tvToolbar.setTitle(R.string.tv_series);
         tvToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        ((AppCompatActivity) getActivity()).setSupportActionBar(tvToolbar);
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(tvToolbar);
     }
 
     @Override
@@ -113,11 +115,19 @@ public class TVShowsFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_setting) {
-            Intent settingIntent = new Intent(getActivity(), SettingActivity.class);
-            startActivity(settingIntent);
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent searchIntent = new Intent(getActivity(), SearchTVActivity.class);
+                startActivity(searchIntent);
+                return true;
+            case R.id.action_setting:
+                Intent settingIntent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(settingIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
     }
     private void showLoading(Boolean state) {
         if (state) {
