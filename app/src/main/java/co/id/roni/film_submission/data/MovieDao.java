@@ -1,5 +1,7 @@
 package co.id.roni.film_submission.data;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -24,6 +26,9 @@ public interface MovieDao {
 
     @Query("SELECT * FROM tbMovieFav")
     List<MovieFavModel> getMovieFavsListWidget();
+
+    @Query("SELECT * FROM tbMovieFav")
+    Cursor getMovieFavsAll();
 
     @Query("DELETE FROM tbMovieFav WHERE id = :id")
     void deleteFavorite(int id);
