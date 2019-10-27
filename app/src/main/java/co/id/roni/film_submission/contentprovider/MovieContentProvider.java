@@ -1,4 +1,4 @@
-package co.id.roni.film_submission;
+package co.id.roni.film_submission.contentprovider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

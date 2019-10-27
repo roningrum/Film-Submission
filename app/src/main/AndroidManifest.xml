@@ -18,7 +18,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <provider
-            android:name=".MovieContentProvider"
+            android:name=".contentprovider.MovieContentProvider"
             android:authorities="co.id.roni.film_submission"
             android:enabled="true"
             android:exported="true" />
