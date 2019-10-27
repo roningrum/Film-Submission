@@ -37,7 +37,9 @@
         <activity
             android:name=".activity.SearchMovieActivity"
             android:parentActivityName=".activity.MainHomeActivity" />
-        <activity android:name=".activity.SettingActivity" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:parentActivityName=".activity.MainHomeActivity" />
         <activity
             android:name=".activity.TVShowsDetailActivity"
             android:parentActivityName=".activity.MainHomeActivity" />

@@ -35,7 +35,7 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         movieDb = MovieDatabase.getDatabase(context);
         try {
             movieFavModelList = new GetMovieFavsAsyncTask(movieDb).execute().get();
-        } catch (ExecutionException | InterruptedException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
@@ -50,9 +50,20 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         }
     }
 
+    private static class GetMovieFavsAsyncTask extends AsyncTask<MovieDatabase, Void, List<MovieFavModel>> {
+        MovieDatabase movieDatabase;
+
+        GetMovieFavsAsyncTask(MovieDatabase movieDb) {
+            movieDatabase = movieDb;
+        }
+
+        @Override
+        protected List<MovieFavModel> doInBackground(MovieDatabase... movieDatabases) {
+            return movieDatabase.movieDao().getMovieFavsListWidget();
+        }
+    }
     @Override
     public void onDestroy() {
-
     }
 
     @Override
@@ -75,7 +86,6 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-
             Bundle extras = new Bundle();
             extras.putString(EXTRA_ITEM, movieFavModel.getTitle());
             Intent fillDataIntent = new Intent();
@@ -107,16 +117,4 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         return false;
     }
 
-    private static class GetMovieFavsAsyncTask extends AsyncTask<MovieDatabase, Void, List<MovieFavModel>> {
-        MovieDatabase movieDatabase;
-
-        GetMovieFavsAsyncTask(MovieDatabase movieDb) {
-            movieDatabase = movieDb;
-        }
-
-        @Override
-        protected List<MovieFavModel> doInBackground(MovieDatabase... movieDatabases) {
-            return movieDatabase.movieDao().getMovieFavsListWidget();
-        }
-    }
 }

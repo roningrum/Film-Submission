@@ -71,18 +71,16 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
+        menu.findItem(R.id.action_search).setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_setting:
-                Intent settingIntent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(settingIntent);
-                return true;
-            case R.id.action_search:
-                item.setVisible(false);
+        if (item.getItemId() == R.id.action_setting) {
+            Intent settingIntent = new Intent(getActivity(), SettingActivity.class);
+            startActivity(settingIntent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

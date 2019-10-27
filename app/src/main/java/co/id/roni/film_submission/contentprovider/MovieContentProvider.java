@@ -2,49 +2,84 @@ package co.id.roni.film_submission.contentprovider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
+import co.id.roni.film_submission.data.MovieDatabase;
+import co.id.roni.film_submission.model.favorite.MovieFavModel;
+
 public class MovieContentProvider extends ContentProvider {
+
+    public static final String AUTHORITY = "co.id.roni.film_submission";
+    public static final Uri URI_MOVIEFAVS = Uri.parse("content://" + AUTHORITY + "/" + MovieFavModel.TABLE_NAME);
+
+    public static final int CODE_ALL_MOVIE_FAVS = 1;
+    public static final int CODE_ID_MOVIE_FAVS = 2;
+
+    private static final UriMatcher MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+
+    static {
+        MATCHER.addURI(AUTHORITY, MovieFavModel.TABLE_NAME, CODE_ALL_MOVIE_FAVS);
+        MATCHER.addURI(AUTHORITY, MovieFavModel.TABLE_NAME + "/*", CODE_ID_MOVIE_FAVS);
+    }
+
+    Context context;
+    MovieDatabase movieDatabase;
+
     public MovieContentProvider() {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public String getType(Uri uri) {
-        // TODO: Implement this to handle requests for the MIME type of the data
-        // at the given URI.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
     public boolean onCreate() {
-        // TODO: Implement this to initialize your content provider on startup.
-        return false;
+        return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        // TODO: Implement this to handle query requests from clients.
-        throw new UnsupportedOperationException("Not yet implemented");
+        Cursor cursor;
+        switch (MATCHER.match(URI_MOVIEFAVS)) {
+            case CODE_ALL_MOVIE_FAVS:
+                cursor = movieDatabase.movieDao().getMovieFavsAll();
+                break;
+            case CODE_ID_MOVIE_FAVS:
+                cursor = null;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + URI_MOVIEFAVS);
+        }
+        return cursor;
+    }
+
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        // TODO: Implement this to handle requests to insert a new row.
+        if (MATCHER.match(URI_MOVIEFAVS) == CODE_ALL_MOVIE_FAVS) {
+            MovieDatabase.getDatabase(getContext()).movieDao().insert(MovieFavModel.fromContentValues(values));
+            context.getContentResolver().notifyChange(uri, null);
+        } else {
+            return null;
+        }
+        return Uri.parse(URI_MOVIEFAVS + "/");
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        return null;
+    }
+
+
 }

@@ -1,13 +1,18 @@
 package co.id.roni.film_submission.model.favorite;
 
+import android.content.ContentValues;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "tbMovieFav")
+@Entity(tableName = MovieFavModel.TABLE_NAME)
 public class MovieFavModel {
+
+    public static final String TABLE_NAME = "tbMovieFav";
+
     @PrimaryKey
     @ColumnInfo(name = "id")
     private int id;
@@ -31,6 +36,26 @@ public class MovieFavModel {
         this.poster_path = poster_path;
         this.overview = overview;
         this.vote_average = vote_average;
+    }
+
+    public static MovieFavModel fromContentValues(ContentValues values) {
+        MovieFavModel movieFavModel = new MovieFavModel();
+        if (values.containsKey("id")) {
+            movieFavModel.setId(values.getAsInteger("id"));
+        }
+        if (values.containsKey("title")) {
+            movieFavModel.setTitle(values.getAsString("title"));
+        }
+        if (values.containsKey("poster_path")) {
+            movieFavModel.setPoster_path(values.getAsString("poster_path"));
+        }
+        if (values.containsKey("overview")) {
+            movieFavModel.setOverview(values.getAsString("overview"));
+        }
+        if (values.containsKey("vote_average")) {
+            movieFavModel.setVote_average(values.getAsDouble("vote_average"));
+        }
+        return movieFavModel;
     }
 
     @NonNull

@@ -44,8 +44,7 @@ public class MovieAppBannerWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
         if (intent.getAction() != null) {
             if (intent.getAction().equals(TOAST_ACTION)) {
-                int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
-                Toast.makeText(context, "Touched View" + viewIndex, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, TOAST_ACTION, Toast.LENGTH_SHORT).show();
             }
         }
     }
