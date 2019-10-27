@@ -1,6 +1,8 @@
 package co.id.roni.film_submission.favorite;
 
 import android.app.Application;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -17,9 +19,11 @@ import co.id.roni.film_submission.model.favorite.TVShowFavModel;
 
 public class FavoriteRepository {
     private MovieDao movieDao;
+    private static Cursor favoriteCursor;
     private TvDao tvDao;
     private LiveData<List<MovieFavModel>> allMovieFavs;
     private LiveData<List<TVShowFavModel>> allTvFavs;
+    private MovieFavModel movieFavModel;
 
     public FavoriteRepository(Application application) {
         MovieDatabase database = MovieDatabase.getDatabase(application);
@@ -28,6 +32,11 @@ public class FavoriteRepository {
 
         allMovieFavs = movieDao.getAllMovieFavs();
         allTvFavs = tvDao.getAllTvFavs();
+    }
+
+    public FavoriteRepository(Context context) {
+        MovieDatabase db = MovieDatabase.getDatabase(context);
+        movieDao = db.movieDao();
     }
 
     //Movie Favorite
@@ -52,6 +61,10 @@ public class FavoriteRepository {
         return movieFavModel;
     }
 
+    public Cursor getAllMovieCursor() {
+        new SelectMovieFavForCursor(movieDao).execute();
+        return favoriteCursor;
+    }
     public LiveData<List<MovieFavModel>> getAllMovieFavs() {
         return allMovieFavs;
     }
@@ -164,6 +177,20 @@ public class FavoriteRepository {
         @Override
         protected LiveData<TVShowFavModel> doInBackground(Integer... integers) {
             return tvDao.selectByIdTv(integers[0]);
+        }
+    }
+
+    private static class SelectMovieFavForCursor extends AsyncTask<Void, Void, Void> {
+        private MovieDao movieDao;
+
+        SelectMovieFavForCursor(MovieDao movieDao) {
+            this.movieDao = movieDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            favoriteCursor = movieDao.getMovieFavsAll();
+            return null;
         }
     }
 }

@@ -7,7 +7,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
-import co.id.roni.film_submission.data.MovieDatabase;
+import co.id.roni.film_submission.favorite.FavoriteRepository;
 import co.id.roni.film_submission.model.favorite.MovieFavModel;
 
 public class MovieContentProvider extends ContentProvider {
@@ -25,14 +25,17 @@ public class MovieContentProvider extends ContentProvider {
         MATCHER.addURI(AUTHORITY, MovieFavModel.TABLE_NAME + "/*", CODE_ID_MOVIE_FAVS);
     }
 
-    Context context;
-    MovieDatabase movieDatabase;
+    FavoriteRepository repository;
+    MovieFavModel movieFavModel;
+    Context context = getContext();
+//    MovieDatabase movieDatabase;
 
     public MovieContentProvider() {
     }
 
     @Override
     public boolean onCreate() {
+        repository = new FavoriteRepository(context);
         return true;
     }
 
@@ -42,7 +45,7 @@ public class MovieContentProvider extends ContentProvider {
         Cursor cursor;
         switch (MATCHER.match(URI_MOVIEFAVS)) {
             case CODE_ALL_MOVIE_FAVS:
-                cursor = movieDatabase.movieDao().getMovieFavsAll();
+                cursor = repository.getAllMovieCursor();
                 break;
             case CODE_ID_MOVIE_FAVS:
                 cursor = null;
@@ -57,8 +60,7 @@ public class MovieContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         // TODO: Implement this to handle requests to insert a new row.
         if (MATCHER.match(URI_MOVIEFAVS) == CODE_ALL_MOVIE_FAVS) {
-            MovieDatabase.getDatabase(getContext()).movieDao().insert(MovieFavModel.fromContentValues(values));
-            context.getContentResolver().notifyChange(uri, null);
+            repository.insert(movieFavModel);
         } else {
             return null;
         }
@@ -73,7 +75,10 @@ public class MovieContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (MATCHER.match(URI_MOVIEFAVS) == CODE_ALL_MOVIE_FAVS) {
+            repository.delete(movieFavModel.getId());
+        }
+        throw new IllegalArgumentException("Unknown URI: " + URI_MOVIEFAVS);
     }
 
     @Override

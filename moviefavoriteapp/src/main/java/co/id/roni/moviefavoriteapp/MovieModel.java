@@ -10,6 +10,14 @@ public class MovieModel {
     public MovieModel() {
     }
 
+    public MovieModel(int id, String title, String poster_path, String overview, double vote_average) {
+        this.id = id;
+        this.title = title;
+        this.poster_path = poster_path;
+        this.overview = overview;
+        this.vote_average = vote_average;
+    }
+
     public int getId() {
         return id;
     }
@@ -43,7 +51,7 @@ public class MovieModel {
     }
 
     public String getPoster_path() {
-        return "https://image.tmdb.org/t/p/w500" + poster_path;
+        return poster_path;
     }
 
     public void setPoster_path(String poster_path) {

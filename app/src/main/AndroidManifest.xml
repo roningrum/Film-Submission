@@ -7,6 +7,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <permission
+        android:name="co.id.roni.film_submission.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="co.id.roni.film_submission.WRITE_DATABASE"
+        android:protectionLevel="normal" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -20,8 +27,9 @@
         <provider
             android:name=".contentprovider.MovieContentProvider"
             android:authorities="co.id.roni.film_submission"
-            android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:readPermission="co.id.roni.film_submission.READ_DATABASE"
+            android:writePermission="co.id.roni.film_submission.WRITE_DATABASE" />
 
         <receiver android:name=".widget.MovieAppBannerWidget">
             <intent-filter>
