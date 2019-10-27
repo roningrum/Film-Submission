@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MovieFavoriteApp</string>
+    <string name="cd_poster_image">poster</string>
 </resources>
