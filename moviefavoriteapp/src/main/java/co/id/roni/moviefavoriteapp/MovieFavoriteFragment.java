@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -16,6 +20,8 @@ import androidx.fragment.app.Fragment;
  */
 
 public class MovieFavoriteFragment extends Fragment {
+    @BindView(R.id.rv_movies_favs)
+    RecyclerView rvMovieFavConsumer;
 
     public MovieFavoriteFragment() {
         // Required empty public constructor
@@ -31,5 +37,6 @@ public class MovieFavoriteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
     }
 }
