@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
  */
 
 public class MovieFavoriteFragment extends Fragment {
+
     public MovieFavoriteFragment() {
         // Required empty public constructor
     }
