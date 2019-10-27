@@ -22,6 +22,9 @@ public interface MovieDao {
     @Query("SELECT * FROM tbMovieFav WHERE id = :id")
     LiveData<MovieFavModel> selectByIdMovie(int id);
 
+    @Query("SELECT * FROM tbMovieFav")
+    List<MovieFavModel> getMovieFavsListWidget();
+
     @Query("DELETE FROM tbMovieFav WHERE id = :id")
     void deleteFavorite(int id);
 
