@@ -4,10 +4,11 @@
     package="co.id.roni.film_submission">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:configChanges="orientation"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,11 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DetailTestActivity"></activity>
+        <activity android:name=".activity.SettingActivity" />
         <activity
-            android:name=".tvshows.detail.TVShowsDetailActivity"
-            android:parentActivityName=".home.MainHomeActivity" />
-        <activity android:name=".home.MainHomeActivity">
+            android:name=".activity.TVShowsDetailActivity"
+            android:parentActivityName=".activity.MainHomeActivity" />
+        <activity android:name=".activity.MainHomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,8 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movies.detail.MovieDetailActivity"
-            android:parentActivityName=".home.MainHomeActivity" />
+            android:name=".activity.MovieDetailActivity"
+            android:parentActivityName=".activity.MainHomeActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

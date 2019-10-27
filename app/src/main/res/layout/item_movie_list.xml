@@ -1,75 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/dimen_vertical_activity"
-    android:paddingBottom="@dimen/dimen_vertical_activity"
-    android:paddingRight="@dimen/dimen_horizontal_activity"
-    android:paddingLeft="@dimen/dimen_horizontal_activity">
+    android:layout_margin="@dimen/dimen_vertical_activity"
+    app:cardCornerRadius="8dp">
 
-    <ImageView
-        android:id="@+id/img_poster_item"
-        android:layout_width="100dp"
-        android:layout_height="145dp"
-        android:contentDescription="@string/cd_poster_image"
-        android:scaleType="fitXY"
-        android:src="@color/colorAccent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_title_movie_item"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_poster_item"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Batman" />
+        android:paddingLeft="@dimen/dimen_horizontal_activity"
+        android:paddingTop="@dimen/dimen_vertical_activity"
+        android:paddingRight="@dimen/dimen_horizontal_activity"
+        android:paddingBottom="@dimen/dimen_vertical_activity">
 
-    <ImageView
-        android:id="@+id/img_star_movie_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_rate"
-        app:layout_constraintStart_toEndOf="@+id/img_poster_item"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_movie_item"/>
+        <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
+            android:id="@+id/img_poster_item_layout"
+            android:layout_width="100dp"
+            android:layout_height="145dp"
+            android:layout_marginTop="4dp"
+            app:corner_radius="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_rate_average"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/img_star_movie_rate"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_movie_item"
-        tools:text="7.8" />
-
-    <TextView
-        android:id="@+id/tv_overview_item"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:text="@string/sample_overview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/img_poster_item"
-        app:layout_constraintTop_toBottomOf="@+id/tv_rate_average" />
+            <ImageView
+                android:id="@+id/img_poster_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/cd_poster_image"
+                android:scaleType="fitXY"
+                android:src="@color/colorPrimary" />
+        </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_title_movie_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_item_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Batman" />
+
+        <ImageView
+            android:id="@+id/img_star_movie_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/content_desc_rate_image"
+            android:src="@drawable/ic_rate"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_item_layout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_movie_item" />
+
+        <TextView
+            android:id="@+id/tv_rate_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/img_star_movie_rate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_movie_item"
+            tools:text="7.8" />
+
+        <TextView
+            android:id="@+id/tv_overview_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto"
+            android:lineSpacingExtra="5sp"
+            android:maxLines="3"
+            android:text="@string/sample_overview"
+            android:textColor="#B3B1B1"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_item_layout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rate_average" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

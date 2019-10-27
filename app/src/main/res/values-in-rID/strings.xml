@@ -16,4 +16,11 @@
     <string name="minute">menit</string>
     <string name="season">Musim</string>
     <string name="favorite_menu">Favorit</string>
+    <string name="casts">Pemain</string>
+    <string name="Language">Bahasa</string>
+    <string name="setting">Pengaturan</string>
+    <string name="add_favorite">DiTambah Ke Favorit</string>
+    <string name="remove_favorite">Dihapus dari Favorit</string>
+    <string name="playing_now">Tayang Sekarang</string>
+    <string name="popular">Populer</string>
 </resources>

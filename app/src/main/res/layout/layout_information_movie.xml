@@ -14,7 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sans"
         android:text="@string/release"
+        android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,26 +27,35 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="86dp"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/colorText"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/img_movie_poster_detail"
+        app:layout_constraintEnd_toStartOf="@+id/img_movie_poster_detail_layout"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tv_release_time"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="14 August 2019" />
 
-    <ImageView
-        android:id="@+id/img_movie_poster_detail"
+    <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
+        android:id="@+id/img_movie_poster_detail_layout"
         android:layout_width="125dp"
         android:layout_height="180dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:scaleType="fitXY"
-        android:src="@android:color/darker_gray"
+        app:corner_radius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/cd_poster_image"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_movie_poster_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/cd_poster_image"
+            android:scaleType="fitXY"
+            android:src="@android:color/darker_gray" />
+    </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
 
 
     <TextView
@@ -53,7 +64,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/open_sans"
         android:text="@string/genre"
+        android:textColor="@color/colorText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_release_time" />
 
@@ -67,7 +80,7 @@
         android:layout_marginBottom="16dp"
         android:nestedScrollingEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/img_movie_poster_detail"
+        app:layout_constraintEnd_toStartOf="@+id/img_movie_poster_detail_layout"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_genre" />

@@ -16,4 +16,11 @@
     <string name="minute">minute</string>
     <string name="season">season</string>
     <string name="favorite_menu">Favorite</string>
+    <string name="casts">Cast</string>
+    <string name="Language">Language</string>
+    <string name="setting">Setting</string>
+    <string name="remove_favorite">Removed from favorite</string>
+    <string name="add_favorite">Add to Favorite</string>
+    <string name="playing_now">Playing Now</string>
+    <string name="popular">Popular</string>
 </resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
+        android:layout_width="125dp"
+        android:layout_height="150dp"
+        app:corner_radius="8dp">
+
+        <ImageView
+            android:id="@+id/img_cast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/casts"
+            android:scaleType="centerCrop"
+            android:src="@color/colorPrimary" />
+
+    </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
+
+    <TextView
+        android:id="@+id/tv_cast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="Jared Letto" />
+
+    <TextView
+        android:id="@+id/tv_character"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#BDBDBD"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="Joker" />
+
+</LinearLayout>
