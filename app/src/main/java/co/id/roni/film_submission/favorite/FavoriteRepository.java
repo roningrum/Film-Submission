@@ -23,7 +23,6 @@ public class FavoriteRepository {
     private TvDao tvDao;
     private LiveData<List<MovieFavModel>> allMovieFavs;
     private LiveData<List<TVShowFavModel>> allTvFavs;
-    private MovieFavModel movieFavModel;
 
     public FavoriteRepository(Application application) {
         MovieDatabase database = MovieDatabase.getDatabase(application);
@@ -35,8 +34,7 @@ public class FavoriteRepository {
     }
 
     public FavoriteRepository(Context context) {
-        MovieDatabase db = MovieDatabase.getDatabase(context);
-        movieDao = db.movieDao();
+        MovieDatabase database = MovieDatabase.getDatabase(context);
     }
 
     //Movie Favorite
@@ -67,6 +65,11 @@ public class FavoriteRepository {
     }
     public LiveData<List<MovieFavModel>> getAllMovieFavs() {
         return allMovieFavs;
+    }
+
+    public long insertMovieFavoriteCursor(MovieFavModel movieFavModel) {
+        new InsertMovieFavCursor(movieDao).execute(movieFavModel);
+        return 0;
     }
 
     //Tv Favorite
@@ -190,6 +193,20 @@ public class FavoriteRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             favoriteCursor = movieDao.getMovieFavsAll();
+            return null;
+        }
+    }
+
+    private static class InsertMovieFavCursor extends AsyncTask<MovieFavModel, Void, Long> {
+        private MovieDao movieDao;
+
+        InsertMovieFavCursor(MovieDao movieDao) {
+            this.movieDao = movieDao;
+        }
+
+        @Override
+        protected Long doInBackground(MovieFavModel... movieFavModels) {
+            movieDao.insertMovieToCursor(movieFavModels[0]);
             return null;
         }
     }

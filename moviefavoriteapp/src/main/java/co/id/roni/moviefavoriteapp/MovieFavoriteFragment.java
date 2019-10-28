@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +30,7 @@ public class MovieFavoriteFragment extends Fragment {
     RecyclerView rvMovieFavConsumer;
 
     private static final String PROVIDER_NAME = "co.id.roni.film_submission";
-    private static final String URL = "content://" + PROVIDER_NAME + "/tbMovieFav";
+    private static final String URL = "content://" + PROVIDER_NAME;
     private static final Uri CONTENT_URI = Uri.parse(URL);
     private MovieFavoriteAdapter movieFavoriteAdapter;
 
@@ -51,7 +50,7 @@ public class MovieFavoriteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        Cursor cursor = Objects.requireNonNull(getContext()).getContentResolver().query(CONTENT_URI, null, null, null, null);
+        Cursor cursor = getContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
         if (cursor != null) {
             ArrayList<MovieModel> favoriteMovieList = new ArrayList<>();
             String title, overview, poster_path;

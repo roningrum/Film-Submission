@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.id.roni.moviefavoriteapp">
 
+    <uses-permission android:name="co.id.roni.film_submission.READ_DATABASE" />
+    <uses-permission android:name="co.id.roni.film_submission.WRITE_DATABASE" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

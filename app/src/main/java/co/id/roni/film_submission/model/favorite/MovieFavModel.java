@@ -1,12 +1,15 @@
 package co.id.roni.film_submission.model.favorite;
 
 import android.content.ContentValues;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import co.id.roni.film_submission.data.MovieDatabase;
 
 @Entity(tableName = MovieFavModel.TABLE_NAME)
 public class MovieFavModel {
@@ -28,6 +31,10 @@ public class MovieFavModel {
     @Ignore
     public MovieFavModel() {
 
+    }
+
+    public MovieFavModel(Context context) {
+        MovieDatabase.getDatabase(context);
     }
 
     public MovieFavModel(int id, String title, String poster_path, String overview, double vote_average) {

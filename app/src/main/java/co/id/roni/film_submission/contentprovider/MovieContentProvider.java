@@ -1,13 +1,14 @@
 package co.id.roni.film_submission.contentprovider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
-import co.id.roni.film_submission.data.MovieDatabase;
+import co.id.roni.film_submission.favorite.FavoriteRepository;
 import co.id.roni.film_submission.model.favorite.MovieFavModel;
 
 public class MovieContentProvider extends ContentProvider {
@@ -20,49 +21,49 @@ public class MovieContentProvider extends ContentProvider {
 
     private static final UriMatcher MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
+    private FavoriteRepository favoriteRepository;
+
     static {
         MATCHER.addURI(AUTHORITY, MovieFavModel.TABLE_NAME, CODE_ALL_MOVIE_FAVS);
         MATCHER.addURI(AUTHORITY, MovieFavModel.TABLE_NAME + "/*", CODE_ID_MOVIE_FAVS);
     }
 
-    Context context;
-    MovieDatabase movieDatabase;
-
-    public MovieContentProvider() {
-    }
 
     @Override
     public boolean onCreate() {
+        favoriteRepository = new FavoriteRepository(getContext());
         return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        Cursor cursor;
-        switch (MATCHER.match(URI_MOVIEFAVS)) {
-            case CODE_ALL_MOVIE_FAVS:
-                cursor = movieDatabase.movieDao().getMovieFavsAll();
-                break;
-            case CODE_ID_MOVIE_FAVS:
-                cursor = null;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + URI_MOVIEFAVS);
+
+        int code = MATCHER.match(uri);
+        if (code == CODE_ALL_MOVIE_FAVS) {
+            return favoriteRepository.getAllMovieCursor();
         }
-        return cursor;
+        throw new IllegalArgumentException("Unknown URI: " + URI_MOVIEFAVS);
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         // TODO: Implement this to handle requests to insert a new row.
-        if (MATCHER.match(URI_MOVIEFAVS) == CODE_ALL_MOVIE_FAVS) {
-            MovieDatabase.getDatabase(getContext()).movieDao().insert(MovieFavModel.fromContentValues(values));
-            context.getContentResolver().notifyChange(uri, null);
-        } else {
-            return null;
+        switch (MATCHER.match(uri)) {
+            case CODE_ALL_MOVIE_FAVS:
+                final Context context = getContext();
+                if (context == null) {
+                    return null;
+                }
+                long id = favoriteRepository.insertMovieFavoriteCursor(MovieFavModel.fromContentValues(values));
+                context.getContentResolver().notifyChange(uri, null);
+                return ContentUris.withAppendedId(uri, id);
+            case CODE_ID_MOVIE_FAVS:
+                throw new IllegalArgumentException("Invalid URI, cannot insert with ID: " + uri);
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+
         }
-        return Uri.parse(URI_MOVIEFAVS + "/");
     }
 
     @Override

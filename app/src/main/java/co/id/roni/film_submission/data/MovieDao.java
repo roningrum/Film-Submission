@@ -18,6 +18,9 @@ public interface MovieDao {
     @Insert(onConflict = REPLACE)
     void insert(MovieFavModel movieFavModel);
 
+    @Insert
+    long insertMovieToCursor(MovieFavModel movieFavModel);
+
     @Query("SELECT * FROM tbMovieFav ORDER BY id DESC")
     LiveData<List<MovieFavModel>> getAllMovieFavs();
 
