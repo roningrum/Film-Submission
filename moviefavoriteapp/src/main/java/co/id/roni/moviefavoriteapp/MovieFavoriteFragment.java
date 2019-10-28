@@ -31,7 +31,7 @@ public class MovieFavoriteFragment extends Fragment {
     RecyclerView rvMovieFavConsumer;
 
     private static final String PROVIDER_NAME = "co.id.roni.film_submission";
-    private static final String URL = "content://" + PROVIDER_NAME;
+    private static final String URL = "content://" + PROVIDER_NAME + "/tbMovieFav";
     private static final Uri CONTENT_URI = Uri.parse(URL);
     private MovieFavoriteAdapter movieFavoriteAdapter;
 
@@ -70,12 +70,13 @@ public class MovieFavoriteFragment extends Fragment {
                     cursor.moveToNext();
                 }
                 while (!cursor.moveToFirst());
+                movieFavoriteAdapter.setMovieFavModels(favoriteMovieList);
+                movieFavoriteAdapter = new MovieFavoriteAdapter(favoriteMovieList);
+                rvMovieFavConsumer.setAdapter(movieFavoriteAdapter);
+                rvMovieFavConsumer.setLayoutManager(new LinearLayoutManager(getContext()));
             }
-            movieFavoriteAdapter.setMovieFavModels(favoriteMovieList);
 
-            movieFavoriteAdapter = new MovieFavoriteAdapter(favoriteMovieList);
-            rvMovieFavConsumer.setAdapter(movieFavoriteAdapter);
-            rvMovieFavConsumer.setLayoutManager(new LinearLayoutManager(getContext()));
+
         }
     }
 }
