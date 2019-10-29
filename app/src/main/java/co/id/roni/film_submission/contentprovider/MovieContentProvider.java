@@ -42,7 +42,9 @@ public class MovieContentProvider extends ContentProvider {
 
         int code = MATCHER.match(URI_MOVIEFAVS);
         if (code == CODE_ALL_MOVIE_FAVS) {
-            return favoriteRepository.getAllMovieCursor();
+            Cursor cursor;
+            cursor = favoriteRepository.getAllMovieCursor();
+            return cursor;
         } else {
             throw new SQLException("Failed insert from " + URI_MOVIEFAVS);
         }

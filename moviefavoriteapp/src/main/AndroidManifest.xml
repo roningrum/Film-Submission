@@ -4,6 +4,8 @@
 
     <uses-permission android:name="co.id.roni.film_submission.READ_DATABASE" />
     <uses-permission android:name="co.id.roni.film_submission.WRITE_DATABASE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
     <application

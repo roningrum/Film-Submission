@@ -22,7 +22,7 @@ public class FavoriteRepository {
     private TvDao tvDao;
     private LiveData<List<MovieFavModel>> allMovieFavs;
     private LiveData<List<TVShowFavModel>> allTvFavs;
-    private Cursor favoriteCursor;
+    private static Cursor favoriteCursor;
 
     public FavoriteRepository(Application application) {
         MovieDatabase database = MovieDatabase.getDatabase(application);
@@ -33,7 +33,8 @@ public class FavoriteRepository {
     }
 
     public FavoriteRepository(Context context) {
-        MovieDatabase.getDatabase(context);
+        MovieDatabase moviedb = MovieDatabase.getDatabase(context);
+        movieDao = moviedb.movieDao();
 //        favoriteCursor = movieDao.getMovieFavsAll();
     }
 
@@ -60,12 +61,7 @@ public class FavoriteRepository {
     }
 
     public Cursor getAllMovieCursor() {
-        Cursor favoriteCursor = movieDao.getMovieFavsAll();
-        try {
-            new SelectMovieFavForCursor(movieDao).execute().get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        new SelectMovieFavForCursor(movieDao).execute();
         return favoriteCursor;
     }
     public LiveData<List<MovieFavModel>> getAllMovieFavs() {
@@ -155,7 +151,8 @@ public class FavoriteRepository {
 
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return movieDao.getMovieFavsAll();
+            favoriteCursor = movieDao.getMovieFavsAll();
+            return null;
         }
     }
 

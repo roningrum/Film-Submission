@@ -61,6 +61,21 @@ public class MovieViewModel extends ViewModel {
         });
     }
 
+    private void setUpcomingMovieRelease(String apiKey, String currentdate, String date) {
+        Call<MovieObjectData> movieRelaseCall = api.getMovieRelaase(apiKey, currentdate, date);
+        movieRelaseCall.enqueue(new Callback<MovieObjectData>() {
+            @Override
+            public void onResponse(Call<MovieObjectData> call, Response<MovieObjectData> response) {
+                listMovies.setValue(response.body().getResults());
+            }
+
+            @Override
+            public void onFailure(Call<MovieObjectData> call, Throwable t) {
+                Log.w("Response Failed", "" + t.getMessage());
+            }
+        });
+    }
+
     public LiveData<List<MovieModel>> getListMovies() {
         return listMovies;
     }

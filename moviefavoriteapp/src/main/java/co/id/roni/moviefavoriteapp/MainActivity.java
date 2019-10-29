@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         rvMovieFavConsumer.setHasFixedSize(true);
 
         Cursor cursor = getApplicationContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
-        MovieFavoriteViewModel movieViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(MovieFavoriteViewModel.class);
+        MovieFavoriteViewModel movieViewModel = ViewModelProviders.of(this).get(MovieFavoriteViewModel.class);
         movieViewModel.getListMovieFavs().observe(this, getMovieFavs);
         movieViewModel.setListMovieFavs(cursor);
 

@@ -21,6 +21,8 @@ public class SettingActivity extends AppCompatActivity {
     @BindView(R.id.tv_language_setting)
     TextView tvSettingLanguage;
 
+    public static CharSequence REMINDER_NAME = "NOTIFICATION";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
