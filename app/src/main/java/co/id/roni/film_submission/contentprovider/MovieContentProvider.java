@@ -42,8 +42,10 @@ public class MovieContentProvider extends ContentProvider {
         int code = MATCHER.match(uri);
         if (code == CODE_ALL_MOVIE_FAVS) {
             return favoriteRepository.getAllMovieCursor();
+        } else {
+            throw new IllegalArgumentException("Unknown URI: " + URI_MOVIEFAVS);
         }
-        throw new IllegalArgumentException("Unknown URI: " + URI_MOVIEFAVS);
+
     }
 
     @Override
