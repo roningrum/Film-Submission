@@ -18,15 +18,11 @@ import butterknife.ButterKnife;
 
 public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavoriteHolder> {
     private List<MovieModel> movieFavModels;
-    private MovieFavoriteAdapter.OnItemClickCallback onItemClickCallback;
 
     public MovieFavoriteAdapter(List<MovieModel> movieFavModels) {
         this.movieFavModels = movieFavModels;
     }
 
-    public void setOnItemClickCallback(MovieFavoriteAdapter.OnItemClickCallback onItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback;
-    }
 
     @NonNull
     @Override
@@ -51,10 +47,6 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
         notifyDataSetChanged();
     }
 
-    public interface OnItemClickCallback {
-        void onItemClicked(MovieModel movieData);
-    }
-
     class MovieFavoriteHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_title_movie_item)
         TextView tvMovieTitle;
@@ -69,13 +61,11 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
         void bind(final MovieModel movies) {
             tvMovieTitle.setText(movies.getTitle());
             tvOverview.setText(movies.getOverview());
             tvMovieRate.setText(String.valueOf(movies.getVote_average()));
             Glide.with(itemView.getContext()).load(movies.getPoster_path()).into(imgMoviePoster);
-            itemView.setOnClickListener(v -> onItemClickCallback.onItemClicked(movieFavModels.get(getAdapterPosition())));
         }
 
     }
