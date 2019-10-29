@@ -48,6 +48,7 @@ import co.id.roni.film_submission.util.DateHelper;
 import co.id.roni.film_submission.viewmodel.CastDetailViewModel;
 import co.id.roni.film_submission.viewmodel.FavoriteViewModel;
 import co.id.roni.film_submission.viewmodel.MovieDetailViewModel;
+import co.id.roni.film_submission.widget.MovieAppBannerWidget;
 
 import static co.id.roni.film_submission.R.string;
 
@@ -198,6 +199,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private void removeFavorite() {
         favoriteViewModel.delete(id);
         Toast.makeText(this, getString(R.string.remove_favorite), Toast.LENGTH_SHORT).show();
+        MovieAppBannerWidget.updateWidget(this);
     }
 
     private void addToFavorite() {
@@ -222,6 +224,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         favorite.setVote_average(vote_average);
         favoriteViewModel.insert(favorite);
         Toast.makeText(this, getString(R.string.add_favorite), Toast.LENGTH_SHORT).show();
+
+        MovieAppBannerWidget.updateWidget(this);
     }
 
     @SuppressLint("SetTextI18n")

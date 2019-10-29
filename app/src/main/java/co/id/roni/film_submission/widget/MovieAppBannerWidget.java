@@ -3,6 +3,7 @@ package co.id.roni.film_submission.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -65,6 +66,12 @@ public class MovieAppBannerWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    public static void updateWidget(Context context) {
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        int[] widgetIds = manager.getAppWidgetIds(new ComponentName(context, MovieAppBannerWidget.class));
+        manager.notifyAppWidgetViewDataChanged(widgetIds, R.id.stack_view);
     }
 }
 
