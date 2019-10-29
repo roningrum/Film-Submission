@@ -146,7 +146,7 @@ public class FavoriteRepository {
         }
     }
 
-    private static class SelectMovieFavForCursor extends AsyncTask<Void, Void, Cursor> {
+    private static class SelectMovieFavForCursor extends AsyncTask<Void, Cursor, Cursor> {
         private MovieDao movieDao;
 
         SelectMovieFavForCursor(MovieDao movieDao) {

@@ -6,8 +6,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
-import android.util.Log;
 
 import co.id.roni.film_submission.favorite.FavoriteRepository;
 import co.id.roni.film_submission.model.favorite.MovieFavModel;
@@ -40,14 +40,11 @@ public class MovieContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        int code = MATCHER.match(uri);
+        int code = MATCHER.match(URI_MOVIEFAVS);
         if (code == CODE_ALL_MOVIE_FAVS) {
-            Cursor cursor;
-            cursor = favoriteRepository.getAllMovieCursor();
-            Log.d("Check", "Data" + cursor);
-            return cursor;
+            return favoriteRepository.getAllMovieCursor();
         } else {
-            throw new IllegalArgumentException("Unknown URI: " + URI_MOVIEFAVS);
+            throw new SQLException("Failed insert from " + URI_MOVIEFAVS);
         }
 
     }
@@ -55,14 +52,14 @@ public class MovieContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         // TODO: Implement this to handle requests to insert a new row.
-        switch (MATCHER.match(uri)) {
+        switch (MATCHER.match(URI_MOVIEFAVS)) {
             case CODE_ALL_MOVIE_FAVS:
                 final Context context = getContext();
                 if (context == null) {
                     return null;
                 }
                 long id = favoriteRepository.insertMovieFavoriteCursor(MovieFavModel.fromContentValues(values));
-                context.getContentResolver().notifyChange(uri, null);
+                context.getContentResolver().notifyChange(URI_MOVIEFAVS, null);
                 return ContentUris.withAppendedId(uri, id);
             case CODE_ID_MOVIE_FAVS:
                 throw new IllegalArgumentException("Invalid URI, cannot insert with ID: " + uri);
