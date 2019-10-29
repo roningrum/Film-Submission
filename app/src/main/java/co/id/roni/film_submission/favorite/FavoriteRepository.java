@@ -60,7 +60,7 @@ public class FavoriteRepository {
     }
 
     public Cursor getAllMovieCursor() {
-        favoriteCursor = movieDao.getMovieFavsAll();
+        Cursor favoriteCursor = movieDao.getMovieFavsAll();
         try {
             new SelectMovieFavForCursor(movieDao).execute().get();
         } catch (ExecutionException | InterruptedException e) {

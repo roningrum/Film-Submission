@@ -17,7 +17,6 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 public interface MovieDao {
     @Insert(onConflict = REPLACE)
     void insert(MovieFavModel movieFavModel);
-
     @Insert
     long insertMovieToCursor(MovieFavModel movieFavModel);
 
