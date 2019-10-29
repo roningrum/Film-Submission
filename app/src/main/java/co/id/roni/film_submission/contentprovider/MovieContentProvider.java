@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import co.id.roni.film_submission.favorite.FavoriteRepository;
 import co.id.roni.film_submission.model.favorite.MovieFavModel;
@@ -41,7 +42,10 @@ public class MovieContentProvider extends ContentProvider {
 
         int code = MATCHER.match(uri);
         if (code == CODE_ALL_MOVIE_FAVS) {
-            return favoriteRepository.getAllMovieCursor();
+            Cursor cursor;
+            cursor = favoriteRepository.getAllMovieCursor();
+            Log.d("Check", "Data" + cursor);
+            return cursor;
         } else {
             throw new IllegalArgumentException("Unknown URI: " + URI_MOVIEFAVS);
         }

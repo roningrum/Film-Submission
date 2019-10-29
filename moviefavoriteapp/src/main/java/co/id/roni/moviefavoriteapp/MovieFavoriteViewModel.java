@@ -1,6 +1,7 @@
 package co.id.roni.moviefavoriteapp;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -24,6 +25,8 @@ public class MovieFavoriteViewModel extends ViewModel {
             } while (cursor.moveToNext());
             cursor.close();
             listMovieFavs.postValue(favMovies);
+
+            Log.d("Check", "Data:" + favMovies + "");
         }
     }
 }

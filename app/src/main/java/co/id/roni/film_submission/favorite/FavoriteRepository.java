@@ -28,14 +28,13 @@ public class FavoriteRepository {
         MovieDatabase database = MovieDatabase.getDatabase(application);
         movieDao = database.movieDao();
         tvDao = database.tvDao();
-
         allMovieFavs = movieDao.getAllMovieFavs();
         allTvFavs = tvDao.getAllTvFavs();
-        favoriteCursor = movieDao.getMovieFavsAll();
     }
 
     public FavoriteRepository(Context context) {
         MovieDatabase.getDatabase(context);
+//        favoriteCursor = movieDao.getMovieFavsAll();
     }
 
     //Movie Favorite
@@ -62,7 +61,11 @@ public class FavoriteRepository {
 
     public Cursor getAllMovieCursor() {
         favoriteCursor = movieDao.getMovieFavsAll();
-        new SelectMovieFavForCursor(movieDao).execute();
+        try {
+            new SelectMovieFavForCursor(movieDao).execute().get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
         return favoriteCursor;
     }
     public LiveData<List<MovieFavModel>> getAllMovieFavs() {
@@ -143,6 +146,31 @@ public class FavoriteRepository {
         }
     }
 
+    private static class SelectMovieFavForCursor extends AsyncTask<Void, Void, Cursor> {
+        private MovieDao movieDao;
+
+        SelectMovieFavForCursor(MovieDao movieDao) {
+            this.movieDao = movieDao;
+        }
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            return movieDao.getMovieFavsAll();
+        }
+    }
+
+    private static class InsertMovieFavCursor extends AsyncTask<MovieFavModel, Void, Long> {
+        private MovieDao movieDao;
+
+        InsertMovieFavCursor(MovieDao movieDao) {
+            this.movieDao = movieDao;
+        }
+
+        @Override
+        protected Long doInBackground(MovieFavModel... movieFavModels) {
+            return movieDao.insertMovieToCursor(movieFavModels[0]);
+        }
+    }
     //tambah, hapus, menampilkan data tv favorit ke TvFragment
     private static class InsertTvFavsAsyncTask extends AsyncTask<TVShowFavModel, Void, Void> {
         private TvDao tvDao;
@@ -185,29 +213,4 @@ public class FavoriteRepository {
         }
     }
 
-    private static class SelectMovieFavForCursor extends AsyncTask<Void, Void, Cursor> {
-        private MovieDao movieDao;
-
-        SelectMovieFavForCursor(MovieDao movieDao) {
-            this.movieDao = movieDao;
-        }
-
-        @Override
-        protected Cursor doInBackground(Void... voids) {
-            return movieDao.getMovieFavsAll();
-        }
-    }
-
-    private static class InsertMovieFavCursor extends AsyncTask<MovieFavModel, Void, Long> {
-        private MovieDao movieDao;
-
-        InsertMovieFavCursor(MovieDao movieDao) {
-            this.movieDao = movieDao;
-        }
-
-        @Override
-        protected Long doInBackground(MovieFavModel... movieFavModels) {
-            return movieDao.insertMovieToCursor(movieFavModels[0]);
-        }
-    }
 }
