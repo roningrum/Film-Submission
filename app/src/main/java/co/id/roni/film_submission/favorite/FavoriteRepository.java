@@ -19,10 +19,10 @@ import co.id.roni.film_submission.model.favorite.TVShowFavModel;
 
 public class FavoriteRepository {
     private MovieDao movieDao;
-    private static Cursor favoriteCursor;
     private TvDao tvDao;
     private LiveData<List<MovieFavModel>> allMovieFavs;
     private LiveData<List<TVShowFavModel>> allTvFavs;
+    private Cursor favoriteCursor;
 
     public FavoriteRepository(Application application) {
         MovieDatabase database = MovieDatabase.getDatabase(application);
@@ -31,10 +31,11 @@ public class FavoriteRepository {
 
         allMovieFavs = movieDao.getAllMovieFavs();
         allTvFavs = tvDao.getAllTvFavs();
+        favoriteCursor = movieDao.getMovieFavsAll();
     }
 
     public FavoriteRepository(Context context) {
-        MovieDatabase database = MovieDatabase.getDatabase(context);
+        MovieDatabase.getDatabase(context);
     }
 
     //Movie Favorite
@@ -60,6 +61,7 @@ public class FavoriteRepository {
     }
 
     public Cursor getAllMovieCursor() {
+        favoriteCursor = movieDao.getMovieFavsAll();
         new SelectMovieFavForCursor(movieDao).execute();
         return favoriteCursor;
     }
@@ -183,7 +185,7 @@ public class FavoriteRepository {
         }
     }
 
-    private static class SelectMovieFavForCursor extends AsyncTask<Void, Void, Void> {
+    private static class SelectMovieFavForCursor extends AsyncTask<Void, Void, Cursor> {
         private MovieDao movieDao;
 
         SelectMovieFavForCursor(MovieDao movieDao) {
@@ -191,9 +193,8 @@ public class FavoriteRepository {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            favoriteCursor = movieDao.getMovieFavsAll();
-            return null;
+        protected Cursor doInBackground(Void... voids) {
+            return movieDao.getMovieFavsAll();
         }
     }
 
@@ -206,8 +207,7 @@ public class FavoriteRepository {
 
         @Override
         protected Long doInBackground(MovieFavModel... movieFavModels) {
-            movieDao.insertMovieToCursor(movieFavModels[0]);
-            return null;
+            return movieDao.insertMovieToCursor(movieFavModels[0]);
         }
     }
 }
