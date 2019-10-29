@@ -29,4 +29,5 @@
     <string name="add_widget">Add Widget</string>
     <string name="appwidget_text">MOVIE WIDGET</string>
     <string name="widget">widget</string>
+    <string name="notification">Notification</string>
 </resources>

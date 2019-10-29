@@ -47,6 +47,7 @@ public class MovieFavModel {
 
     public static MovieFavModel fromContentValues(ContentValues values) {
         MovieFavModel movieFavModel = new MovieFavModel();
+
         if (values.containsKey("id")) {
             movieFavModel.setId(values.getAsInteger("id"));
         }
