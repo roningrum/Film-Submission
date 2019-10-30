@@ -1,5 +1,6 @@
 package co.id.roni.moviefavoriteapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,16 +20,18 @@ import butterknife.ButterKnife;
 
 public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavoriteHolder> {
     private List<MovieModel> movieFavModels;
+    private Context context;
 
-    public MovieFavoriteAdapter(List<MovieModel> movieFavModels) {
-        this.movieFavModels = movieFavModels;
+    public MovieFavoriteAdapter(Context context) {
+        movieFavModels = new ArrayList<>();
+        this.context = context;
     }
 
 
     @NonNull
     @Override
     public MovieFavoriteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MovieFavoriteHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_list, parent, false));
+        return new MovieFavoriteHolder(LayoutInflater.from(context).inflate(R.layout.item_movie_list, parent, false));
     }
 
     @Override
@@ -65,7 +69,7 @@ public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdap
             tvMovieTitle.setText(movies.getTitle());
             tvOverview.setText(movies.getOverview());
             tvMovieRate.setText(String.valueOf(movies.getVote_average()));
-            Glide.with(itemView.getContext()).load(movies.getPoster_path()).into(imgMoviePoster);
+            Glide.with(context).load(movies.getPoster_path()).into(imgMoviePoster);
         }
 
     }

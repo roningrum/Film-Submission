@@ -18,7 +18,7 @@ public interface MovieDao {
     @Insert(onConflict = REPLACE)
     void insert(MovieFavModel movieFavModel);
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     long insertMovieToCursor(MovieFavModel movieFavModel);
 
     @Query("SELECT * FROM tbMovieFav ORDER BY id DESC")

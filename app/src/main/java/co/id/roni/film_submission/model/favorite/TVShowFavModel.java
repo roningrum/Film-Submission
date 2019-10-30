@@ -1,13 +1,21 @@
 package co.id.roni.film_submission.model.favorite;
 
+import android.content.ContentValues;
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "tbTVShowFav")
+import co.id.roni.film_submission.data.MovieDatabase;
+
+@Entity(tableName = TVShowFavModel.TABLE_NAME)
 public class TVShowFavModel {
+
+    public static final String TABLE_NAME = "tbTVShowFav";
+
     @PrimaryKey
     @ColumnInfo(name = "id")
     private int id;
@@ -24,12 +32,37 @@ public class TVShowFavModel {
     public TVShowFavModel() {
     }
 
+    public TVShowFavModel(Context context) {
+        MovieDatabase movieDb = MovieDatabase.getDatabase(context);
+    }
+
     public TVShowFavModel(int id, String name, String poster_path, String overview, double vote_average) {
         this.id = id;
         this.name = name;
         this.poster_path = poster_path;
         this.overview = overview;
         this.vote_average = vote_average;
+    }
+
+    public static TVShowFavModel fromContentValues(ContentValues values) {
+        TVShowFavModel tvFavModel = new TVShowFavModel();
+
+        if (values.containsKey("id")) {
+            tvFavModel.setId(values.getAsInteger("id"));
+        }
+        if (values.containsKey("name")) {
+            tvFavModel.setName(values.getAsString("name"));
+        }
+        if (values.containsKey("poster_path")) {
+            tvFavModel.setPoster_path(values.getAsString("poster_path"));
+        }
+        if (values.containsKey("overview")) {
+            tvFavModel.setOverview(values.getAsString("overview"));
+        }
+        if (values.containsKey("vote_average")) {
+            tvFavModel.setVote_average(values.getAsDouble("vote_average"));
+        }
+        return tvFavModel;
     }
 
     @NonNull

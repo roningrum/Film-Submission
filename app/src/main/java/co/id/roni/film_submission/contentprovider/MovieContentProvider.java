@@ -6,19 +6,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.net.Uri;
 
 import co.id.roni.film_submission.favorite.FavoriteRepository;
 import co.id.roni.film_submission.model.favorite.MovieFavModel;
+import co.id.roni.film_submission.model.favorite.TVShowFavModel;
 
 public class MovieContentProvider extends ContentProvider {
 
     public static final String AUTHORITY = "co.id.roni.film_submission";
     public static final Uri URI_MOVIEFAVS = Uri.parse("content://" + AUTHORITY + "/" + MovieFavModel.TABLE_NAME);
+    public static final Uri URI_TVFAVS = Uri.parse("content://" + AUTHORITY + "/" + TVShowFavModel.TABLE_NAME);
 
     public static final int CODE_ALL_MOVIE_FAVS = 1;
-    public static final int CODE_ID_MOVIE_FAVS = 2;
+    public static final int CODE_ALL_TV_FAVS = 2;
 
     private static final UriMatcher MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -26,7 +27,7 @@ public class MovieContentProvider extends ContentProvider {
 
     static {
         MATCHER.addURI(AUTHORITY, MovieFavModel.TABLE_NAME, CODE_ALL_MOVIE_FAVS);
-//        MATCHER.addURI(AUTHORITY, MovieFavModel.TABLE_NAME + "/*", CODE_ID_MOVIE_FAVS);
+        MATCHER.addURI(AUTHORITY, TVShowFavModel.TABLE_NAME, CODE_ALL_TV_FAVS);
     }
 
 
@@ -40,13 +41,17 @@ public class MovieContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        int code = MATCHER.match(URI_MOVIEFAVS);
-        if (code == CODE_ALL_MOVIE_FAVS) {
-            Cursor cursor;
-            cursor = favoriteRepository.getAllMovieCursor();
-            return cursor;
-        } else {
-            throw new SQLException("Failed insert from " + URI_MOVIEFAVS);
+        int code = MATCHER.match(uri);
+        Cursor cursor;
+        switch (code) {
+            case CODE_ALL_MOVIE_FAVS:
+                cursor = favoriteRepository.getAllMovieCursor();
+                return cursor;
+            case CODE_ALL_TV_FAVS:
+                cursor = favoriteRepository.getAllTvFavCursor();
+                return cursor;
+            default:
+                throw new IllegalArgumentException("Invalid URI, cannot insert with ID: " + uri);
         }
 
     }
@@ -54,7 +59,7 @@ public class MovieContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         // TODO: Implement this to handle requests to insert a new row.
-        switch (MATCHER.match(URI_MOVIEFAVS)) {
+        switch (MATCHER.match(uri)) {
             case CODE_ALL_MOVIE_FAVS:
                 final Context context = getContext();
                 if (context == null) {
@@ -63,7 +68,7 @@ public class MovieContentProvider extends ContentProvider {
                 long id = favoriteRepository.insertMovieFavoriteCursor(MovieFavModel.fromContentValues(values));
                 context.getContentResolver().notifyChange(URI_MOVIEFAVS, null);
                 return ContentUris.withAppendedId(uri, id);
-            case CODE_ID_MOVIE_FAVS:
+            case CODE_ALL_TV_FAVS:
                 throw new IllegalArgumentException("Invalid URI, cannot insert with ID: " + uri);
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);

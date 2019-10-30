@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,7 +30,7 @@ public class MovieFragment extends Fragment {
     private static final String PROVIDER_NAME = "co.id.roni.film_submission";
     private static final String TABLE_NAME = "tbMovieFav";
     private static final String URL = "content://" + PROVIDER_NAME + "/" + TABLE_NAME;
-    private static final Uri CONTENT_URI = Uri.parse(URL);
+
 
     @BindView(R.id.rv_movies_favs)
     RecyclerView rvMovieFavConsumer;
@@ -65,15 +64,23 @@ public class MovieFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        Cursor cursor = getContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
-        MovieFavoriteViewModel movieViewModel = ViewModelProviders.of(this).get(MovieFavoriteViewModel.class);
-        movieViewModel.getListMovieFavs().observe(this, getMovieFavs);
-        movieViewModel.setListMovieFavs(cursor);
-
-        movieFavoriteAdapter = new MovieFavoriteAdapter(new ArrayList<>());
-        rvMovieFavConsumer.setAdapter(movieFavoriteAdapter);
         rvMovieFavConsumer.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMovieFavConsumer.setHasFixedSize(true);
+        movieFavoriteAdapter = new MovieFavoriteAdapter(getContext());
+        rvMovieFavConsumer.setAdapter(movieFavoriteAdapter);
+
+        MovieFavoriteViewModel movieViewModel = ViewModelProviders.of(this).get(MovieFavoriteViewModel.class);
+        movieViewModel.getListMovieFavs().observe(this, getMovieFavs);
+
+        Uri CONTENT_URI = Uri.parse(URL);
+        Cursor cursor = getContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
+        if (cursor != null) {
+            movieViewModel.setListMovieFavs(cursor);
+        }
+
+
+
+
 
 
     }
