@@ -41,8 +41,9 @@ public class MovieContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        int code = MATCHER.match(uri);
         Cursor cursor;
+        int code = MATCHER.match(uri);
+
         switch (code) {
             case CODE_ALL_MOVIE_FAVS:
                 cursor = favoriteRepository.getAllMovieCursor();

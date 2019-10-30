@@ -33,7 +33,7 @@ public class TVShowFavModel {
     }
 
     public TVShowFavModel(Context context) {
-        MovieDatabase movieDb = MovieDatabase.getDatabase(context);
+        MovieDatabase.getDatabase(context);
     }
 
     public TVShowFavModel(int id, String name, String poster_path, String overview, double vote_average) {
@@ -46,7 +46,6 @@ public class TVShowFavModel {
 
     public static TVShowFavModel fromContentValues(ContentValues values) {
         TVShowFavModel tvFavModel = new TVShowFavModel();
-
         if (values.containsKey("id")) {
             tvFavModel.setId(values.getAsInteger("id"));
         }

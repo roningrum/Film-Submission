@@ -1,4 +1,4 @@
-package co.id.roni.moviefavoriteapp;
+package co.id.roni.moviefavoriteapp.model;
 
 import android.database.Cursor;
 
@@ -20,12 +20,12 @@ public class MovieModel {
         this.vote_average = vote_average;
     }
 
-    public MovieModel(Cursor cursor) {
-        id = cursor.getInt(cursor.getColumnIndex("id"));
-        title = cursor.getString(cursor.getColumnIndex("title"));
-        overview = cursor.getString(cursor.getColumnIndex("overview"));
-        poster_path = cursor.getString(cursor.getColumnIndex("poster_path"));
-        vote_average = cursor.getDouble(cursor.getColumnIndex("vote_average"));
+    public MovieModel(Cursor cursorMovie) {
+        id = cursorMovie.getInt(cursorMovie.getColumnIndex("id"));
+        title = cursorMovie.getString(cursorMovie.getColumnIndex("title"));
+        overview = cursorMovie.getString(cursorMovie.getColumnIndex("overview"));
+        poster_path = cursorMovie.getString(cursorMovie.getColumnIndex("poster_path"));
+        vote_average = cursorMovie.getDouble(cursorMovie.getColumnIndex("vote_average"));
     }
 
     public int getId() {

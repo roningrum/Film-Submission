@@ -11,6 +11,8 @@ import com.google.android.material.tabs.TabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.id.roni.moviefavoriteapp.fragment.MovieFragment;
+import co.id.roni.moviefavoriteapp.fragment.TvShowFragment;
 import co.id.roni.moviefavoriteapp.tab.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {

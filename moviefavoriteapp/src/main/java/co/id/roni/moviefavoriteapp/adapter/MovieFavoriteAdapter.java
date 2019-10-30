@@ -1,4 +1,4 @@
-package co.id.roni.moviefavoriteapp;
+package co.id.roni.moviefavoriteapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,6 +17,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.id.roni.moviefavoriteapp.R;
+import co.id.roni.moviefavoriteapp.model.MovieModel;
 
 public class MovieFavoriteAdapter extends RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavoriteHolder> {
     private List<MovieModel> movieFavModels;

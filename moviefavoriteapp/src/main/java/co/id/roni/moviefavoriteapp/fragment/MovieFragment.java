@@ -1,4 +1,4 @@
-package co.id.roni.moviefavoriteapp;
+package co.id.roni.moviefavoriteapp.fragment;
 
 
 import android.database.Cursor;
@@ -20,6 +20,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.id.roni.moviefavoriteapp.FavoriteViewModel;
+import co.id.roni.moviefavoriteapp.R;
+import co.id.roni.moviefavoriteapp.adapter.MovieFavoriteAdapter;
+import co.id.roni.moviefavoriteapp.model.MovieModel;
 
 
 /**
@@ -69,19 +73,14 @@ public class MovieFragment extends Fragment {
         movieFavoriteAdapter = new MovieFavoriteAdapter(getContext());
         rvMovieFavConsumer.setAdapter(movieFavoriteAdapter);
 
-        MovieFavoriteViewModel movieViewModel = ViewModelProviders.of(this).get(MovieFavoriteViewModel.class);
+        FavoriteViewModel movieViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
         movieViewModel.getListMovieFavs().observe(this, getMovieFavs);
 
         Uri CONTENT_URI = Uri.parse(URL);
-        Cursor cursor = getContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
-        if (cursor != null) {
-            movieViewModel.setListMovieFavs(cursor);
+        Cursor cursorMovie = getContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
+        if (cursorMovie != null) {
+            movieViewModel.setListMovieFavs(cursorMovie);
         }
-
-
-
-
-
 
     }
 }

@@ -9,7 +9,6 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import co.id.roni.film_submission.model.favorite.MovieFavModel;
 import co.id.roni.film_submission.model.favorite.TVShowFavModel;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
@@ -21,7 +20,7 @@ public interface TvDao {
     void insert(TVShowFavModel tvShowFavModel);
 
     @Insert(onConflict = REPLACE)
-    long insertMovieToCursor(MovieFavModel movieFavModel);
+    long insertMovieToCursor(TVShowFavModel tvShowFavModel);
 
     @Query("SELECT * FROM tbTVShowFav ORDER BY id DESC")
     LiveData<List<TVShowFavModel>> getAllTvFavs();
@@ -32,7 +31,7 @@ public interface TvDao {
     @Query("DELETE FROM tbTVShowFav WHERE id = :id")
     void deleteFavorite(int id);
 
-    @Query("SELECT * FROM tbMovieFav")
+    @Query("SELECT * FROM tbTVShowFav")
     Cursor getTvFavsAll();
 
 }
