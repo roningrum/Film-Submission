@@ -59,17 +59,20 @@ public class MovieContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         // TODO: Implement this to handle requests to insert a new row.
+        long id;
+        final Context context = getContext();
+        if (context == null) {
+            return null;
+        }
         switch (MATCHER.match(uri)) {
             case CODE_ALL_MOVIE_FAVS:
-                final Context context = getContext();
-                if (context == null) {
-                    return null;
-                }
-                long id = favoriteRepository.insertMovieFavoriteCursor(MovieFavModel.fromContentValues(values));
+                id = favoriteRepository.insertMovieFavoriteCursor(MovieFavModel.fromContentValues(values));
                 context.getContentResolver().notifyChange(URI_MOVIEFAVS, null);
                 return ContentUris.withAppendedId(uri, id);
             case CODE_ALL_TV_FAVS:
-                throw new IllegalArgumentException("Invalid URI, cannot insert with ID: " + uri);
+                id = favoriteRepository.insertTvFavCursor(TVShowFavModel.fromContentValues(values));
+                context.getContentResolver().notifyChange(URI_TVFAVS, null);
+                return ContentUris.withAppendedId(uri, id);
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
 
