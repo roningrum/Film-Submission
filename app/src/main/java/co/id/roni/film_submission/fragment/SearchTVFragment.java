@@ -87,6 +87,7 @@ public class SearchTVFragment extends Fragment {
 
         assert getArguments() != null;
         String queryResult = getArguments().getString(SearchTVActivity.SEARCH_QUERY);
+
         Log.d("Query Result", " Result " + queryResult);
         tvShowsViewModel.setListSearchTvResult(BuildConfig.API_KEY, queryResult, getResources().getString(R.string.language));
 

@@ -1,8 +1,10 @@
 package co.id.roni.film_submission.notification;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +14,8 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+
+import java.util.Calendar;
 
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.activity.SettingActivity;
@@ -47,7 +51,34 @@ public class DailyNotification extends BroadcastReceiver {
 
         Notification notification = builder.build();
         if (notificationManager != null) {
-//            notificationManager.notify(ID_REPEAT_TIME);
+            notificationManager.notify(DailyNotification.ID_REPEAT_TIME, notification);
         }
+    }
+
+    public void setRepeatingReminder(Context context) {
+        cancelNotification(context);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, DailyNotification.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_REPEAT_TIME, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 7);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        assert alarmManager != null;
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+
+    }
+
+    private void cancelNotification(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, DailyNotification.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 102, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        assert alarmManager != null;
+        alarmManager.cancel(pendingIntent);
+
     }
 }

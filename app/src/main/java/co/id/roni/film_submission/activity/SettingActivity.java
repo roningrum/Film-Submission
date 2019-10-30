@@ -13,6 +13,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
+import co.id.roni.film_submission.notification.DailyNotification;
 
 public class SettingActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
@@ -20,6 +21,8 @@ public class SettingActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_language_setting)
     TextView tvSettingLanguage;
+
+    private DailyNotification dailyNotification = new DailyNotification();
 
     public static CharSequence REMINDER_NAME = "NOTIFICATION";
 
