@@ -29,4 +29,8 @@
     <string name="appwidget_text">PINTASAN FILM</string>
     <string name="empty_text">Tidak ada Item Tersedia</string>
     <string name="widget">widget</string>
+    <string name="DAILYKEY">daily_notification_key</string>
+    <string name="LANGUAGEKEY">language_change_key</string>
+    <string name="RELEASEKEY">release_movie_notification_key</string>
+    <string name="notification">Pemberitahuan</string>
 </resources>

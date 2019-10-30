@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <permission
         android:name="co.id.roni.film_submission.READ_DATABASE"
@@ -73,6 +75,11 @@
                 android:resource="@xml/movie_app_banner_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".notification.DailyNotification"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver" />
         <service
             android:name=".widget.StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />

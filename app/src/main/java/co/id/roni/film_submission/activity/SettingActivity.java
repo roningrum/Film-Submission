@@ -1,9 +1,7 @@
 package co.id.roni.film_submission.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,18 +11,14 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.id.roni.film_submission.R;
-import co.id.roni.film_submission.notification.DailyNotification;
+import co.id.roni.film_submission.fragment.SettingFragment;
 
 public class SettingActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar settingToolbar;
 
-    @BindView(R.id.tv_language_setting)
-    TextView tvSettingLanguage;
-
-    private DailyNotification dailyNotification = new DailyNotification();
-
-    public static CharSequence REMINDER_NAME = "NOTIFICATION";
+    @BindView(R.id.frame_container)
+    FrameLayout tvSettingLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +32,7 @@ public class SettingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        tvSettingLanguage.setOnClickListener(v -> {
-            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-            startActivity(mIntent);
-        });
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new SettingFragment()).commit();
 
     }
 }

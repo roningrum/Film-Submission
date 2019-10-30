@@ -7,7 +7,7 @@
     <string name="release">Release</string>
     <string name="genre">Genre</string>
     <string name="synopsis">Overview</string>
-    <string name="change_language">change_language</string>
+    <string name="change_language">Change Language</string>
     <string name="movie">Movies</string>
     <string name="tv_series">TV Shows</string>
     <string name="language">en-US</string>
@@ -30,4 +30,7 @@
     <string name="appwidget_text">MOVIE WIDGET</string>
     <string name="widget">widget</string>
     <string name="notification">Notification</string>
+    <string name="DAILYKEY">daily_notification_key</string>
+    <string name="LANGUAGEKEY">language_change_key</string>
+    <string name="RELEASEKEY">release_movie_notification_key</string>
 </resources>

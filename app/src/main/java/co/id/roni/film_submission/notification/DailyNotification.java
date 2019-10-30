@@ -18,7 +18,8 @@ import androidx.core.content.ContextCompat;
 import java.util.Calendar;
 
 import co.id.roni.film_submission.R;
-import co.id.roni.film_submission.activity.SettingActivity;
+
+import static co.id.roni.film_submission.fragment.SettingFragment.REMINDER_NAME;
 
 public class DailyNotification extends BroadcastReceiver {
     private static final String REPEATING_REMINDER = "Repeating Alarm";
@@ -42,7 +43,7 @@ public class DailyNotification extends BroadcastReceiver {
                 .setVibrate(new long[]{1000, 1000, 1000, 1000})
                 .setSound(alarmSound);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(REPEATING_REMINDER, SettingActivity.REMINDER_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(REPEATING_REMINDER, REMINDER_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             builder.setChannelId(REPEATING_REMINDER);
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
@@ -72,7 +73,7 @@ public class DailyNotification extends BroadcastReceiver {
 
     }
 
-    private void cancelNotification(Context context) {
+    public void cancelNotification(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, DailyNotification.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 102, intent, PendingIntent.FLAG_CANCEL_CURRENT);

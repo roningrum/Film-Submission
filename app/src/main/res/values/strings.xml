@@ -30,5 +30,10 @@
     <string name="empty_text">No Item Available</string>
     <string name="widget">widget</string>
     <string name="notification">Notification</string>
+    <string name="DAILYKEY">daily_notification_key</string>
+    <string name="RELEASEKEY">release_movie_notification_key</string>
+    <string name="LANGUAGEKEY">language_change_key</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
 
 </resources>
