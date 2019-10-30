@@ -102,6 +102,10 @@ public class FavoriteRepository {
         return favoriteCursor;
     }
 
+    public long insertTvFavCursor(TVShowFavModel tvFavModel) {
+        new InsertTvFavCursor(tvDao).execute(tvFavModel);
+        return 0;
+    }
     public LiveData<List<TVShowFavModel>> getAllTvFavs() {
         return allTvFavs;
     }
@@ -216,7 +220,7 @@ public class FavoriteRepository {
         }
     }
 
-    private static class SelectTvFavForCursorAsyncTask extends AsyncTask<Cursor, Void, Void> {
+    private static class SelectTvFavForCursorAsyncTask extends AsyncTask<Void, Cursor, Cursor> {
         private TvDao tvDao;
 
         SelectTvFavForCursorAsyncTask(TvDao tvDao) {
@@ -224,10 +228,23 @@ public class FavoriteRepository {
         }
 
         @Override
-        protected Void doInBackground(Cursor... cursors) {
+        protected Cursor doInBackground(Void... voids) {
             favoriteCursor = tvDao.getTvFavsAll();
-            return null;
+            return favoriteCursor;
         }
     }
 
+    private static class InsertTvFavCursor extends AsyncTask<TVShowFavModel, Void, Long> {
+        private TvDao tvDao;
+
+        InsertTvFavCursor(TvDao tvDao) {
+            this.tvDao = tvDao;
+        }
+
+        @Override
+        protected Long doInBackground(TVShowFavModel... tvShowFavModels) {
+            tvDao.insert(tvShowFavModels[0]);
+            return null;
+        }
+    }
 }
