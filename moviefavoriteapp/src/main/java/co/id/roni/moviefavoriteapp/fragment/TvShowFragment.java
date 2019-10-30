@@ -33,6 +33,7 @@ public class TvShowFragment extends Fragment {
     private static final String PROVIDER_NAME = "co.id.roni.film_submission";
     private static final String TABLE_NAME = "tbTVShowFav";
     private static final String URL = "content://" + PROVIDER_NAME + "/" + TABLE_NAME;
+    private static final Uri CONTENT_URI = Uri.parse(URL);
 
     @BindView(R.id.rv_tv_favs)
     RecyclerView rvTvShowFavs;
@@ -73,7 +74,7 @@ public class TvShowFragment extends Fragment {
         FavoriteViewModel tvViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
         tvViewModel.getListTVFavs().observe(this, getTvList);
 
-        Uri CONTENT_URI = Uri.parse(URL);
+
         Cursor cursorTV = getContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
         if (cursorTV != null) {
             tvViewModel.setListTVFavs(cursorTV);

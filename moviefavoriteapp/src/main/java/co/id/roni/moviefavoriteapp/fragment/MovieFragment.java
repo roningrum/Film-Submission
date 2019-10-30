@@ -34,6 +34,7 @@ public class MovieFragment extends Fragment {
     private static final String PROVIDER_NAME = "co.id.roni.film_submission";
     private static final String TABLE_NAME = "tbMovieFav";
     private static final String URL = "content://" + PROVIDER_NAME + "/" + TABLE_NAME;
+    private Uri CONTENT_URI = Uri.parse(URL);
 
 
     @BindView(R.id.rv_movies_favs)
@@ -75,8 +76,6 @@ public class MovieFragment extends Fragment {
 
         FavoriteViewModel movieViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
         movieViewModel.getListMovieFavs().observe(this, getMovieFavs);
-
-        Uri CONTENT_URI = Uri.parse(URL);
         Cursor cursorMovie = getContext().getContentResolver().query(CONTENT_URI, null, null, null, null);
         if (cursorMovie != null) {
             movieViewModel.setListMovieFavs(cursorMovie);
