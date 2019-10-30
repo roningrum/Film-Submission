@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieFavoriteApp</string>
+    <string name="cd_poster_image">poster</string>
+    <string name="hello_blank_fragment">Hello fragmen kosong</string>
+    <string name="movie">Film</string>
+    <string name="tvshow">TV Show</string>
+    <string name="Favorite">Favorit</string>
+    <string name="content_desc_rate_image">menilai</string>
+    <string name="sample_overview">lorem ipsum</string>
+</resources>
