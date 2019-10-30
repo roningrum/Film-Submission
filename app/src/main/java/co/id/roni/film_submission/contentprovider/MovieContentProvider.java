@@ -40,17 +40,13 @@ public class MovieContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-
-        Cursor cursor;
         int code = MATCHER.match(uri);
 
         switch (code) {
             case CODE_ALL_MOVIE_FAVS:
-                cursor = favoriteRepository.getAllMovieCursor();
-                return cursor;
+                return favoriteRepository.getAllMovieCursor();
             case CODE_ALL_TV_FAVS:
-                cursor = favoriteRepository.getAllTvFavCursor();
-                return cursor;
+                return favoriteRepository.getAllTvFavCursor();
             default:
                 throw new IllegalArgumentException("Invalid URI, cannot insert with ID: " + uri);
         }
