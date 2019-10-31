@@ -39,8 +39,8 @@ public interface Api {
     @GET("search/tv?api_key=" + BuildConfig.API_KEY)
     Call<TvShowsObject> getTVSearchResult(@Query("api_key") String api, @Query("query") String query, @Query("language") String language);
 
-    @GET("discover/movie?api_key=" + BuildConfig.API_KEY)
-    Call<MovieObjectData> getMovieRelaase(@Query("api_key") String api, @Query("primary_release_date.gte") String currentdate, @Query("primary_release_date.lte") String date);
+    @GET("discover/movie?")
+    Call<MovieObjectData> getMovieRelaase(@Query("primary_release_date.gte") String currentdate, @Query("primary_release_date.lte") String date, @Query("api_key") String api, @Query("language") String language);
 
 
 

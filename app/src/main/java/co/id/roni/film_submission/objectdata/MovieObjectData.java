@@ -6,6 +6,7 @@ import co.id.roni.film_submission.model.MovieModel;
 
 public class MovieObjectData {
     private List<MovieModel> results;
+    private int page;
 
 
     public List<MovieModel> getResults() {

@@ -14,6 +14,7 @@ import androidx.preference.SwitchPreference;
 
 import co.id.roni.film_submission.R;
 import co.id.roni.film_submission.notification.DailyNotification;
+import co.id.roni.film_submission.notification.ReleaseTodayReminder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,16 +22,20 @@ import co.id.roni.film_submission.notification.DailyNotification;
 public class SettingFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     public static CharSequence REMINDER_NAME = "NOTIFICATION";
     private DailyNotification dailyNotification = new DailyNotification();
+    private ReleaseTodayReminder releaseTodayReminder = new ReleaseTodayReminder();
 
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences_setting);
         SwitchPreference switchDailyNotif = findPreference(getString(R.string.DAILYKEY));
-
+        SwitchPreference switchReminderNotif = findPreference(getString(R.string.RELEASEKEY));
         assert switchDailyNotif != null;
         switchDailyNotif.setOnPreferenceChangeListener(this);
+        assert switchReminderNotif != null;
+        switchReminderNotif.setOnPreferenceChangeListener(this);
         findPreference(getString(R.string.LANGUAGEKEY)).setOnPreferenceClickListener(this);
+
 
     }
 
@@ -43,6 +48,13 @@ public class SettingFragment extends PreferenceFragmentCompat implements Prefere
                 dailyNotification.setRepeatingReminder(getActivity());
             } else {
                 dailyNotification.cancelNotification(getActivity());
+            }
+        }
+        if (key.equals(getString(R.string.RELEASEKEY))) {
+            if (isSet) {
+                releaseTodayReminder.setRepeatingReminder(getActivity());
+            } else {
+                releaseTodayReminder.cancelNotification(getActivity());
             }
         }
         return true;

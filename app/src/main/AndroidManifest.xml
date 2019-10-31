@@ -80,6 +80,12 @@
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver" />
+
+        <receiver
+            android:name=".notification.ReleaseTodayReminder"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver" />
         <service
             android:name=".widget.StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
