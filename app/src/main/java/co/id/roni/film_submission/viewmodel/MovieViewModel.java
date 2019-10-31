@@ -11,19 +11,14 @@ import java.util.List;
 import co.id.roni.film_submission.model.MovieModel;
 import co.id.roni.film_submission.objectdata.MovieObjectData;
 import co.id.roni.film_submission.service.Api;
+import co.id.roni.film_submission.service.ApiConstant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieViewModel extends ViewModel {
     private MutableLiveData<List<MovieModel>> listMovies = new MutableLiveData<>();
-    private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(Api.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    private Api api = retrofit.create(Api.class);
+    private Api api = ApiConstant.getRetrofit().create(Api.class);
 
     public void setListMovies(int page, String language) {
 

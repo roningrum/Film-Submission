@@ -11,22 +11,16 @@ import java.util.List;
 import co.id.roni.film_submission.model.Cast;
 import co.id.roni.film_submission.objectdata.CreditObjectData;
 import co.id.roni.film_submission.service.Api;
+import co.id.roni.film_submission.service.ApiConstant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CastDetailViewModel extends ViewModel {
     public MutableLiveData<List<Cast>> castCreditMovieList = new MutableLiveData<>();
     public MutableLiveData<List<Cast>> castCreditTvList = new MutableLiveData<>();
 
-    private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(Api.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-    private Api api = retrofit.create(Api.class);
+    private Api api = ApiConstant.getRetrofit().create(Api.class);
 
     public LiveData<List<Cast>> getCastCreditMovies() {
         return castCreditMovieList;

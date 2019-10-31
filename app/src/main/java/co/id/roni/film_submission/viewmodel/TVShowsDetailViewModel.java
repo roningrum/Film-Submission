@@ -8,21 +8,15 @@ import androidx.lifecycle.ViewModel;
 
 import co.id.roni.film_submission.model.detailmodel.TVShowDetailModel;
 import co.id.roni.film_submission.service.Api;
+import co.id.roni.film_submission.service.ApiConstant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TVShowsDetailViewModel extends ViewModel {
     private MutableLiveData<TVShowDetailModel> tvDetails = new MutableLiveData<>();
 
-    private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(Api.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-    private Api api = retrofit.create(Api.class);
+    private Api api = ApiConstant.getRetrofit().create(Api.class);
 
     public void setDetailTvShows(int id, String language) {
         Call<TVShowDetailModel> tvShowModelCall = api.getTvShowDetail(id, language);

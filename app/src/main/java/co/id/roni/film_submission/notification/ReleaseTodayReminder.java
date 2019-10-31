@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,25 +30,21 @@ import co.id.roni.film_submission.activity.MainHomeActivity;
 import co.id.roni.film_submission.model.MovieModel;
 import co.id.roni.film_submission.objectdata.MovieObjectData;
 import co.id.roni.film_submission.service.Api;
+import co.id.roni.film_submission.service.ApiConstant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ReleaseTodayReminder extends BroadcastReceiver {
     private final static String GROUP_KEY_EMAILS = "group_movie_keys";
     private final static int NOTIFICATION_REQUEST_CODE = 104;
-    private final static int MAX_NOTIFICATION = 2;
+    private final static int MAX_NOTIFICATION = 24;
     public static CharSequence CHANNEL_NAME = "Film Submission";
-    private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(Api.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-    private Api api = retrofit.create(Api.class);
+
+    private Api api = ApiConstant.getRetrofit().create(Api.class);
     private List<StackNotificationItem> stackNotificationItems = new ArrayList<>();
     private ArrayList<MovieModel> movieModels;
-    private int notifCount = 0;
+    private int movieId;
 
     public ReleaseTodayReminder() {
     }
@@ -70,7 +67,7 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
                     movieModels = (ArrayList<MovieModel>) response.body().getResults();
                     for (int i = 0; i < movieModels.size(); i++) {
                         stackNotificationItems.add(new StackNotificationItem(movieModels.get(i).getId(), movieModels.get(i).getTitle(), movieModels.get(i).getOverview()));
-                        notifCount++;
+                        movieId++;
                     }
                 }
                 showAlarmNotification(context);
@@ -93,47 +90,49 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder;
+        for (movieId = 1; movieId < movieModels.size(); movieId++) {
+            String CHANNLE_ID = "release_movie_chanel";
+            if (movieId < MAX_NOTIFICATION) {
+                builder = new NotificationCompat.Builder(context, CHANNLE_ID)
+                        .setContentTitle(stackNotificationItems.get(movieId).getSender())
+                        .setContentText(stackNotificationItems.get(movieId).getMessage())
+                        .setSmallIcon(R.drawable.ic_movie)
+                        .setLargeIcon(largeIcon)
+                        .setGroup(GROUP_KEY_EMAILS)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+            } else {
+                int jum = movieModels.size() - 2;
+                NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle()
+                        .addLine(stackNotificationItems.get(movieId).getSender() + ":" + stackNotificationItems.get(movieId).getMessage())
+                        .addLine(stackNotificationItems.get(movieId - 1).getSender() + ":" + stackNotificationItems.get(movieId).getMessage())
+                        .setBigContentTitle(movieId + 1 + "new movie release today")
+                        .setSummaryText("+" + jum + "more");
 
-
-        String CHANNLE_ID = "release_movie_chanel";
-        if (notifCount < MAX_NOTIFICATION) {
-            builder = new NotificationCompat.Builder(context, CHANNLE_ID)
-                    .setContentTitle(stackNotificationItems.get(notifCount).getSender())
-                    .setContentText(stackNotificationItems.get(notifCount).getMessage())
-                    .setSmallIcon(R.drawable.ic_movie)
-                    .setLargeIcon(largeIcon)
-                    .setGroup(GROUP_KEY_EMAILS)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
-        } else {
-            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle()
-                    .setBigContentTitle(notifCount + "new movie release today")
-                    .setSummaryText("Movie Release Reminder");
-
-            for (int i = 0; i < movieModels.size(); i++) {
-                inboxStyle.addLine(stackNotificationItems.get(i).getSender() + ":" + stackNotificationItems.get(i).getMessage());
+                builder = new NotificationCompat.Builder(context, CHANNLE_ID)
+                        .setContentTitle(stackNotificationItems.get(movieId).getSender() + "- Release" + setFormatDateNow())
+                        .setContentText(stackNotificationItems.get(movieId).getMessage())
+                        .setSmallIcon(R.drawable.ic_movie)
+                        .setGroup(GROUP_KEY_EMAILS)
+                        .setGroupSummary(true)
+                        .setContentIntent(pendingIntent)
+                        .setStyle(inboxStyle)
+                        .setAutoCancel(true);
             }
-            builder = new NotificationCompat.Builder(context, CHANNLE_ID)
-                    .setContentTitle(notifCount + "new movie relase today")
-                    .setContentText("Movie Release Reminder")
-                    .setSmallIcon(R.drawable.ic_movie)
-                    .setGroup(GROUP_KEY_EMAILS)
-                    .setGroupSummary(true)
-                    .setContentIntent(pendingIntent)
-                    .setStyle(inboxStyle)
-                    .setAutoCancel(true);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNLE_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            builder.setChannelId(CHANNLE_ID);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(CHANNLE_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                builder.setChannelId(CHANNLE_ID);
+                if (notificationManager != null) {
+                    notificationManager.createNotificationChannel(channel);
+                }
+            }
+            Notification notification = builder.build();
             if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
+                notificationManager.notify(movieId, notification);
             }
         }
-        Notification notification = builder.build();
-        if (notificationManager != null) {
-            notificationManager.notify(notifCount, notification);
-        }
+
+
     }
 
     public void setRepeatingReminder(Context context) {
@@ -161,6 +160,11 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
         assert alarmManager != null;
         alarmManager.cancel(pendingIntent);
 
+    }
+
+    private String setFormatDateNow() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return df.format(new Date());
     }
 
 }

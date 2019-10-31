@@ -11,21 +11,14 @@ import java.util.List;
 import co.id.roni.film_submission.model.TVShowModel;
 import co.id.roni.film_submission.objectdata.TvShowsObject;
 import co.id.roni.film_submission.service.Api;
+import co.id.roni.film_submission.service.ApiConstant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TVShowsViewModel extends ViewModel {
     private MutableLiveData<List<TVShowModel>> listTvs = new MutableLiveData<>();
-
-    private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(Api.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-    private Api api = retrofit.create(Api.class);
+    private Api api = ApiConstant.getRetrofit().create(Api.class);
 
     public void setListTVs(int page, String language) {
         Call<TvShowsObject> tvObjectCall = api.getTVList(page, language);
