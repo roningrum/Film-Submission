@@ -34,4 +34,10 @@
     <string name="RELEASEKEY">release_movie_notification_key</string>
     <string name="notification">Pemberitahuan</string>
     <string name="movie_release_today_notif">Film Rilis Hari Ini</string>
+    <string name="daily_notif_alert">Pemberitahuan Harian On</string>
+    <string name="more">banyak</string>
+    <string name="repeating_set_alarm">Alarm Rilis On</string>
+    <string name="new_movie_release">film rilis baru hari ini</string>
+    <string name="daily_app_reminder">Pemberitahuan Harian</string>
+    <string name="release_movie_today">Rilis Film Hari Ini</string>
 </resources>

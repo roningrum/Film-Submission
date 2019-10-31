@@ -34,4 +34,10 @@
     <string name="LANGUAGEKEY">language_change_key</string>
     <string name="RELEASEKEY">release_movie_notification_key</string>
     <string name="movie_release_today_notif">Movie Release Today</string>
+    <string name="more">more</string>
+    <string name="repeating_set_alarm">Release Alarm On</string>
+    <string name="daily_notif_alert">Daily Alert Set Up</string>
+    <string name="new_movie_release">new movie release today</string>
+    <string name="daily_app_reminder">Daily App Reminder</string>
+    <string name="release_movie_today">Release Movie Today</string>
 </resources>

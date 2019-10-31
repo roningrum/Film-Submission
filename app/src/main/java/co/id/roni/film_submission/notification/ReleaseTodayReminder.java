@@ -106,8 +106,8 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle()
                         .addLine(stackNotificationItems.get(movieId).getSender() + ":" + stackNotificationItems.get(movieId).getMessage())
                         .addLine(stackNotificationItems.get(movieId - 1).getSender() + ":" + stackNotificationItems.get(movieId).getMessage())
-                        .setBigContentTitle(movieId + 1 + "new movie release today")
-                        .setSummaryText("+" + jum + "more");
+                        .setBigContentTitle(movieId + 1 + context.getString(R.string.new_movie_release) + "")
+                        .setSummaryText("+" + jum + context.getString(R.string.more) + "");
 
                 builder = new NotificationCompat.Builder(context, CHANNLE_ID)
                         .setContentTitle(stackNotificationItems.get(movieId).getSender() + "- Release" + setFormatDateNow())
@@ -148,7 +148,7 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
 
         assert alarmManager != null;
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        Toast.makeText(context, "Repeating Alarm Set Up", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.repeating_set_alarm), Toast.LENGTH_SHORT).show();
 
     }
 

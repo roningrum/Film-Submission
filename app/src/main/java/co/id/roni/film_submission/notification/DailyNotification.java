@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -70,6 +71,7 @@ public class DailyNotification extends BroadcastReceiver {
 
         assert alarmManager != null;
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        Toast.makeText(context, context.getString(R.string.daily_notif_alert), Toast.LENGTH_SHORT).show();
 
 
     }
