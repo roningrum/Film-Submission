@@ -58,19 +58,20 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
     }
 
     private void getMovieData(Context context) {
-        final Locale current = context.getResources().getConfiguration().locale;
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String currentDate = dateFormat.format(date);
-        Call<MovieObjectData> call = api.getMovieRelaase(currentDate, currentDate, BuildConfig.API_KEY, current.getLanguage());
+        Call<MovieObjectData> call = api.getMovieRelaase(currentDate, currentDate, BuildConfig.API_KEY);
         call.enqueue(new Callback<MovieObjectData>() {
             @Override
             public void onResponse(Call<MovieObjectData> call, Response<MovieObjectData> response) {
 
-                movieModels = (ArrayList<MovieModel>) response.body().getResults();
-                for (int i = 0; i < movieModels.size(); i++) {
-                    stackNotificationItems.add(new StackNotificationItem(movieModels.get(i).getId(), movieModels.get(i).getTitle(), movieModels.get(i).getOverview()));
-                    notifCount++;
+                if (response.isSuccessful()) {
+                    movieModels = (ArrayList<MovieModel>) response.body().getResults();
+                    for (int i = 0; i < movieModels.size(); i++) {
+                        stackNotificationItems.add(new StackNotificationItem(movieModels.get(i).getId(), movieModels.get(i).getTitle(), movieModels.get(i).getOverview()));
+                        notifCount++;
+                    }
                 }
                 showAlarmNotification(context);
                 Log.d("Check Release Data", "Movie :" + movieModels);
@@ -78,7 +79,7 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
 
             @Override
             public void onFailure(Call<MovieObjectData> call, Throwable t) {
-                Log.d("Check Data", "" + t.getMessage());
+                Log.e("Check Data", "" + t.getMessage());
 
             }
         });
@@ -87,8 +88,8 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
     private void showAlarmNotification(Context context) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_movie);
-        Intent intent = new Intent(context, MainHomeActivity.class);
 
+        Intent intent = new Intent(context, MainHomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder;
@@ -108,8 +109,9 @@ public class ReleaseTodayReminder extends BroadcastReceiver {
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle()
                     .setBigContentTitle(notifCount + "new movie release today")
                     .setSummaryText("Movie Release Reminder");
+
             for (int i = 0; i < movieModels.size(); i++) {
-                inboxStyle.addLine(stackNotificationItems.get(notifCount).getSender() + ":" + stackNotificationItems.get(notifCount).getMessage());
+                inboxStyle.addLine(stackNotificationItems.get(i).getSender() + ":" + stackNotificationItems.get(i).getMessage());
             }
             builder = new NotificationCompat.Builder(context, CHANNLE_ID)
                     .setContentTitle(notifCount + "new movie relase today")

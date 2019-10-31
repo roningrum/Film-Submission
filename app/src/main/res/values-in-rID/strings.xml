@@ -33,4 +33,5 @@
     <string name="LANGUAGEKEY">language_change_key</string>
     <string name="RELEASEKEY">release_movie_notification_key</string>
     <string name="notification">Pemberitahuan</string>
+    <string name="movie_release_today_notif">Film Rilis Hari Ini</string>
 </resources>

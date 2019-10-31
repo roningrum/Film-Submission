@@ -40,7 +40,7 @@ public interface Api {
     Call<TvShowsObject> getTVSearchResult(@Query("api_key") String api, @Query("query") String query, @Query("language") String language);
 
     @GET("discover/movie?")
-    Call<MovieObjectData> getMovieRelaase(@Query("primary_release_date.gte") String currentdate, @Query("primary_release_date.lte") String date, @Query("api_key") String api, @Query("language") String language);
+    Call<MovieObjectData> getMovieRelaase(@Query("primary_release_date.gte") String currentdate, @Query("primary_release_date.lte") String date, @Query("api_key") String api);
 
 
 
