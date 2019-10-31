@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">MovieFavoriteApp</string>
     <string name="cd_poster_image">poster</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="movie">Movie</string>
     <string name="tvshow">TV Show</string>
     <string name="Favorite">Favorites</string>

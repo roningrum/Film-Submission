@@ -26,19 +26,18 @@
     <string name="key_search_tv">Search TV</string>
     <string name="not_available">Not Available</string>
     <string name="appwidget_text">MOVIE WIDGET</string>
-    <string name="add_widget">Add widget</string>
     <string name="empty_text">No Item Available</string>
     <string name="widget">widget</string>
     <string name="notification">Notification</string>
     <string name="DAILYKEY">daily_notification_key</string>
     <string name="RELEASEKEY">release_movie_notification_key</string>
     <string name="LANGUAGEKEY">language_change_key</string>
-    <string name="movie_release_today_notif">Movie Release Today</string>
     <string name="more">more</string>
     <string name="new_movie_release">new movie release today</string>
     <string name="repeating_set_alarm">Release Alarm On</string>
     <string name="daily_notif_alert">Daily Alert Set Up</string>
     <string name="daily_app_reminder">Daily App Reminder</string>
     <string name="release_movie_today">Release Movie Today</string>
+
 
 </resources>
