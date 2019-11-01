@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat;
 import java.util.Calendar;
 
 import co.id.roni.film_submission.R;
-import co.id.roni.film_submission.activity.MainHomeActivity;
 
 import static co.id.roni.film_submission.fragment.SettingFragment.REMINDER_NAME;
 
@@ -61,7 +60,7 @@ public class DailyNotification extends BroadcastReceiver {
     public void setRepeatingReminder(Context context) {
         cancelNotification(context);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, MainHomeActivity.class);
+        Intent intent = new Intent(context, DailyNotification.class);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_REPEAT_TIME, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar calendar = Calendar.getInstance();

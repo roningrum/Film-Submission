@@ -30,9 +30,8 @@ public class SettingFragment extends PreferenceFragmentCompat implements Prefere
         addPreferencesFromResource(R.xml.preferences_setting);
         SwitchPreference switchDailyNotif = findPreference(getString(R.string.DAILYKEY));
         SwitchPreference switchReminderNotif = findPreference(getString(R.string.RELEASEKEY));
-        assert switchDailyNotif != null;
+
         switchDailyNotif.setOnPreferenceChangeListener(this);
-        assert switchReminderNotif != null;
         switchReminderNotif.setOnPreferenceChangeListener(this);
         findPreference(getString(R.string.LANGUAGEKEY)).setOnPreferenceClickListener(this);
 
