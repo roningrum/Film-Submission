@@ -6,6 +6,8 @@ import co.id.roni.film_submission.model.MovieModel;
 
 public class MovieObjectData {
     private List<MovieModel> results;
+    private int page;
+
 
     public List<MovieModel> getResults() {
         return results;
@@ -14,4 +16,5 @@ public class MovieObjectData {
     public void setResults(List<MovieModel> results) {
         this.results = results;
     }
+
 }

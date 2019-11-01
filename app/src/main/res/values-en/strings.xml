@@ -7,7 +7,7 @@
     <string name="release">Release</string>
     <string name="genre">Genre</string>
     <string name="synopsis">Overview</string>
-    <string name="change_language">change_language</string>
+    <string name="change_language">Change Language</string>
     <string name="movie">Movies</string>
     <string name="tv_series">TV Shows</string>
     <string name="language">en-US</string>
@@ -16,4 +16,26 @@
     <string name="minute">minute</string>
     <string name="season">season</string>
     <string name="favorite_menu">Favorite</string>
+    <string name="casts">Cast</string>
+    <string name="Language">Language</string>
+    <string name="setting">Setting</string>
+    <string name="remove_favorite">Removed from favorite</string>
+    <string name="add_favorite">Add to Favorite</string>
+    <string name="search">Search</string>
+    <string name="key_search">Search Movie</string>
+    <string name="not_available">Not Available</string>
+    <string name="key_search_tv">Search TV</string>
+    <string name="empty_text">No Item Available</string>
+    <string name="appwidget_text">MOVIE WIDGET</string>
+    <string name="widget">widget</string>
+    <string name="notification">Notification</string>
+    <string name="DAILYKEY">daily_notification_key</string>
+    <string name="LANGUAGEKEY">language_change_key</string>
+    <string name="RELEASEKEY">release_movie_notification_key</string>
+    <string name="more">more</string>
+    <string name="repeating_set_alarm">Release Alarm On</string>
+    <string name="daily_notif_alert">Daily Alert Set Up</string>
+    <string name="new_movie_release">new movie release today</string>
+    <string name="daily_app_reminder">Daily App Reminder</string>
+    <string name="release_movie_today">Release Movie Today</string>
 </resources>

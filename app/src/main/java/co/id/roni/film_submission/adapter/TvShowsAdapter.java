@@ -26,7 +26,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
         this.onItemClickCallback = onItemClickCallback;
     }
 
-    public void setMovieData(ArrayList<TVShowModel> tvs) {
+    public void setTvData(ArrayList<TVShowModel> tvs) {
         tvSData.clear();
         tvSData.addAll(tvs);
         notifyDataSetChanged();

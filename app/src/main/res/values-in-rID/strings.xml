@@ -16,4 +16,26 @@
     <string name="minute">menit</string>
     <string name="season">Musim</string>
     <string name="favorite_menu">Favorit</string>
+    <string name="casts">Pemain</string>
+    <string name="Language">Bahasa</string>
+    <string name="setting">Pengaturan</string>
+    <string name="add_favorite">DiTambah Ke Favorit</string>
+    <string name="remove_favorite">Dihapus dari Favorit</string>
+    <string name="search">Cari</string>
+    <string name="key_search">Cari Film</string>
+    <string name="not_available">Tidak Tersedia</string>
+    <string name="key_search_tv">Cari TV Show</string>
+    <string name="appwidget_text">PINTASAN FILM</string>
+    <string name="empty_text">Tidak ada Item Tersedia</string>
+    <string name="widget">widget</string>
+    <string name="DAILYKEY">daily_notification_key</string>
+    <string name="LANGUAGEKEY">language_change_key</string>
+    <string name="RELEASEKEY">release_movie_notification_key</string>
+    <string name="notification">Pemberitahuan</string>
+    <string name="daily_notif_alert">Pemberitahuan Harian On</string>
+    <string name="more">banyak</string>
+    <string name="repeating_set_alarm">Alarm Rilis On</string>
+    <string name="new_movie_release">film rilis baru hari ini</string>
+    <string name="daily_app_reminder">Pemberitahuan Harian</string>
+    <string name="release_movie_today">Rilis Film Hari Ini</string>
 </resources>

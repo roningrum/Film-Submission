@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".favorite.FavoriteFragment">
+    tools:context=".fragment.favorite.FavoriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
@@ -16,15 +15,16 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/app_name" />
+            android:theme="@style/AppTheme"
+            app:title="@string/favorite_menu"
+            app:titleTextColor="@android:color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/appbar_layout"
-        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
+        android:layout_below="@+id/appbar_layout" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
