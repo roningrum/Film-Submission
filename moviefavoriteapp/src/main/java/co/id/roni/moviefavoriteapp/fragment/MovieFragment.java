@@ -80,6 +80,7 @@ public class MovieFragment extends Fragment {
         if (cursorMovie != null) {
             movieViewModel.setListMovieFavs(cursorMovie);
         }
+        movieFavoriteAdapter.notifyDataSetChanged();
 
     }
 }

@@ -27,10 +27,6 @@ public class MovieDetailModel {
         return "https://image.tmdb.org/t/p/w500" + backdrop_path;
     }
 
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
-    }
-
     public String getOverview() {
         return overview;
     }
@@ -59,32 +55,15 @@ public class MovieDetailModel {
         return release_date;
     }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
-    }
-
     public int getRuntime() {
         return runtime;
-    }
-
-    public void setRuntime(int runtime) {
-        this.runtime = runtime;
     }
 
     public double getVote_average() {
         return vote_average;
     }
 
-    public void setVote_average(double vote_average) {
-        this.vote_average = vote_average;
-    }
-
-
     public List<Genre> getGenres() {
         return genres;
-    }
-
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
     }
 }
