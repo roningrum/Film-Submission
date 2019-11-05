@@ -42,6 +42,7 @@ public class SettingFragment extends PreferenceFragmentCompat implements Prefere
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
         boolean isSet = (boolean) newValue;
+        assert getActivity() != null;
         if (key.equals(getString(R.string.DAILYKEY))) {
             if (isSet) {
                 dailyNotification.setRepeatingReminder(getActivity());
