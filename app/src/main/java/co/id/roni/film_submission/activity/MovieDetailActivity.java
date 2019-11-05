@@ -92,6 +92,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     private FavoriteViewModel favoriteViewModel;
     private MovieDetailViewModel movieDetailViewModel;
 
+    private CastAdapter adapter;
+
 
     private Observer<MovieDetailModel> getMovieDetail = movieDetailModel -> {
         if (movieDetailModel != null) {
@@ -104,15 +106,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private Observer<List<Cast>> getCastMovieDetail = castMovieDetail -> {
         if (castMovieDetail != null) {
-            CastAdapter adapter = new CastAdapter();
+
             adapter.setCastMovieList(castMovieDetail);
-
-            LinearLayoutManager llm = new LinearLayoutManager(this);
-            llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-
-            rvCasts.setLayoutManager(llm);
-            rvCasts.setAdapter(adapter);
-            rvCasts.setHasFixedSize(true);
         }
     };
 
@@ -149,6 +144,15 @@ public class MovieDetailActivity extends AppCompatActivity {
         imgDetailBackDropMovie.setOutlineProvider(viewOutlineProvider);
         bgBackdrop.setOutlineProvider(viewOutlineProvider);
 
+
+        adapter = new CastAdapter();
+        rvCasts.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvCasts.setLayoutManager(llm);
+        rvCasts.setHasFixedSize(true);
+
         Log.d("Check Id", "Movie Id" + id);
         id = getIntent().getIntExtra("id", id);
         movieDetailViewModel.setDetailMovies(id, getString(string.language));
@@ -157,6 +161,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         movieFavModelLiveData = favoriteViewModel.selectMovieFav(id);
         showLoading(true);
+
         Stetho.initializeWithDefaults(this);
 
     }
@@ -212,10 +217,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         double vote_average = movieDetailModel.getVote_average();
 
         Log.d("Test Data Insert", "Test : " + title);
-        Log.d("Test Data Insert", "Test : " + poster_path);
-        Log.d("Test Data Insert", "Test : " + overview);
-
-
         MovieFavModel favorite = new MovieFavModel();
         favorite.setId(Favid);
         favorite.setTitle(title);
