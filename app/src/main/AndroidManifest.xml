@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="co.id.roni.film_submission">
+    package="co.id.roni.filmsubmission">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -10,10 +10,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <permission
-        android:name="co.id.roni.film_submission.READ_DATABASE"
+        android:name="co.id.roni.filmsubmission.READ_DATABASE"
         android:protectionLevel="normal" />
     <permission
-        android:name="co.id.roni.film_submission.WRITE_DATABASE"
+        android:name="co.id.roni.filmsubmission.WRITE_DATABASE"
         android:protectionLevel="normal" />
 
     <application
@@ -27,13 +27,13 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <provider
-            android:name=".contentprovider.MovieContentProvider"
-            android:authorities="co.id.roni.film_submission"
+            android:name="co.id.roni.filmsubmission.contentprovider.MovieContentProvider"
+            android:authorities="co.id.roni.filmsubmission"
             android:exported="true"
             android:readPermission="co.id.roni.film_submission.READ_DATABASE"
             android:writePermission="co.id.roni.film_submission.WRITE_DATABASE" />
 
-        <receiver android:name=".widget.MovieAppBannerWidget">
+        <receiver android:name="co.id.roni.filmsubmission.widget.MovieAppBannerWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -43,17 +43,17 @@
                 android:resource="@xml/movie_app_banner_widget_info" />
         </receiver>
 
-        <activity android:name=".activity.SearchTVActivity" />
+        <activity android:name="co.id.roni.filmsubmission.activity.SearchTVActivity" />
         <activity
-            android:name=".activity.SearchMovieActivity"
-            android:parentActivityName=".activity.MainHomeActivity" />
+            android:name="co.id.roni.filmsubmission.activity.SearchMovieActivity"
+            android:parentActivityName="co.id.roni.filmsubmission.activity.MainHomeActivity" />
         <activity
-            android:name=".activity.SettingActivity"
-            android:parentActivityName=".activity.MainHomeActivity" />
+            android:name="co.id.roni.filmsubmission.activity.SettingActivity"
+            android:parentActivityName="co.id.roni.filmsubmission.activity.MainHomeActivity" />
         <activity
-            android:name=".activity.TVShowsDetailActivity"
-            android:parentActivityName=".activity.MainHomeActivity" />
-        <activity android:name=".activity.MainHomeActivity">
+            android:name="co.id.roni.filmsubmission.activity.TVShowsDetailActivity"
+            android:parentActivityName="co.id.roni.filmsubmission.activity.MainHomeActivity" />
+        <activity android:name="co.id.roni.filmsubmission.activity.MainHomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,10 +62,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MovieDetailActivity"
-            android:parentActivityName=".activity.MainHomeActivity" />
+            android:name="co.id.roni.filmsubmission.activity.MovieDetailActivity"
+            android:parentActivityName="co.id.roni.filmsubmission.activity.MainHomeActivity" />
 
-        <receiver android:name=".widget.MovieAppBannerWidget">
+        <receiver android:name="co.id.roni.filmsubmission.widget.MovieAppBannerWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -76,18 +76,18 @@
         </receiver>
 
         <receiver
-            android:name=".notification.DailyNotification"
+            android:name="co.id.roni.filmsubmission.notification.DailyNotification"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver" />
 
         <receiver
-            android:name=".notification.ReleaseTodayReminder"
+            android:name="co.id.roni.filmsubmission.notification.ReleaseTodayReminder"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver" />
         <service
-            android:name=".widget.StackWidgetService"
+            android:name="co.id.roni.filmsubmission.widget.StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <meta-data
