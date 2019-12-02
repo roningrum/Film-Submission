@@ -51,6 +51,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.jcminarro:RoundKornerLayouts:0.4.0'
+    implementation 'androidx.room:room-runtime:2.2.2'
+    annotationProcessor 'androidx.room:room-compiler:2.2.2'
 
 
 }
